@@ -304,7 +304,6 @@
     <Compile Include="Assets\Scenes\Scripts\ColliderEventHandler.cs" />
     <Compile Include="Assets\Scenes\Scripts\EnemyController.cs" />
     <Compile Include="Assets\Scenes\Scripts\EnemyManager.cs" />
-    <Compile Include="Assets\Scenes\Scripts\HealthBarController.cs" />
     <Compile Include="Assets\Scenes\Scripts\MouseMoveInHandler.cs" />
     <Compile Include="Assets\Scenes\Scripts\TowerCombiningManager.cs" />
     <Compile Include="Assets\Scenes\Scripts\TowerController.cs" />

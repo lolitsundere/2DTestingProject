@@ -415,7 +415,6 @@ public class WorldManager : MonoBehaviour {
         tower.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
 
         FloorMap[Convert.ToInt32(pos.x)][Convert.ToInt32(pos.y)].transform.GetComponent<BoxCollider2D>().enabled = false;
-        IntMap[Convert.ToInt32(pos.x), Convert.ToInt32(pos.y)] = -1;
     }
 
     /// <summary>

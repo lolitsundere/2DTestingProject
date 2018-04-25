@@ -10,6 +10,8 @@ public class EnemyController : MonoBehaviour
     public int MovementSpeed;
     public int Armor;
     public float MagicResistance;
+    public Transform Front;
+    public Transform Back;
 
     public void TakeDamage(int damageAmount, TowerController.DamageType damageType)
     {
@@ -29,8 +31,8 @@ public class EnemyController : MonoBehaviour
         }
         if (Health > 0)
         {
-            transform.GetComponent<HealthBarController>().Front.localScale = new Vector3(0.55f * (transform.GetComponent<EnemyController>().Health + 0.0f) / (transform.GetComponent<EnemyController>().MaxHealth + 0.0f), 0.07f, 1f);
-            transform.GetComponent<HealthBarController>().Front.localPosition -= new Vector3((0.55f - transform.GetComponent<HealthBarController>().Front.localScale.x), 0f, 0f);
+            Front.localScale = new Vector3(0.55f * Health / MaxHealth, 0.07f, 1f);
+            Front.localPosition = new Vector3(-((0.55f-Front.localScale.x)*3.2f)/2f, 0.8f, 0f);
         }
     }
 
@@ -41,6 +43,11 @@ public class EnemyController : MonoBehaviour
         MovementSpeed = 446;
         Armor = 0;
         MagicResistance = 0.1f;
+
+        Front = Instantiate(Front, transform);
+        Back = Instantiate(Back, transform);
+        Front.localPosition = new Vector3(0, 0.8f, 0);
+        Back.localPosition = new Vector3(0, 0.8f, 0);
 
         //transform.GetComponent<NavMeshAgent>().speed = MovementSpeed / 4 * 3;
     }
