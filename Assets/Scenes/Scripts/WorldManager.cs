@@ -313,14 +313,15 @@ public class WorldManager : MonoBehaviour {
         var enemy = Instantiate(NormalEnemy, transform.GetChild(1).GetChild(4).transform);
         enemy.transform.position = new Vector3(Enter.x, Enter.y, -1f);
         enemy.GetComponent<ClickEventHandler>().ClickEvent += EnemyClickAction;
-        EnemyManager.SetEnemy(enemy.GetComponent<EnemyController>(), Level);
 
         var enemy3D = Instantiate(NormalEnemy3D, transform.GetChild(0).GetChild(1).transform);
         enemy3D.transform.position = new Vector3(Enter.x, 0.275f, Enter.y);
         var enemyNav = enemy3D.transform.GetComponent<NavMeshAgent>();
         enemyNav.Warp(new Vector3(Enter.x, 0.275f, Enter.y));
-        enemyNav.speed = enemy.GetComponent<EnemyController>().MovementSpeed/400*3;
         enemyNav.SetDestination(new Vector3(TurningPoint1.x, 0.275f, TurningPoint1.y));
+
+        enemy.GetComponent<EnemyController>().nav = enemyNav;
+        EnemyManager.SetEnemy(enemy.GetComponent<EnemyController>(), Level);
 
         CurrentEnemyAcount++;
         EnemyDic.Add(enemy, enemy3D);

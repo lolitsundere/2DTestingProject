@@ -5,6 +5,9 @@ using UnityEngine;
 public class TowerController : MonoBehaviour
 {
     public enum DamageType {Physical, Magic, Pure};
+    public enum AttackSlowEffect { SlowEffect0, SlowEffect60, SlowEffect90, SlowEffect120, SlowEffect150, SlowEffect180, SlowEffect480};
+    public enum AttackSpeedAccelerateEffect { AccelerateEffect0, AccelerateEffect20, AccelerateEffect30, AccelerateEffect40, AccelerateEffect50, AccelerateEffect60, AccelerateEffect70 };
+
 
     private double attackSpeed;
     public double AttackSpeed
@@ -82,6 +85,8 @@ public class TowerController : MonoBehaviour
     }
     public int MaxTargetAmount;
 
+    public AttackSlowEffect attackSlowEffect;
+    public AttackSpeedAccelerateEffect attackSpeedAccelerateEffect;
 
     private List<GameObject> AttackTargets;
     private float time;
@@ -92,7 +97,7 @@ public class TowerController : MonoBehaviour
     {
         foreach (GameObject go in AttackTargets)
         {
-            go.GetComponent<EnemyController>().TakeDamage(PhysicalDamage, DamageType.Physical);
+            go.GetComponent<EnemyController>().TakeTowerAttack(this);
         }
     }
 
