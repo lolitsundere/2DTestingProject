@@ -338,6 +338,7 @@ public class WorldManager : MonoBehaviour {
     /// </summary>
     private void InnerWallClickedAction(GameObject _SelectedObject)
     {
+        ClearUI();
         if (EnabledAttackRange != null)
         {
             EnabledAttackRange.enabled = false;
