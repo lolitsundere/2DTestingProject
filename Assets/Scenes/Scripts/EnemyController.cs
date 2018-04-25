@@ -38,17 +38,9 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
-        MaxHealth = 6;
-        Health = MaxHealth;
-        MovementSpeed = 446;
-        Armor = 0;
-        MagicResistance = 0.1f;
-
         Front = Instantiate(Front, transform);
         Back = Instantiate(Back, transform);
         Front.localPosition = new Vector3(0, 0.8f, 0);
         Back.localPosition = new Vector3(0, 0.8f, 0);
-
-        //transform.GetComponent<NavMeshAgent>().speed = MovementSpeed / 4 * 3;
     }
 }

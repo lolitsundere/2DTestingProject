@@ -32,6 +32,7 @@ public class WorldManager : MonoBehaviour {
 
     private const int WorldWidth = 39;
     private const int WorldHeight = 39;
+    private int Level = 1;
 
     private readonly Vector2 Enter = new Vector2(5f, 33f);
     private readonly Vector2 Exit = new Vector2(33f, 5f);
@@ -92,6 +93,11 @@ public class WorldManager : MonoBehaviour {
         for (int i = 0; i<deadEnemy.Count; i++)
         {
             DestroyEnemy(deadEnemy[i]);
+            if (deadEnemy[i]==SelectedObject)
+            {
+                SelectedObject = null;
+                ClearUI();
+            }
         }
     }
 
@@ -113,11 +119,30 @@ public class WorldManager : MonoBehaviour {
                 {
                     SpawnEnemy();
                 }
+                if (SelectedObject!=null && SelectedObject.tag == "Enemy")
+                {
+                    ItemInfo1.text = String.Format("生命值:{0}/{1}", SelectedObject.GetComponent<EnemyController>().Health, SelectedObject.GetComponent<EnemyController>().MaxHealth);
+                    ItemInfo2.text = String.Format("护甲:{0}", SelectedObject.GetComponent<EnemyController>().Armor);
+                    ItemInfo3.text = String.Format("魔法抗性:{0}%", SelectedObject.GetComponent<EnemyController>().MagicResistance * 100);
+                    ItemInfo4.text = String.Format("移动速度:{0}", SelectedObject.GetComponent<EnemyController>().MovementSpeed);
+                }
                 if (CurrentEnemyAcount == EnemyPerLevel && EnemyDic.Count == 0)
                 {
                     CurrentPhase = Phase.ConstructingTower;
                     InfoMessage.text = "点击地板创建5个随机防御塔";
                     CurrentEnemyAcount = 0;
+
+                    foreach (int x in Enumerable.Range(0, WorldWidth))
+                    {
+                        foreach (int y in Enumerable.Range(0, WorldHeight))
+                        {
+                            if (IntMap[x, y] == 0)
+                            {
+                                FloorMap[x][y].transform.GetComponent<BoxCollider2D>().enabled = true;
+                            }
+                        }
+                    }
+                    Level++;
                 }
                 break;
         }
@@ -287,15 +312,36 @@ public class WorldManager : MonoBehaviour {
     {
         var enemy = Instantiate(NormalEnemy, transform.GetChild(1).GetChild(4).transform);
         enemy.transform.position = new Vector3(Enter.x, Enter.y, -1f);
+        enemy.GetComponent<ClickEventHandler>().ClickEvent += EnemyClickAction;
+        EnemyManager.SetEnemy(enemy.GetComponent<EnemyController>(), Level);
 
         var enemy3D = Instantiate(NormalEnemy3D, transform.GetChild(0).GetChild(1).transform);
         enemy3D.transform.position = new Vector3(Enter.x, 0.275f, Enter.y);
         var enemyNav = enemy3D.transform.GetComponent<NavMeshAgent>();
         enemyNav.Warp(new Vector3(Enter.x, 0.275f, Enter.y));
+        enemyNav.speed = enemy.GetComponent<EnemyController>().MovementSpeed/400*3;
         enemyNav.SetDestination(new Vector3(TurningPoint1.x, 0.275f, TurningPoint1.y));
 
         CurrentEnemyAcount++;
         EnemyDic.Add(enemy, enemy3D);
+    }
+
+    /// <summary>
+    /// 在鼠标点击敌人时触发
+    /// </summary>
+    /// <param name="obj"></param>
+    private void EnemyClickAction(GameObject obj)
+    {
+        SelectedObject = obj;
+        if (EnabledAttackRange != null)
+        {
+            EnabledAttackRange.enabled = false;
+        }
+        ClearUI();
+        ItemInfo1.text = String.Format("生命值:{0}/{1}", SelectedObject.GetComponent<EnemyController>().Health, SelectedObject.GetComponent<EnemyController>().MaxHealth);
+        ItemInfo2.text = String.Format("护甲:{0}", SelectedObject.GetComponent<EnemyController>().Armor);
+        ItemInfo3.text = String.Format("魔法抗性:{0}%", SelectedObject.GetComponent<EnemyController>().MagicResistance*100);
+        ItemInfo4.text = String.Format("移动速度:{0}", SelectedObject.GetComponent<EnemyController>().MovementSpeed);
     }
 
     /// <summary>
@@ -372,6 +418,10 @@ public class WorldManager : MonoBehaviour {
             IntMap[Convert.ToInt32(SelectedObject.transform.position.x), Convert.ToInt32(SelectedObject.transform.position.y)] = 0;
             Destroy(SelectedObject);
             ClearUI();
+
+            int length = GetMazeLength();
+            MazeLengthMessage.text = "迷宫长度:" + length;
+            MazeLengthMessage.color = Color.white;
         }
     }
 
@@ -503,10 +553,29 @@ public class WorldManager : MonoBehaviour {
             ItemInfo2.text = String.Format("攻击力:{0}", SelectedObject.GetComponent<TowerController>().PhysicalDamage);
             ItemInfo3.text = String.Format("基础攻击间隔:{0}s", SelectedObject.GetComponent<TowerController>().BasicAttackTime);
             ItemInfo4.text = String.Format("攻击速度:{0}", SelectedObject.GetComponent<TowerController>().AttackSpeed);
+
+
+            CurrentPhase = Phase.EnemySpawning;
             UpdateNavMesh();
             SpawnEnemy();
-            CurrentPhase = Phase.EnemySpawning;
             InfoMessage.text = "消灭敌人";
+            foreach (int x in Enumerable.Range(0,WorldWidth))
+            {
+                foreach (int y in Enumerable.Range(0,WorldHeight))
+                {
+                    FloorMap[x][y].transform.GetComponent<BoxCollider2D>().enabled = false;                    
+                }
+            }
+            FloorMap[5][33].transform.GetComponent<BoxCollider2D>().enabled = true;
+            FloorMap[33][5].transform.GetComponent<BoxCollider2D>().enabled = true;
+            FloorMap[5][19].transform.GetComponent<BoxCollider2D>().enabled = true;
+            FloorMap[33][19].transform.GetComponent<BoxCollider2D>().enabled = true;
+            FloorMap[33][33].transform.GetComponent<BoxCollider2D>().enabled = true;
+            FloorMap[19][33].transform.GetComponent<BoxCollider2D>().enabled = true;
+            FloorMap[19][5].transform.GetComponent<BoxCollider2D>().enabled = true;
+
+
+
         }
     }
 
