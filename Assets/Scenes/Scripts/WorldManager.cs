@@ -24,6 +24,10 @@ public class WorldManager : MonoBehaviour {
     public Button Button2;
     public Button Button3;
     public Button Button4;
+    public Text ItemInfo1;
+    public Text ItemInfo2;
+    public Text ItemInfo3;
+    public Text ItemInfo4;
 
 
     private const int WorldWidth = 39;
@@ -366,7 +370,7 @@ public class WorldManager : MonoBehaviour {
             InnerWallDic.Remove(SelectedObject);
             IntMap[Convert.ToInt32(SelectedObject.transform.position.x), Convert.ToInt32(SelectedObject.transform.position.y)] = 0;
             Destroy(SelectedObject);
-            ClearButtoms();
+            ClearUI();
         }
     }
 
@@ -405,7 +409,7 @@ public class WorldManager : MonoBehaviour {
         tower.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         OneTurnTowerList.Add(tower);
 
-        TowerManager.SettingTower(tower.GetComponent<TowerController>(), TowerCombiningManager.GetTowerType(tower));
+        TowerManager.SettingTower(tower.GetComponent<TowerController>(), TowerManager.GetTowerType(tower));
 
         tower.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
 
@@ -426,10 +430,16 @@ public class WorldManager : MonoBehaviour {
         }
         EnabledAttackRange = SelectedObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
         EnabledAttackRange.enabled = true;
+
+        ClearUI();
+        ItemInfo1.text = TowerManager.GetTowerName(TowerManager.GetTowerType(SelectedObject));
+        ItemInfo2.text = String.Format("攻击力:{0}", SelectedObject.GetComponent<TowerController>().PhysicalDamage);
+        ItemInfo3.text = String.Format("基础攻击间隔:{0}s", SelectedObject.GetComponent<TowerController>().BasicAttackTime);
+        ItemInfo4.text = String.Format("攻击速度:{0}", SelectedObject.GetComponent<TowerController>().AttackSpeed);
+
         switch (CurrentPhase)
         {
             case Phase.SecetingTower:
-                ClearButtoms();
                 var updateTowers = TowerCombiningManager.GetCombinableTowers(OneTurnTowerList,true);
                 if (OneTurnTowerList.Contains(SelectedObject))
                 { 
@@ -440,7 +450,7 @@ public class WorldManager : MonoBehaviour {
 
                     if (updateTowers.ContainsKey(SelectedObject))
                     {
-                        foreach (TowerCombiningManager.TowerType tt in updateTowers[SelectedObject])
+                        foreach (TowerManager.TowerType tt in updateTowers[SelectedObject])
                         {
                             if (TowerCombiningManager.CanUpgrade(SelectedObject,tt))
                             {
@@ -461,11 +471,9 @@ public class WorldManager : MonoBehaviour {
                 }
                 else
                 {
-                    ClearButtoms();
                 }
                 break;
             default:
-                ClearButtoms();
                 break;
         }
     }
@@ -490,7 +498,11 @@ public class WorldManager : MonoBehaviour {
             }
 
             OneTurnTowerList = new List<GameObject>();
-            ClearButtoms();
+            ClearUI();
+            ItemInfo1.text = TowerManager.GetTowerName(TowerManager.GetTowerType(SelectedObject));
+            ItemInfo2.text = String.Format("攻击力:{0}", SelectedObject.GetComponent<TowerController>().PhysicalDamage);
+            ItemInfo3.text = String.Format("基础攻击间隔:{0}s", SelectedObject.GetComponent<TowerController>().BasicAttackTime);
+            ItemInfo4.text = String.Format("攻击速度:{0}", SelectedObject.GetComponent<TowerController>().AttackSpeed);
             UpdateNavMesh();
             SpawnEnemy();
             CurrentPhase = Phase.EnemySpawning;
@@ -506,7 +518,7 @@ public class WorldManager : MonoBehaviour {
         if (SelectedObject != null && SelectedObject.tag == "Tower")
         {
             SelectedObject.transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
-            TowerManager.SettingTower(SelectedObject.GetComponent<TowerController>(), TowerCombiningManager.GetTowerType(SelectedObject));
+            TowerManager.SettingTower(SelectedObject.GetComponent<TowerController>(), TowerManager.GetTowerType(SelectedObject));
             RemainSelectedTower();
         }
     }
@@ -519,16 +531,16 @@ public class WorldManager : MonoBehaviour {
         if (SelectedObject != null && SelectedObject.tag == "Tower")
         {
             SelectedObject.transform.localScale += new Vector3(0.2f, 0.2f, 0.2f);
-            TowerManager.SettingTower(SelectedObject.GetComponent<TowerController>(), TowerCombiningManager.GetTowerType(SelectedObject));
+            TowerManager.SettingTower(SelectedObject.GetComponent<TowerController>(), TowerManager.GetTowerType(SelectedObject));
             RemainSelectedTower();
         }
     }
 
 
     /// <summary>
-    /// 重置按钮状态
+    /// 重置UI状态
     /// </summary>
-    private void ClearButtoms()
+    private void ClearUI()
     {
         Button1.image.color = new Color(0f,0f,0f,0f);
         Button1.onClick = new Button.ButtonClickedEvent();
@@ -545,6 +557,12 @@ public class WorldManager : MonoBehaviour {
         Button4.image.color = new Color(0f, 0f, 0f, 0f);
         Button4.onClick = new Button.ButtonClickedEvent();
         Button4.GetComponentInChildren<Text>().text = "";
+
+        ItemInfo1.text = "";
+        ItemInfo2.text = "";
+        ItemInfo3.text = "";
+        ItemInfo4.text = "";
+
     }
 
     /// <summary>
@@ -579,7 +597,7 @@ public class WorldManager : MonoBehaviour {
                 CreateRandomTower(SelectedObject.transform.position);
                 break;
             default:
-                ClearButtoms();
+                ClearUI();
                 break;
         }
     }
