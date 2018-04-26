@@ -463,7 +463,7 @@ public class WorldManager : MonoBehaviour {
         MazeLengthMessage.text = "迷宫长度:" + length;
         MazeLengthMessage.color = Color.white;
 
-        var tower = Instantiate(BasicTowerList[random.Next(3)], transform.GetChild(1).GetChild(5).transform);
+        var tower = Instantiate(BasicTowerList[random.Next(BasicTowerList.Count)], transform.GetChild(1).GetChild(5).transform);
         tower.transform.position = pos;
         tower.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         OneTurnTowerList.Add(tower);

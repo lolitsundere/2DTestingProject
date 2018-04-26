@@ -96,6 +96,8 @@ public class TowerController : MonoBehaviour
                     go.GetComponent<ColliderEventHandler>().EnemyStayEvent += EnemyIn;
                 }
             }
+
+            transform.GetChild(0).GetComponent<CircleCollider2D>().transform.localScale = new Vector3(1f / transform.localScale.x,1f/transform.localScale.y,1f/transform.localScale.z);
             attackRange = value;
         }
     }
