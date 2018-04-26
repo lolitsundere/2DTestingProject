@@ -26,6 +26,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n减少攻击目标的移动速度(减60移动速度,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.B2:
                 tower.AttackRange = 600;
@@ -36,6 +38,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n减少攻击目标的移动速度(减90移动速度,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.B3:
                 tower.AttackRange = 600;
@@ -46,6 +50,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n减少攻击目标的移动速度(减120移动速度,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.B4:
                 tower.AttackRange = 600;
@@ -56,6 +62,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n减少攻击目标的移动速度(减150移动速度,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.B5:
                 tower.AttackRange = 600;
@@ -66,6 +74,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:减少攻击目标的移动速度(减180移动速度,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.B6:
                 tower.AttackRange = 600;
@@ -76,6 +86,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n减少攻击目标的移动速度(减480移动速度,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.D1:
                 tower.AttackRange = 500;
@@ -86,6 +98,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n高攻击";
                 break;
             case TowerType.D2:
                 tower.AttackRange = 500;
@@ -96,6 +110,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n高攻击";
                 break;
             case TowerType.D3:
                 tower.AttackRange = 500;
@@ -106,6 +122,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n高攻击";
                 break;
             case TowerType.D4:
                 tower.AttackRange = 500;
@@ -116,6 +134,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n高攻击";
                 break;
             case TowerType.D5:
                 tower.AttackRange = 500;
@@ -126,6 +146,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n高攻击";
                 break;
             case TowerType.D6:
                 tower.AttackRange = 500;
@@ -136,6 +158,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n高攻击";
                 break;
             case TowerType.E1:
                 tower.AttackRange = 500;
@@ -146,6 +170,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect20;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加20)\n同种效果不可叠加";
                 break;
             case TowerType.E2:
                 tower.AttackRange = 500;
@@ -156,6 +182,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect30;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加30)\n同种效果不可叠加";
                 break;
             case TowerType.E3:
                 tower.AttackRange = 500;
@@ -166,6 +194,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect40;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加40)\n同种效果不可叠加";
                 break;
             case TowerType.E4:
                 tower.AttackRange = 500;
@@ -176,6 +206,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect50;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加50)\n同种效果不可叠加";
                 break;
             case TowerType.E5:
                 tower.AttackRange = 500;
@@ -186,6 +218,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect60;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加60)\n同种效果不可叠加";
                 break;
             case TowerType.E6:
                 tower.AttackRange = 500;
@@ -196,6 +230,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect70;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加70)\n同种效果不可叠加";
                 break;
             case TowerType.G1:
                 tower.AttackRange = 500;
@@ -206,6 +242,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect1;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒1点魔法伤害)\n同种效果不可叠加";
                 break;
             case TowerType.G2:
                 tower.AttackRange = 500;
@@ -216,6 +254,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect2;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒2点魔法伤害)\n同种效果不可叠加";
                 break;
             case TowerType.G3:
                 tower.AttackRange = 500;
@@ -226,6 +266,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect4;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒4点魔法伤害)\n同种效果不可叠加";
                 break;
             case TowerType.G4:
                 tower.AttackRange = 500;
@@ -236,6 +278,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect8;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒8点魔法伤害)\n同种效果不可叠加";
                 break;
             case TowerType.G5:
                 tower.AttackRange = 500;
@@ -246,6 +290,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect16;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒16点魔法伤害)\n同种效果不可叠加";
                 break;
             case TowerType.G6:
                 tower.AttackRange = 500;
@@ -256,6 +302,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect64;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒64点魔法伤害)\n同种效果不可叠加";
                 break;
             case TowerType.P1:
                 tower.AttackRange = 500;
@@ -266,6 +314,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect1;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n减少攻击目标的护甲值(减1点护甲,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.P2:
                 tower.AttackRange = 500;
@@ -276,6 +326,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect2;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n减少攻击目标的护甲值(减2点护甲,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.P3:
                 tower.AttackRange = 500;
@@ -286,6 +338,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect4;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n减少攻击目标的护甲值(减4点护甲,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.P4:
                 tower.AttackRange = 500;
@@ -296,6 +350,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect8;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n减少攻击目标的护甲值(减8点护甲,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.P5:
                 tower.AttackRange = 500;
@@ -306,6 +362,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect16;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n减少攻击目标的护甲值(减16点护甲,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.P6:
                 tower.AttackRange = 500;
@@ -316,6 +374,8 @@ public class TowerManager : MonoBehaviour
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect64;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n减少攻击目标的护甲值(减64点护甲,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.Q1:
                 tower.AttackRange = 400;
@@ -325,6 +385,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n高攻击速度";
                 break;
             case TowerType.Q2:
                 tower.AttackRange = 400;
@@ -334,6 +396,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n高攻击速度";
                 break;
             case TowerType.Q3:
                 tower.AttackRange = 400;
@@ -343,6 +407,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n高攻击速度";
                 break;
             case TowerType.Q4:
                 tower.AttackRange = 400;
@@ -352,6 +418,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n高攻击速度";
                 break;
             case TowerType.Q5:
                 tower.AttackRange = 400;
@@ -361,6 +429,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n高攻击速度";
                 break;
             case TowerType.Q6:
                 tower.AttackRange = 500;
@@ -370,6 +440,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n高攻击速度";
                 break;
             case TowerType.R1:
                 tower.AttackRange = 500;
@@ -379,6 +451,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect1;
+                tower.TowerDescription = "防御塔特性:\n分裂攻击(3格内敌人受到主攻击目标所受30%的伤害)";
                 break;
             case TowerType.R2:
                 tower.AttackRange = 500;
@@ -388,6 +462,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect2;
+                tower.TowerDescription = "防御塔特性:\n分裂攻击(3.5格内敌人受到主攻击目标所受40%的伤害)";
                 break;
             case TowerType.R3:
                 tower.AttackRange = 500;
@@ -397,6 +473,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect3;
+                tower.TowerDescription = "防御塔特性:\n分裂攻击(4格内敌人受到主攻击目标所受50%的伤害)";
                 break;
             case TowerType.R4:
                 tower.AttackRange = 500;
@@ -406,6 +484,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect4;
+                tower.TowerDescription = "防御塔特性:\n分裂攻击(4.5格内敌人受到主攻击目标所受60%的伤害)";
                 break;
             case TowerType.R5:
                 tower.AttackRange = 500;
@@ -415,6 +495,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect5;
+                tower.TowerDescription = "防御塔特性:\n分裂攻击(5格内敌人受到主攻击目标所受70%的伤害)";
                 break;
             case TowerType.R6:
                 tower.AttackRange = 500;
@@ -424,6 +506,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect6;
+                tower.TowerDescription = "防御塔特性:\n分裂攻击(7格内敌人受到主攻击目标所受100%的伤害)";
                 break;
             case TowerType.Y1:
                 tower.AttackRange = 500;
@@ -433,6 +517,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击3个目标)";
                 break;
             case TowerType.Y2:
                 tower.AttackRange = 500;
@@ -442,6 +528,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击3个目标)";
                 break;
             case TowerType.Y3:
                 tower.AttackRange = 500;
@@ -451,6 +539,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击3个目标)";
                 break;
             case TowerType.Y4:
                 tower.AttackRange = 500;
@@ -460,6 +550,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击3个目标)";
                 break;
             case TowerType.Y5:
                 tower.AttackRange = 500;
@@ -469,6 +561,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击3个目标)";
                 break;
             case TowerType.Y6:
                 tower.AttackRange = 5000;
@@ -478,6 +572,8 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect0;
+                tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击3个目标)";
                 break;
         }
     }
@@ -736,6 +832,11 @@ public class TowerManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 输出输入物体的名字
+    /// </summary>
+    /// <param name="tt"></param>
+    /// <returns></returns>
     public static string GetTowerName(TowerType tt)
     {
         switch (tt)

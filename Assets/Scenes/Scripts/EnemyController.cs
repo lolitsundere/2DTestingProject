@@ -51,23 +51,13 @@ public class EnemyController : MonoBehaviour
     private double attackArmorReduce16Timer;
     private double attackArmorReduce64Timer;
 
+
+    /// <summary>
+    /// 受到物理攻击
+    /// </summary>
+    /// <param name="tower"></param>
     public void TakeTowerAttack(TowerController tower)
     {
-        /*       switch (damageType)
-               {
-                   case TowerController.DamageType.Physical:
-                       var damage = (1 - (0.05 * Armor / (1 + 0.05 * Mathf.Abs(Armor)))) * damageAmount;
-                       Health -= Convert.ToInt32(damage);
-                       break;
-                   case TowerController.DamageType.Magic:
-                       damage = (1 - MagicResistance) * damageAmount;
-                       Health -= Convert.ToInt32(damage);
-                       break;
-                   case TowerController.DamageType.Pure:
-                       Health -= damageAmount;
-                       break;
-               }*/
-
         switch(tower.AtkSlowEffect)
         {
             case TowerController.AttackSlowEffect.SlowEffect60:
@@ -185,9 +175,82 @@ public class EnemyController : MonoBehaviour
         double damage = Mathf.Round((1 - (0.05f * Armor / (1 + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage);
         Health -= Convert.ToInt32(damage);
 
+        switch (tower.AtkSplashEffect)
+        {
+            case TowerController.AttackSplashEffect.SplashEffect1:
+                var enemyNear = Physics2D.OverlapCircleAll(transform.position, 3, LayerMask.GetMask("Enemy"));
+                foreach (Collider2D enemy in enemyNear)
+                {
+                    if (enemy.gameObject != transform.gameObject)
+                    {
+                        enemy.GetComponent<EnemyController>().TakePureDamage(Convert.ToInt32(Mathf.Round((1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage * 0.3f)));
+                    }
+                }
+                break;
+
+            case TowerController.AttackSplashEffect.SplashEffect2:
+                enemyNear = Physics2D.OverlapCircleAll(transform.position, 3.5f, LayerMask.GetMask("Enemy"));
+                foreach (Collider2D enemy in enemyNear)
+                {
+                    if (enemy.gameObject != transform.gameObject)
+                    {
+                        enemy.GetComponent<EnemyController>().TakePureDamage(Convert.ToInt32(Mathf.Round((1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage * 0.4f)));
+                    }
+                }
+                break;
+
+            case TowerController.AttackSplashEffect.SplashEffect3:
+                enemyNear = Physics2D.OverlapCircleAll(transform.position, 4, LayerMask.GetMask("Enemy"));
+                foreach (Collider2D enemy in enemyNear)
+                {
+                    if (enemy.gameObject != transform.gameObject)
+                    {
+                        enemy.GetComponent<EnemyController>().TakePureDamage(Convert.ToInt32(Mathf.Round((1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage * 0.5f)));
+                    }
+                }
+                break;
+
+            case TowerController.AttackSplashEffect.SplashEffect4:
+                enemyNear = Physics2D.OverlapCircleAll(transform.position, 4.5f, LayerMask.GetMask("Enemy"));
+                foreach (Collider2D enemy in enemyNear)
+                {
+                    if (enemy.gameObject != transform.gameObject)
+                    {
+                        enemy.GetComponent<EnemyController>().TakePureDamage(Convert.ToInt32(Mathf.Round((1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage * 0.6f)));
+                    }
+                }
+                break;
+
+            case TowerController.AttackSplashEffect.SplashEffect5:
+                enemyNear = Physics2D.OverlapCircleAll(transform.position, 5, LayerMask.GetMask("Enemy"));
+                foreach (Collider2D enemy in enemyNear)
+                {
+                    if (enemy.gameObject != transform.gameObject)
+                    {
+                        enemy.GetComponent<EnemyController>().TakePureDamage(Convert.ToInt32(Mathf.Round((1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage * 0.7f)));
+                    }
+                }
+                break;
+
+            case TowerController.AttackSplashEffect.SplashEffect6:
+                enemyNear = Physics2D.OverlapCircleAll(transform.position, 7, LayerMask.GetMask("Enemy"));
+                foreach (Collider2D enemy in enemyNear)
+                {
+                    if (enemy.gameObject != transform.gameObject)
+                    {
+                        enemy.GetComponent<EnemyController>().TakePureDamage(Convert.ToInt32(Mathf.Round((1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage)));
+                    }
+                }
+                break;
+        }
+
         HealthBarChange();
     }
 
+    /// <summary>
+    /// 受到魔法伤害
+    /// </summary>
+    /// <param name="damageAmount"></param>
     public void TakeMagicDamage(int damageAmount)
     {
         double damage = Mathf.Round((1 - MagicResistance) * damageAmount);
@@ -196,6 +259,19 @@ public class EnemyController : MonoBehaviour
         HealthBarChange();
     }
 
+    /// <summary>
+    /// 受到纯粹伤害
+    /// </summary>
+    /// <param name="damageAmount"></param>
+    public void TakePureDamage(int damageAmount)
+    {
+        Health -= damageAmount;
+        HealthBarChange();
+    }
+
+    /// <summary>
+    /// 改变血条
+    /// </summary>
     private void HealthBarChange()
     {
         if (Health > 0)
@@ -226,6 +302,9 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 根据状态改变颜色
+    /// </summary>
     private void CheckColor()
     {
         bool isSlowed = attackSlow60Timer != 0 || attackSlow90Timer != 0 || attackSlow120Timer != 0 || attackSlow150Timer != 0 || attackSlow180Timer != 0 || attackSlow480Timer != 0;
@@ -267,6 +346,9 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 更新中毒状态
+    /// </summary>
     private void CheckPoisonState()
     {
         if (poison1Timer > 0)
@@ -348,6 +430,9 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 更新减速状态
+    /// </summary>
     private void CheckSlowState()
     {
         if (attackSlow60Timer > 0)
@@ -411,6 +496,9 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 更新减甲状态
+    /// </summary>
     private void CheckArmorReduceState()
     {
         if (attackArmorReduce1Timer > 0)

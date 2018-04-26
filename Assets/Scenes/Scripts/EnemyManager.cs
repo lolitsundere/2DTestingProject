@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    /// <summary>
+    /// 根据当前关数给敌人赋值
+    /// </summary>
+    /// <param name="enemy"></param>
+    /// <param name="level"></param>
     public static void SetEnemy(EnemyController enemy, int level)
     {
         switch (level)

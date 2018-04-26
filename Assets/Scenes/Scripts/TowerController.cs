@@ -10,7 +10,7 @@ public class TowerController : MonoBehaviour
     public enum AttackSpeedAccelerateEffect { AccelerateEffect0, AccelerateEffect20, AccelerateEffect30, AccelerateEffect40, AccelerateEffect50, AccelerateEffect60, AccelerateEffect70 };
     public enum AttackPoisonEffect { PoisonEffect0, PoisonEffect1, PoisonEffect2, PoisonEffect4, PoisonEffect8, PoisonEffect16, PoisonEffect64};
     public enum AttackArmorReduceEffect { ArmorReduceEffect0, ArmorReduceEffect1, ArmorReduceEffect2, ArmorReduceEffect4, ArmorReduceEffect8, ArmorReduceEffect16, ArmorReduceEffect64 };
-
+    public enum AttackSplashEffect { SplashEffect0 , SplashEffect1, SplashEffect2, SplashEffect3,SplashEffect4,SplashEffect5, SplashEffect6};
 
 
     private double attackSpeed;
@@ -106,10 +106,13 @@ public class TowerController : MonoBehaviour
     }
     public int MaxTargetAmount;
 
+    public String TowerDescription;
+
     public AttackSlowEffect AtkSlowEffect;
     public AttackPoisonEffect AtkPoisonEffect;
     public AttackSpeedAccelerateEffect AccelerateEffect;
     public AttackArmorReduceEffect AtkArmorReduceEffect;
+    public AttackSplashEffect AtkSplashEffect;
 
     private List<GameObject> AttackTargets;
     private float time;

@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class ClickEventHandler : MonoBehaviour
 {
+    /// <summary>
+    /// 在鼠标点击时触发
+    /// </summary>
     public event Action<GameObject> ClickEvent;
 
     public GameObject Highlight;

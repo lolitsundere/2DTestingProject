@@ -28,6 +28,7 @@ public class WorldManager : MonoBehaviour {
     public Text ItemInfo2;
     public Text ItemInfo3;
     public Text ItemInfo4;
+    public Text ItemDescription;
 
 
     private const int WorldWidth = 39;
@@ -109,6 +110,7 @@ public class WorldManager : MonoBehaviour {
             ItemInfo2.text = String.Format("攻击力:{0}", SelectedObject.GetComponent<TowerController>().PhysicalDamage);
             ItemInfo3.text = String.Format("基础攻击间隔:{0}s", SelectedObject.GetComponent<TowerController>().BasicAttackTime);
             ItemInfo4.text = String.Format("攻击速度:{0}", SelectedObject.GetComponent<TowerController>().AttackSpeed);
+            ItemDescription.text = SelectedObject.GetComponent<TowerController>().TowerDescription;
         }
         switch (CurrentPhase)
         {
@@ -494,6 +496,7 @@ public class WorldManager : MonoBehaviour {
         ItemInfo2.text = String.Format("攻击力:{0}", SelectedObject.GetComponent<TowerController>().PhysicalDamage);
         ItemInfo3.text = String.Format("基础攻击间隔:{0}s", SelectedObject.GetComponent<TowerController>().BasicAttackTime);
         ItemInfo4.text = String.Format("攻击速度:{0}", SelectedObject.GetComponent<TowerController>().AttackSpeed);
+        ItemDescription.text = SelectedObject.GetComponent<TowerController>().TowerDescription;
 
         switch (CurrentPhase)
         {
