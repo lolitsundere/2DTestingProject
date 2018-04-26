@@ -37,6 +37,13 @@ public class EnemyController : MonoBehaviour
     private double attackSlow180Timer;
     private double attackSlow480Timer;
 
+    private double poison1Timer;
+    private double poison2Timer;
+    private double poison4Timer;
+    private double poison8Timer;
+    private double poison16Timer;
+    private double poison64Timer;
+
     public void TakeTowerAttack(TowerController tower)
     {
         /*       switch (damageType)
@@ -53,16 +60,15 @@ public class EnemyController : MonoBehaviour
                        Health -= damageAmount;
                        break;
                }*/
-        var damage = (1 - (0.05 * Armor / (1 + 0.05 * Mathf.Abs(Armor)))) * tower.PhysicalDamage;
+        double damage = Mathf.Round((1 - (0.05f * Armor / (1 + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage);
         Health -= Convert.ToInt32(damage);
 
-        switch(tower.attackSlowEffect)
+        switch(tower.AtkSlowEffect)
         {
             case TowerController.AttackSlowEffect.SlowEffect60:
                 if (attackSlow60Timer == 0)
                 {
                     MovementSpeed -= 60;
-                    transform.GetComponent<SpriteRenderer>().color = new Color(71f / 255f, 133f / 133f, 1f);
                 }
                 attackSlow60Timer = 2f;
                 break;
@@ -70,7 +76,6 @@ public class EnemyController : MonoBehaviour
                 if (attackSlow90Timer == 0)
                 {
                     MovementSpeed -= 90;
-                    transform.GetComponent<SpriteRenderer>().color = new Color(71f / 255f, 133f / 133f, 1f);
                 }
                 attackSlow90Timer = 2f;
                 break;
@@ -78,7 +83,6 @@ public class EnemyController : MonoBehaviour
                 if (attackSlow120Timer == 0)
                 {
                     MovementSpeed -= 120;
-                    transform.GetComponent<SpriteRenderer>().color = new Color(71f / 255f, 133f / 133f, 1f);
                 }
                 attackSlow120Timer = 2f;
                 break;
@@ -86,7 +90,6 @@ public class EnemyController : MonoBehaviour
                 if (attackSlow150Timer == 0)
                 {
                     MovementSpeed -= 150;
-                    transform.GetComponent<SpriteRenderer>().color = new Color(71f / 255f, 133f / 133f, 1f);
                 }
                 attackSlow150Timer = 2f;
                 break;
@@ -94,7 +97,6 @@ public class EnemyController : MonoBehaviour
                 if (attackSlow180Timer == 0)
                 {
                     MovementSpeed -= 180;
-                    transform.GetComponent<SpriteRenderer>().color = new Color(71f / 255f, 133f / 133f, 1f);
                 }
                 attackSlow180Timer = 2f;
                 break;
@@ -102,16 +104,51 @@ public class EnemyController : MonoBehaviour
                 if (attackSlow480Timer == 0)
                 {
                     MovementSpeed -= 480;
-                    transform.GetComponent<SpriteRenderer>().color = new Color(71f / 255f, 133f / 133f, 1f);
                 }
                 attackSlow480Timer = 2f;
                 break;
         }
 
+        switch (tower.AtkPoisonEffect)
+        {
+            case TowerController.AttackPoisonEffect.PoisonEffect1:
+                poison1Timer = 5.1f;
+                break;
+            case TowerController.AttackPoisonEffect.PoisonEffect2:
+                poison2Timer = 5.1f;
+                break;
+            case TowerController.AttackPoisonEffect.PoisonEffect4:
+                poison4Timer = 5.1f;
+                break;
+            case TowerController.AttackPoisonEffect.PoisonEffect8:
+                poison8Timer = 5.1f;
+                break;
+            case TowerController.AttackPoisonEffect.PoisonEffect16:
+                poison16Timer = 5.1f;
+                break;
+            case TowerController.AttackPoisonEffect.PoisonEffect64:
+                poison64Timer = 5.1f;
+                break;
+        }
+
+
+        HealthBarChange();
+    }
+
+    public void TakeMagicDamage(int damageAmount)
+    {
+        double damage = Mathf.Round((1 - MagicResistance) * damageAmount);
+        Health -= Convert.ToInt32(damage);
+
+        HealthBarChange();
+    }
+
+    private void HealthBarChange()
+    {
         if (Health > 0)
         {
             Front.localScale = new Vector3(0.55f * Health / MaxHealth, 0.07f, 1f);
-            Front.localPosition = new Vector3(-((0.55f-Front.localScale.x)*3.2f)/2f, 0.8f, 0f);
+            Front.localPosition = new Vector3(-((0.55f - Front.localScale.x) * 3.2f) / 2f, 0.8f, 0f);
         }
     }
 
@@ -126,10 +163,115 @@ public class EnemyController : MonoBehaviour
     private void Update()
     {
         CheckSlowState();
+        CheckPoisonState();
+        CheckColor();
 
         if (MovementSpeed <100)
         {
             MovementSpeed = 100;
+        }
+    }
+
+    private void CheckColor()
+    {
+
+        if ((attackSlow60Timer != 0 || attackSlow90Timer != 0 || attackSlow120Timer != 0 || attackSlow150Timer != 0 || attackSlow180Timer != 0 || attackSlow480Timer != 0) 
+            && (poison1Timer != 0 || poison2Timer != 0 || poison4Timer != 0 || poison8Timer != 0 || poison16Timer != 0 || poison64Timer != 0))
+        {
+            transform.GetComponent<SpriteRenderer>().color = new Color(5f / 255f, 171f / 255f, 150f/255f);
+        }
+        else if (attackSlow60Timer != 0 || attackSlow90Timer != 0 || attackSlow120Timer != 0 || attackSlow150Timer != 0 || attackSlow180Timer != 0 || attackSlow480Timer != 0)
+        {
+            transform.GetComponent<SpriteRenderer>().color = new Color(71f / 255f, 1f, 1f);
+        }
+        else if (poison1Timer != 0 || poison2Timer != 0 || poison4Timer != 0 || poison8Timer != 0 || poison16Timer != 0 || poison64Timer != 0)
+        {
+            transform.GetComponent<SpriteRenderer>().color = new Color(118/ 255f, 1f, 101f / 255f);
+        }
+        else
+        {
+            transform.GetComponent<SpriteRenderer>().color = Color.white;
+        }
+    }
+
+    private void CheckPoisonState()
+    {
+        if (poison1Timer > 0)
+        {
+            poison1Timer -= Time.deltaTime;
+            if (Convert.ToInt32(poison1Timer*100)%100 == 0)
+            {
+                TakeMagicDamage(1);
+            }
+            if (poison1Timer <= 0)
+            {
+                poison1Timer = 0;
+            }
+        }
+
+        if (poison2Timer > 0)
+        {
+            poison2Timer -= Time.deltaTime;
+            if (Convert.ToInt32(poison2Timer * 100) % 100 == 0)
+            {
+                TakeMagicDamage(2);
+            }
+            if (poison2Timer <= 0)
+            {
+                poison2Timer = 0;
+            }
+        }
+
+        if (poison4Timer > 0)
+        {
+            poison4Timer -= Time.deltaTime;
+            if (Convert.ToInt32(poison4Timer * 100) % 100 == 0)
+            {
+                TakeMagicDamage(4);
+            }
+            if (poison4Timer <= 0)
+            {
+                poison4Timer = 0;
+            }
+        }
+
+        if (poison8Timer > 0)
+        {
+            poison8Timer -= Time.deltaTime;
+            if (Convert.ToInt32(poison8Timer * 100) % 100 == 0)
+            {
+                TakeMagicDamage(8);
+            }
+            if (poison8Timer <= 0)
+            {
+                poison8Timer = 0;
+            }
+        }
+
+        if (poison16Timer > 0)
+        {
+            poison16Timer -= Time.deltaTime;
+            if (Convert.ToInt32(poison16Timer * 100) % 100 == 0)
+            {
+                TakeMagicDamage(16);
+            }
+            if (poison16Timer <= 0)
+            {
+                poison16Timer = 0;
+            }
+        }
+
+        if (poison64Timer > 0)
+        {
+            poison64Timer -= Time.deltaTime;
+            if (Convert.ToInt32(poison64Timer * 100) % 100 == 0)
+            {
+                TakeMagicDamage(64);
+            }
+            if (poison64Timer <= 0)
+            {
+                poison64Timer = 0;
+            }
         }
     }
 
@@ -193,11 +335,6 @@ public class EnemyController : MonoBehaviour
                 attackSlow480Timer = 0;
                 MovementSpeed += 480;
             }
-        }
-
-        if (attackSlow60Timer == 0 && attackSlow90Timer == 0 && attackSlow120Timer == 0 && attackSlow150Timer == 0 && attackSlow180Timer == 0 && attackSlow480Timer == 0)
-        {
-            transform.GetComponent<SpriteRenderer>().color = Color.white;
         }
     }
 }

@@ -22,384 +22,432 @@ public class TowerManager : MonoBehaviour
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 2;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect60;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect60;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.B2:
                 tower.AttackRange = 600;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 4;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect90;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect90;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.B3:
                 tower.AttackRange = 600;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 6;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect120;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect120;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.B4:
                 tower.AttackRange = 600;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 8;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect150;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect150;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.B5:
                 tower.AttackRange = 600;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 10;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect180;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect180;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.B6:
                 tower.AttackRange = 600;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 36;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect480;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect480;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.D1:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 5;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.D2:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 10;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.D3:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 20;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.D4:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 40;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.D5:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 80;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.D6:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.7;
                 tower.PhysicalDamage = 460;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.E1:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 1;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect20;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.E2:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 2;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect30;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.E3:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 3;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect40;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.E4:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 4;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect50;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.E5:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 5;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect60;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.E6:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 6;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect70;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.G1:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 2;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect1;
                 break;
             case TowerType.G2:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 4;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect2;
                 break;
             case TowerType.G3:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 6;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect4;
                 break;
             case TowerType.G4:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 8;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect8;
                 break;
             case TowerType.G5:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 10;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect16;
                 break;
             case TowerType.G6:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 12;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect64;
                 break;
             case TowerType.P1:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 2;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.P2:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 4;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.P3:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 6;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.P4:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 8;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.P5:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 10;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.P6:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 70;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.Q1:
                 tower.AttackRange = 400;
                 tower.BasicAttackSpeed = 300;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 2;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.Q2:
                 tower.AttackRange = 400;
                 tower.BasicAttackSpeed = 300;
                 tower.BasicAttackTime = 0.9;
                 tower.PhysicalDamage = 4;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.Q3:
                 tower.AttackRange = 400;
                 tower.BasicAttackSpeed = 300;
                 tower.BasicAttackTime = 0.8;
                 tower.PhysicalDamage = 8;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.Q4:
                 tower.AttackRange = 400;
                 tower.BasicAttackSpeed = 300;
                 tower.BasicAttackTime = 0.7;
                 tower.PhysicalDamage = 16;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.Q5:
                 tower.AttackRange = 400;
                 tower.BasicAttackSpeed = 300;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 24;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.Q6:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 300;
                 tower.BasicAttackTime = 0.5;
                 tower.PhysicalDamage = 80;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.R1:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 4;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.R2:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 8;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.R3:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 12;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.R4:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 24;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.R5:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 48;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.R6:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 150;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.Y1:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1.3;
                 tower.PhysicalDamage = 3;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.Y2:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1.3;
                 tower.PhysicalDamage = 6;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.Y3:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1.3;
                 tower.PhysicalDamage = 9;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.Y4:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1.3;
                 tower.PhysicalDamage = 18;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.Y5:
                 tower.AttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1.3;
                 tower.PhysicalDamage = 36;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
             case TowerType.Y6:
                 tower.AttackRange = 5000;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 200;
-                tower.attackSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
                 break;
         }
     }
