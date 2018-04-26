@@ -21,7 +21,6 @@ public class ColliderEventHandler : MonoBehaviour
     public event Action<GameObject> EnemyStayEvent;
 
 
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Enemy")
@@ -39,7 +38,7 @@ public class ColliderEventHandler : MonoBehaviour
         {
             if (EnemyExitEvent != null)
             {
-                EnemyExitEvent(other.gameObject);
+                EnemyExitEvent(other.gameObject); 
             }
         }
     }
@@ -54,4 +53,5 @@ public class ColliderEventHandler : MonoBehaviour
             }
         }
     }
+    
 }

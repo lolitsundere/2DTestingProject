@@ -103,6 +103,13 @@ public class WorldManager : MonoBehaviour {
 
     private void Update()
     {
+        if (SelectedObject != null && SelectedObject.tag == "Tower")
+        {
+            ItemInfo1.text = TowerManager.GetTowerName(TowerManager.GetTowerType(SelectedObject));
+            ItemInfo2.text = String.Format("攻击力:{0}", SelectedObject.GetComponent<TowerController>().PhysicalDamage);
+            ItemInfo3.text = String.Format("基础攻击间隔:{0}s", SelectedObject.GetComponent<TowerController>().BasicAttackTime);
+            ItemInfo4.text = String.Format("攻击速度:{0}", SelectedObject.GetComponent<TowerController>().AttackSpeed);
+        }
         switch (CurrentPhase)
         {
             case (Phase.ConstructingTower):
@@ -456,7 +463,7 @@ public class WorldManager : MonoBehaviour {
         MazeLengthMessage.text = "迷宫长度:" + length;
         MazeLengthMessage.color = Color.white;
 
-        var tower = Instantiate(BasicTowerList[random.Next(BasicTowerList.Count)], transform.GetChild(1).GetChild(5).transform);
+        var tower = Instantiate(BasicTowerList[random.Next(3)], transform.GetChild(1).GetChild(5).transform);
         tower.transform.position = pos;
         tower.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         OneTurnTowerList.Add(tower);
