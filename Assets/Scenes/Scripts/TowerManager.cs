@@ -25,6 +25,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect60;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.B2:
                 tower.AttackRange = 600;
@@ -34,6 +35,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect90;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.B3:
                 tower.AttackRange = 600;
@@ -43,6 +45,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect120;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.B4:
                 tower.AttackRange = 600;
@@ -52,6 +55,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect150;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.B5:
                 tower.AttackRange = 600;
@@ -61,6 +65,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect180;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.B6:
                 tower.AttackRange = 600;
@@ -70,6 +75,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect480;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.D1:
                 tower.AttackRange = 500;
@@ -79,6 +85,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.D2:
                 tower.AttackRange = 500;
@@ -88,6 +95,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.D3:
                 tower.AttackRange = 500;
@@ -97,6 +105,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.D4:
                 tower.AttackRange = 500;
@@ -106,6 +115,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.D5:
                 tower.AttackRange = 500;
@@ -115,6 +125,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.D6:
                 tower.AttackRange = 500;
@@ -124,6 +135,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.E1:
                 tower.AttackRange = 500;
@@ -133,6 +145,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect20;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.E2:
                 tower.AttackRange = 500;
@@ -142,6 +155,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect30;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.E3:
                 tower.AttackRange = 500;
@@ -151,6 +165,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect40;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.E4:
                 tower.AttackRange = 500;
@@ -160,6 +175,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect50;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.E5:
                 tower.AttackRange = 500;
@@ -169,6 +185,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect60;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.E6:
                 tower.AttackRange = 500;
@@ -178,6 +195,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect70;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.G1:
                 tower.AttackRange = 500;
@@ -187,6 +205,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect1;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.G2:
                 tower.AttackRange = 500;
@@ -196,6 +215,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect2;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.G3:
                 tower.AttackRange = 500;
@@ -205,6 +225,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect4;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.G4:
                 tower.AttackRange = 500;
@@ -214,6 +235,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect8;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.G5:
                 tower.AttackRange = 500;
@@ -223,6 +245,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect16;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.G6:
                 tower.AttackRange = 500;
@@ -232,6 +255,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect64;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect0;
                 break;
             case TowerType.P1:
                 tower.AttackRange = 500;
@@ -241,6 +265,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect1;
                 break;
             case TowerType.P2:
                 tower.AttackRange = 500;
@@ -250,6 +275,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect2;
                 break;
             case TowerType.P3:
                 tower.AttackRange = 500;
@@ -259,6 +285,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect4;
                 break;
             case TowerType.P4:
                 tower.AttackRange = 500;
@@ -268,6 +295,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect8;
                 break;
             case TowerType.P5:
                 tower.AttackRange = 500;
@@ -277,6 +305,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect16;
                 break;
             case TowerType.P6:
                 tower.AttackRange = 500;
@@ -286,6 +315,7 @@ public class TowerManager : MonoBehaviour
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect0;
                 tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect0;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect0;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect64;
                 break;
             case TowerType.Q1:
                 tower.AttackRange = 400;

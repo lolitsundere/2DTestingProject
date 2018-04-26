@@ -44,7 +44,7 @@ public class WorldManager : MonoBehaviour {
 
     private GameObject SelectedObject;
 
-    private const int EnemyPerLevel = 10;
+    private const int EnemyPerLevel = 5;
     private int CurrentEnemyAcount = 0;
 
     private const int TowerPerTurn = 5;

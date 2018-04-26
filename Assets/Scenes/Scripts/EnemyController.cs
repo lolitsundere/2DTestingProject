@@ -44,6 +44,13 @@ public class EnemyController : MonoBehaviour
     private double poison16Timer;
     private double poison64Timer;
 
+    private double attackArmorReduce1Timer;
+    private double attackArmorReduce2Timer;
+    private double attackArmorReduce4Timer;
+    private double attackArmorReduce8Timer;
+    private double attackArmorReduce16Timer;
+    private double attackArmorReduce64Timer;
+
     public void TakeTowerAttack(TowerController tower)
     {
         /*       switch (damageType)
@@ -60,8 +67,6 @@ public class EnemyController : MonoBehaviour
                        Health -= damageAmount;
                        break;
                }*/
-        double damage = Mathf.Round((1 - (0.05f * Armor / (1 + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage);
-        Health -= Convert.ToInt32(damage);
 
         switch(tower.AtkSlowEffect)
         {
@@ -131,6 +136,54 @@ public class EnemyController : MonoBehaviour
                 break;
         }
 
+        switch (tower.AtkArmorReduceEffect)
+        {
+            case TowerController.AttackArmorReduceEffect.ArmorReduceEffect1:
+                if (attackArmorReduce1Timer == 0)
+                {
+                    Armor -= 1;
+                }
+                attackArmorReduce1Timer = 2f;
+                break;
+            case TowerController.AttackArmorReduceEffect.ArmorReduceEffect2:
+                if (attackArmorReduce2Timer == 0)
+                {
+                    Armor -= 2;
+                }
+                attackArmorReduce2Timer = 2f;
+                break;
+            case TowerController.AttackArmorReduceEffect.ArmorReduceEffect4:
+                if (attackArmorReduce4Timer == 0)
+                {
+                    Armor -= 4;
+                }
+                attackArmorReduce4Timer = 2f;
+                break;
+            case TowerController.AttackArmorReduceEffect.ArmorReduceEffect8:
+                if (attackArmorReduce8Timer == 0)
+                {
+                    Armor -= 8;
+                }
+                attackArmorReduce8Timer = 2f;
+                break;
+            case TowerController.AttackArmorReduceEffect.ArmorReduceEffect16:
+                if (attackArmorReduce16Timer == 0)
+                {
+                    Armor -= 16;
+                }
+                attackArmorReduce16Timer = 2f;
+                break;
+            case TowerController.AttackArmorReduceEffect.ArmorReduceEffect64:
+                if (attackArmorReduce64Timer == 0)
+                {
+                    Armor -= 64;
+                }
+                attackArmorReduce64Timer = 2f;
+                break;
+        }
+
+        double damage = Mathf.Round((1 - (0.05f * Armor / (1 + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage);
+        Health -= Convert.ToInt32(damage);
 
         HealthBarChange();
     }
@@ -164,6 +217,7 @@ public class EnemyController : MonoBehaviour
     {
         CheckSlowState();
         CheckPoisonState();
+        CheckArmorReduceState();
         CheckColor();
 
         if (MovementSpeed <100)
@@ -174,19 +228,38 @@ public class EnemyController : MonoBehaviour
 
     private void CheckColor()
     {
+        bool isSlowed = attackSlow60Timer != 0 || attackSlow90Timer != 0 || attackSlow120Timer != 0 || attackSlow150Timer != 0 || attackSlow180Timer != 0 || attackSlow480Timer != 0;
+        bool isPoisoned = poison1Timer != 0 || poison2Timer != 0 || poison4Timer != 0 || poison8Timer != 0 || poison16Timer != 0 || poison64Timer != 0;
+        bool isArmorReduced = attackArmorReduce1Timer != 0 || attackArmorReduce2Timer != 0 || attackArmorReduce4Timer != 0 || attackArmorReduce8Timer != 0 || attackArmorReduce16Timer != 0 || attackArmorReduce64Timer != 0;
 
-        if ((attackSlow60Timer != 0 || attackSlow90Timer != 0 || attackSlow120Timer != 0 || attackSlow150Timer != 0 || attackSlow180Timer != 0 || attackSlow480Timer != 0) 
-            && (poison1Timer != 0 || poison2Timer != 0 || poison4Timer != 0 || poison8Timer != 0 || poison16Timer != 0 || poison64Timer != 0))
+        if (isSlowed && isPoisoned && isArmorReduced)
         {
-            transform.GetComponent<SpriteRenderer>().color = new Color(5f / 255f, 171f / 255f, 150f/255f);
+            transform.GetComponent<SpriteRenderer>().color = new Color(25f / 255f, 25f / 255f, 25f/255f);
         }
-        else if (attackSlow60Timer != 0 || attackSlow90Timer != 0 || attackSlow120Timer != 0 || attackSlow150Timer != 0 || attackSlow180Timer != 0 || attackSlow480Timer != 0)
+        else if (isSlowed && isPoisoned)
+        {
+            transform.GetComponent<SpriteRenderer>().color = new Color(5f / 255f, 171f / 255f, 150f / 255f);
+        }
+        else if (isSlowed && isArmorReduced)
+        {
+            transform.GetComponent<SpriteRenderer>().color = new Color(96f / 255f, 94f / 255f, 191f / 255f);
+        }
+        else if (isPoisoned && isArmorReduced)
+        {
+            transform.GetComponent<SpriteRenderer>().color = new Color(104f / 255f, 116f / 255f, 72f / 255f);
+        }
+
+        else if (isSlowed)
         {
             transform.GetComponent<SpriteRenderer>().color = new Color(71f / 255f, 1f, 1f);
         }
-        else if (poison1Timer != 0 || poison2Timer != 0 || poison4Timer != 0 || poison8Timer != 0 || poison16Timer != 0 || poison64Timer != 0)
+        else if (isPoisoned)
         {
-            transform.GetComponent<SpriteRenderer>().color = new Color(118/ 255f, 1f, 101f / 255f);
+            transform.GetComponent<SpriteRenderer>().color = new Color(118f/ 255f, 1f, 101f / 255f);
+        }
+        else if (isArmorReduced)
+        {
+            transform.GetComponent<SpriteRenderer>().color = new Color(189f / 255f, 129f/255f, 212f / 255f);
         }
         else
         {
@@ -337,4 +410,68 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
+
+    private void CheckArmorReduceState()
+    {
+        if (attackArmorReduce1Timer > 0)
+        {
+            attackArmorReduce1Timer -= Time.deltaTime;
+            if (attackArmorReduce1Timer <= 0)
+            {
+                attackArmorReduce1Timer = 0;
+                Armor += 1;
+            }
+        }
+
+        if (attackArmorReduce2Timer > 0)
+        {
+            attackArmorReduce2Timer -= Time.deltaTime;
+            if (attackArmorReduce2Timer <= 0)
+            {
+                attackArmorReduce2Timer = 0;
+                Armor += 2;
+            }
+        }
+
+        if (attackArmorReduce4Timer > 0)
+        {
+            attackArmorReduce4Timer -= Time.deltaTime;
+            if (attackArmorReduce4Timer <= 0)
+            {
+                attackArmorReduce4Timer = 0;
+                Armor += 4;
+            }
+        }
+
+        if (attackArmorReduce8Timer > 0)
+        {
+            attackArmorReduce8Timer -= Time.deltaTime;
+            if (attackArmorReduce8Timer <= 0)
+            {
+                attackArmorReduce8Timer = 0;
+                Armor += 8;
+            }
+        }
+
+        if (attackArmorReduce16Timer > 0)
+        {
+            attackArmorReduce16Timer -= Time.deltaTime;
+            if (attackArmorReduce16Timer <= 0)
+            {
+                attackArmorReduce16Timer = 0;
+                Armor += 16;
+            }
+        }
+
+        if (attackArmorReduce64Timer > 0)
+        {
+            attackArmorReduce64Timer -= Time.deltaTime;
+            if (attackArmorReduce64Timer <= 0)
+            {
+                attackArmorReduce64Timer = 0;
+                Armor += 64;
+            }
+        }
+    }
+
 }
