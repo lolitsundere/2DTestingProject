@@ -227,6 +227,90 @@ public class TowerCombiningManager : MonoBehaviour {
             #endregion
         }
 
+        if (towerDic.ContainsKey(TowerManager.TowerType.B1) && towerDic.ContainsKey(TowerManager.TowerType.D1) && towerDic.ContainsKey(TowerManager.TowerType.Y1))
+        {
+            foreach (GameObject go in towerDic[TowerManager.TowerType.B1])
+            {
+                if (!result.ContainsKey(go))
+                {
+                    result.Add(go, new List<TowerManager.TowerType>());
+                }
+                result[go].Add(TowerManager.TowerType.Sliver);
+            }
+            foreach (GameObject go in towerDic[TowerManager.TowerType.D1])
+            {
+                if (!result.ContainsKey(go))
+                {
+                    result.Add(go, new List<TowerManager.TowerType>());
+                }
+                result[go].Add(TowerManager.TowerType.Sliver);
+            }
+            foreach (GameObject go in towerDic[TowerManager.TowerType.Y1])
+            {
+                if (!result.ContainsKey(go))
+                {
+                    result.Add(go, new List<TowerManager.TowerType>());
+                }
+                result[go].Add(TowerManager.TowerType.Sliver);
+            }
+        }
+
+        if (towerDic.ContainsKey(TowerManager.TowerType.G1) && towerDic.ContainsKey(TowerManager.TowerType.E1) && towerDic.ContainsKey(TowerManager.TowerType.Q1))
+        {
+            foreach (GameObject go in towerDic[TowerManager.TowerType.G1])
+            {
+                if (!result.ContainsKey(go))
+                {
+                    result.Add(go, new List<TowerManager.TowerType>());
+                }
+                result[go].Add(TowerManager.TowerType.Malachite);
+            }
+            foreach (GameObject go in towerDic[TowerManager.TowerType.E1])
+            {
+                if (!result.ContainsKey(go))
+                {
+                    result.Add(go, new List<TowerManager.TowerType>());
+                }
+                result[go].Add(TowerManager.TowerType.Malachite);
+            }
+            foreach (GameObject go in towerDic[TowerManager.TowerType.Q1])
+            {
+                if (!result.ContainsKey(go))
+                {
+                    result.Add(go, new List<TowerManager.TowerType>());
+                }
+                result[go].Add(TowerManager.TowerType.Malachite);
+            }
+        }
+
+        if (towerDic.ContainsKey(TowerManager.TowerType.R2) && towerDic.ContainsKey(TowerManager.TowerType.R1) && towerDic.ContainsKey(TowerManager.TowerType.P1))
+        {
+            foreach (GameObject go in towerDic[TowerManager.TowerType.P1])
+            {
+                if (!result.ContainsKey(go))
+                {
+                    result.Add(go, new List<TowerManager.TowerType>());
+                }
+                result[go].Add(TowerManager.TowerType.AsteriatedRuby);
+            }
+            foreach (GameObject go in towerDic[TowerManager.TowerType.R1])
+            {
+                if (!result.ContainsKey(go))
+                {
+                    result.Add(go, new List<TowerManager.TowerType>());
+                }
+                result[go].Add(TowerManager.TowerType.AsteriatedRuby);
+            }
+            foreach (GameObject go in towerDic[TowerManager.TowerType.R2])
+            {
+                if (!result.ContainsKey(go))
+                {
+                    result.Add(go, new List<TowerManager.TowerType>());
+                }
+                result[go].Add(TowerManager.TowerType.AsteriatedRuby);
+            }
+        }
+
         return result;
     }
 

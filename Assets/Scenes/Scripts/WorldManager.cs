@@ -20,6 +20,7 @@ public class WorldManager : MonoBehaviour {
     public List<GameObject> BasicTowerList;
     public Text InfoMessage;
     public Text MazeLengthMessage;
+    public Text EnemyInfo;
     public Button Button1;
     public Button Button2;
     public Button Button3;
@@ -29,6 +30,11 @@ public class WorldManager : MonoBehaviour {
     public Text ItemInfo3;
     public Text ItemInfo4;
     public Text ItemDescription;
+
+
+    public HashSet<NavMeshSurface> NavSet = new HashSet<NavMeshSurface>();
+    public int PlayerCount = 1;
+
 
 
     private const int WorldWidth = 39;
@@ -45,11 +51,12 @@ public class WorldManager : MonoBehaviour {
 
     private GameObject SelectedObject;
 
-    private const int EnemyPerLevel = 5;
+    private int EnemyPerLevel = 0;
     private int CurrentEnemyAcount = 0;
 
     private const int TowerPerTurn = 5;
     private List<GameObject> OneTurnTowerList = new List<GameObject>();
+    private List<GameObject> TowerList = new List<GameObject>();
 
     private enum Phase{ConstructingTower,SecetingTower,EnemySpawning};
     private Phase CurrentPhase;
@@ -63,7 +70,6 @@ public class WorldManager : MonoBehaviour {
     private List<List<GameObject>> FloorMap = new List<List<GameObject>>();
     private int[,] IntMap = new int[WorldWidth,WorldHeight];
 
-    public HashSet<NavMeshSurface> NavSet = new HashSet<NavMeshSurface>();
 
     private SpriteRenderer EnabledAttackRange;
 
@@ -73,6 +79,7 @@ public class WorldManager : MonoBehaviour {
         CurrentPhase=Phase.ConstructingTower;
         CreateWorld();
         MazeLengthMessage.text = "迷宫长度:" + GetMazeLength();
+        EnemyInfo.text = "下拨敌人: 普通敌人";
     }
 
 
@@ -134,6 +141,7 @@ public class WorldManager : MonoBehaviour {
                     ItemInfo2.text = String.Format("护甲:{0}", SelectedObject.GetComponent<EnemyController>().Armor);
                     ItemInfo3.text = String.Format("魔法抗性:{0}%", SelectedObject.GetComponent<EnemyController>().MagicResistance * 100);
                     ItemInfo4.text = String.Format("移动速度:{0}", SelectedObject.GetComponent<EnemyController>().MovementSpeed);
+                    ItemDescription.text = SelectedObject.GetComponent<EnemyController>().EnemyDescription;
                 }
                 if (CurrentEnemyAcount == EnemyPerLevel && EnemyDic.Count == 0)
                 {
@@ -152,6 +160,7 @@ public class WorldManager : MonoBehaviour {
                         }
                     }
                     Level++;
+                    EnemyInfo.text = EnemyManager.GetEenemyInfo(Level);
                 }
                 break;
         }
@@ -326,11 +335,19 @@ public class WorldManager : MonoBehaviour {
         var enemy3D = Instantiate(NormalEnemy3D, transform.GetChild(0).GetChild(1).transform);
         enemy3D.transform.position = new Vector3(Enter.x, 0.275f, Enter.y);
         var enemyNav = enemy3D.transform.GetComponent<NavMeshAgent>();
-        enemyNav.Warp(new Vector3(Enter.x, 0.275f, Enter.y));
-        enemyNav.SetDestination(new Vector3(TurningPoint1.x, 0.275f, TurningPoint1.y));
 
         enemy.GetComponent<EnemyController>().nav = enemyNav;
-        EnemyManager.SetEnemy(enemy.GetComponent<EnemyController>(), Level);
+        EnemyManager.SetEnemy(enemy.GetComponent<EnemyController>(), Level, PlayerCount);
+        float f = 0.275f;
+        if (enemy.GetComponent<EnemyController>().IsFlying)
+        {
+            f = 0.5f;
+        }
+
+        enemyNav.Warp(new Vector3(Enter.x, f, Enter.y));
+        enemyNav.SetDestination(new Vector3(TurningPoint1.x, 0.275f, TurningPoint1.y));
+
+        EnemyPerLevel = enemy.GetComponent<EnemyController>().MaxAmount;
 
         CurrentEnemyAcount++;
         EnemyDic.Add(enemy, enemy3D);
@@ -352,6 +369,7 @@ public class WorldManager : MonoBehaviour {
         ItemInfo2.text = String.Format("护甲:{0}", SelectedObject.GetComponent<EnemyController>().Armor);
         ItemInfo3.text = String.Format("魔法抗性:{0}%", SelectedObject.GetComponent<EnemyController>().MagicResistance*100);
         ItemInfo4.text = String.Format("移动速度:{0}", SelectedObject.GetComponent<EnemyController>().MovementSpeed);
+        ItemDescription.text = SelectedObject.GetComponent<EnemyController>().EnemyDescription;
     }
 
     /// <summary>
@@ -527,16 +545,286 @@ public class WorldManager : MonoBehaviour {
                                 Button3.onClick = new Button.ButtonClickedEvent();
                                 Button3.onClick.AddListener(SuperUpgradeSelectedTower);
                             }
+                            else if (tt == TowerManager.TowerType.Sliver)
+                            {
+                                Button b = GetEmptyButtom();
+                                b.image.color = Color.white;
+                                b.GetComponentInChildren<Text>().text = "合成白银";
+                                b.onClick = new Button.ButtonClickedEvent();
+                                b.onClick.AddListener(LuckyCombine2Sliver);
+                            }
+                            else if (tt == TowerManager.TowerType.Malachite)
+                            {
+                                Button b = GetEmptyButtom();
+                                b.image.color = Color.white;
+                                b.GetComponentInChildren<Text>().text = "合成孔雀石";
+                                b.onClick = new Button.ButtonClickedEvent();
+                                b.onClick.AddListener(LuckyCombine2Malachite);
+                            }
+                            else if (tt == TowerManager.TowerType.AsteriatedRuby)
+                            {
+                                Button b = GetEmptyButtom();
+                                b.image.color = Color.white;
+                                b.GetComponentInChildren<Text>().text = "合成星彩红宝石";
+                                b.onClick = new Button.ButtonClickedEvent();
+                                b.onClick.AddListener(LuckyCombine2AsteriatedRuby);
+                            }
                         }
                     }
                 }
-                else
+                break;
+            case Phase.EnemySpawning:
+                updateTowers = TowerCombiningManager.GetCombinableTowers(TowerList, false);
+                if (updateTowers.ContainsKey(SelectedObject))
                 {
+                    foreach (TowerManager.TowerType tt in updateTowers[SelectedObject])
+                    {
+                        if (tt == TowerManager.TowerType.Sliver)
+                        {
+                            Button b = GetEmptyButtom();
+                            b.image.color = Color.white;
+                            b.GetComponentInChildren<Text>().text = "合成白银";
+                            b.onClick = new Button.ButtonClickedEvent();
+                            b.onClick.AddListener(Combine2Sliver);
+                        }
+
+                        if (tt == TowerManager.TowerType.Malachite)
+                        {
+                            Button b = GetEmptyButtom();
+                            b.image.color = Color.white;
+                            b.GetComponentInChildren<Text>().text = "合成孔雀石";
+                            b.onClick = new Button.ButtonClickedEvent();
+                            b.onClick.AddListener(Combine2Malachite);
+                        }
+                        
+                        if (tt == TowerManager.TowerType.AsteriatedRuby)
+                        {
+                            Button b = GetEmptyButtom();
+                            b.image.color = Color.white;
+                            b.GetComponentInChildren<Text>().text = "合成星彩红宝石";
+                            b.onClick = new Button.ButtonClickedEvent();
+                            b.onClick.AddListener(Combine2AsteriatedRuby);
+                        }
+                    }
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    /// <summary>
+    /// 在选择防御塔时合成孔雀石
+    /// </summary>
+    private void LuckyCombine2Malachite()
+    {
+        GameObject malachite = Instantiate(Resources.Load("Malachite"), transform.GetChild(1).GetChild(5)) as GameObject;
+        malachite.transform.position = SelectedObject.transform.position;
+        OneTurnTowerList.Remove(SelectedObject);
+        Destroy(SelectedObject);
+        malachite.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+        TowerManager.SettingTower(malachite.GetComponent<TowerController>(), TowerManager.TowerType.Malachite);
+        malachite.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
+        SelectedObject = malachite;
+        RemainSelectedTower();
+    }
+    /// <summary>
+    /// 在消灭敌人时合成孔雀石
+    /// </summary>
+    private void Combine2Malachite()
+    {
+        GameObject malachite = Instantiate(Resources.Load("Malachite"), transform.GetChild(1).GetChild(5)) as GameObject;
+        malachite.transform.position = SelectedObject.transform.position;
+
+        TowerManager.TowerType thisType = TowerManager.GetTowerType(SelectedObject);
+        TowerManager.TowerType type1;
+        TowerManager.TowerType type2;
+        if (thisType == TowerManager.TowerType.E1)
+        {
+            type1 = TowerManager.TowerType.G1;
+            type2 = TowerManager.TowerType.Q1;
+        }
+        else if (thisType == TowerManager.TowerType.Q1)
+        {
+            type1 = TowerManager.TowerType.G1;
+            type2 = TowerManager.TowerType.E1;
+        }
+        else
+        {
+            type1 = TowerManager.TowerType.Q1;
+            type2 = TowerManager.TowerType.E1;
+        }
+
+        foreach (GameObject t in TowerList)
+        {
+            if (TowerManager.GetTowerType(t) == type1)
+            {
+                CreateInnerWall(t.transform.position);
+                TowerList.Remove(t);
+                Destroy(t);
+                break;
+            }
+        }
+        foreach (GameObject t in TowerList)
+        {
+            if (TowerManager.GetTowerType(t) == type2)
+            {
+                CreateInnerWall(t.transform.position);
+                TowerList.Remove(t);
+                Destroy(t);
+                break;
+            }
+        }
+        TowerList.Remove(SelectedObject);
+        Destroy(SelectedObject);
+        malachite.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+        TowerManager.SettingTower(malachite.GetComponent<TowerController>(), TowerManager.TowerType.Malachite);
+        malachite.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
+        SelectedObject = malachite;
+        ClearUI();
+    }
+
+
+    /// <summary>
+    /// 在选择防御塔时合成星彩红宝石
+    /// </summary>
+    private void LuckyCombine2AsteriatedRuby()
+    {
+        GameObject asteriatedRuby = Instantiate(Resources.Load("AsteriatedRuby"), transform.GetChild(1).GetChild(5)) as GameObject;
+        asteriatedRuby.transform.position = SelectedObject.transform.position;
+        OneTurnTowerList.Remove(SelectedObject);
+        Destroy(SelectedObject);
+        TowerManager.SettingTower(asteriatedRuby.GetComponent<TowerController>(), TowerManager.TowerType.AsteriatedRuby);
+        asteriatedRuby.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
+        SelectedObject = asteriatedRuby;
+        RemainSelectedTower();
+    }
+    /// <summary>
+    /// 在消灭敌人时合成星彩红宝石
+    /// </summary>
+    private void Combine2AsteriatedRuby()
+    {
+        GameObject asteriatedRuby = Instantiate(Resources.Load("AsteriatedRuby"), transform.GetChild(1).GetChild(5)) as GameObject;
+        asteriatedRuby.transform.position = SelectedObject.transform.position;
+
+        TowerManager.TowerType thisType = TowerManager.GetTowerType(SelectedObject);
+        TowerManager.TowerType type1;
+        TowerManager.TowerType type2;
+        if (thisType == TowerManager.TowerType.R1)
+        {
+            type1 = TowerManager.TowerType.R2;
+            type2 = TowerManager.TowerType.P1;
+        }
+        else if (thisType == TowerManager.TowerType.R2)
+        {
+            type1 = TowerManager.TowerType.R1;
+            type2 = TowerManager.TowerType.P1;
+        }
+        else
+        {
+            type1 = TowerManager.TowerType.R1;
+            type2 = TowerManager.TowerType.R2;
+        }
+
+        foreach (GameObject t in TowerList)
+        {
+            if (TowerManager.GetTowerType(t) == type1)
+            {
+                CreateInnerWall(t.transform.position);
+                TowerList.Remove(t);
+                Destroy(t);
+                break;
+            }
+        }
+        foreach (GameObject t in TowerList)
+        {
+            if (TowerManager.GetTowerType(t) == type2)
+            {
+                CreateInnerWall(t.transform.position);
+                TowerList.Remove(t);
+                Destroy(t);
+                break;
+            }
+        }
+        TowerList.Remove(SelectedObject);
+        Destroy(SelectedObject);
+        asteriatedRuby.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+        TowerManager.SettingTower(asteriatedRuby.GetComponent<TowerController>(), TowerManager.TowerType.AsteriatedRuby);
+        asteriatedRuby.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
+        SelectedObject = asteriatedRuby;
+        ClearUI();
+    }
+
+    /// <summary>
+    /// 在选择防御塔时合成白银
+    /// </summary>
+    private void LuckyCombine2Sliver()
+    {
+        GameObject sliver = Instantiate(Resources.Load("Sliver"), transform.GetChild(1).GetChild(5)) as GameObject;
+        sliver.transform.position = SelectedObject.transform.position;
+        OneTurnTowerList.Remove(SelectedObject);
+        Destroy(SelectedObject);
+        sliver.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+        TowerManager.SettingTower(sliver.GetComponent<TowerController>(), TowerManager.TowerType.Sliver);
+        sliver.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
+        SelectedObject = sliver;
+        RemainSelectedTower();
+    }
+
+    /// <summary>
+    /// 在消灭敌人时合成白银
+    /// </summary>
+    private void Combine2Sliver()
+    {
+        GameObject sliver = Instantiate(Resources.Load("Sliver"), transform.GetChild(1).GetChild(5)) as GameObject;
+        sliver.transform.position = SelectedObject.transform.position;
+
+        TowerManager.TowerType thisType = TowerManager.GetTowerType(SelectedObject);
+        TowerManager.TowerType type1;
+        TowerManager.TowerType type2;
+        if (thisType == TowerManager.TowerType.B1)
+        {
+            type1 = TowerManager.TowerType.Y1;
+            type2 = TowerManager.TowerType.D1;
+        }
+        else if (thisType == TowerManager.TowerType.D1)
+        {
+            type1 = TowerManager.TowerType.Y1;
+            type2 = TowerManager.TowerType.B1;
+        }
+        else
+        {
+            type1 = TowerManager.TowerType.B1;
+            type2 = TowerManager.TowerType.D1;
+        }
+
+        foreach (GameObject t in TowerList)
+        {
+            if (TowerManager.GetTowerType(t) == type1)
+            {
+                CreateInnerWall(t.transform.position);
+                TowerList.Remove(t);
+                Destroy(t);
+                break;
+            }
+        }
+        foreach (GameObject t in TowerList)
+        {
+            if (TowerManager.GetTowerType(t) == type2)
+            {
+                CreateInnerWall(t.transform.position);
+                TowerList.Remove(t);
+                Destroy(t);
+                break;
+            }
+        }
+        TowerList.Remove(SelectedObject);
+        Destroy(SelectedObject);
+        sliver.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+        TowerManager.SettingTower(sliver.GetComponent<TowerController>(), TowerManager.TowerType.Sliver);
+        sliver.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
+        SelectedObject = sliver;
+        ClearUI();
     }
 
     /// <summary>
@@ -559,6 +847,7 @@ public class WorldManager : MonoBehaviour {
             }
 
             OneTurnTowerList = new List<GameObject>();
+            TowerList.Add(SelectedObject);
             ClearUI();
             ItemInfo1.text = TowerManager.GetTowerName(TowerManager.GetTowerType(SelectedObject));
             ItemInfo2.text = String.Format("攻击力:{0}", SelectedObject.GetComponent<TowerController>().PhysicalDamage);
@@ -587,6 +876,34 @@ public class WorldManager : MonoBehaviour {
 
 
 
+        }
+    }
+
+    /// <summary>
+    /// 返回一个没有使用的按钮
+    /// </summary>
+    /// <returns></returns>
+    private Button GetEmptyButtom()
+    {
+        if (Button1.GetComponentInChildren<Text>().text == "")
+        {
+            return Button1;
+        }
+        else if (Button2.GetComponentInChildren<Text>().text == "")
+        {
+            return Button2;
+        }
+        else if (Button3.GetComponentInChildren<Text>().text == "")
+        {
+            return Button3;
+        }
+        else if (Button4.GetComponentInChildren<Text>().text == "")
+        {
+            return Button4;
+        }
+        else
+        {
+            return null;
         }
     }
 
@@ -642,7 +959,7 @@ public class WorldManager : MonoBehaviour {
         ItemInfo2.text = "";
         ItemInfo3.text = "";
         ItemInfo4.text = "";
-
+        ItemDescription.text = "";
     }
 
     /// <summary>

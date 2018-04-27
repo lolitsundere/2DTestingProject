@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TowerController : MonoBehaviour
 {
-    public enum DamageType {Physical, Magic, Pure};
     public enum AttackSlowEffect { SlowEffect0, SlowEffect60, SlowEffect90, SlowEffect120, SlowEffect150, SlowEffect180, SlowEffect480};
     public enum AttackSpeedAccelerateEffect { AccelerateEffect0, AccelerateEffect20, AccelerateEffect30, AccelerateEffect40, AccelerateEffect50, AccelerateEffect60, AccelerateEffect70 };
     public enum AttackPoisonEffect { PoisonEffect0, PoisonEffect1, PoisonEffect2, PoisonEffect4, PoisonEffect8, PoisonEffect16, PoisonEffect64};
     public enum AttackArmorReduceEffect { ArmorReduceEffect0, ArmorReduceEffect1, ArmorReduceEffect2, ArmorReduceEffect4, ArmorReduceEffect8, ArmorReduceEffect16, ArmorReduceEffect64 };
     public enum AttackSplashEffect { SplashEffect0 , SplashEffect1, SplashEffect2, SplashEffect3,SplashEffect4,SplashEffect5, SplashEffect6};
+    public enum BurnEffect { BurnEffect0, BurnEffect30};
 
 
     private double attackSpeed;
@@ -90,21 +91,14 @@ public class TowerController : MonoBehaviour
                         o = Instantiate(Resources.Load("AttackRange600"), transform);
                         break;
                 }
-
-                if (o != null && o is GameObject)
-                {
-                    GameObject go = o as GameObject;
-                    go.GetComponent<ColliderEventHandler>().EnemyEnterEvent += EnemyIn;
-                    go.GetComponent<ColliderEventHandler>().EnemyExitEvent += EnemyExit;
-                    go.GetComponent<ColliderEventHandler>().EnemyStayEvent += EnemyIn;
-                }
             }
-
-            transform.GetChild(0).GetComponent<CircleCollider2D>().transform.localScale = new Vector3(1f / transform.localScale.x,1f/transform.localScale.y,1f/transform.localScale.z);
+            transform.GetChild(0).transform.localScale = new Vector3(1f / transform.localScale.x,1f/transform.localScale.y,1f/transform.localScale.z);
             attackRange = value;
         }
     }
     public int MaxTargetAmount;
+
+    public bool CanBreakInvisibility;
 
     public String TowerDescription;
 
@@ -113,10 +107,12 @@ public class TowerController : MonoBehaviour
     public AttackSpeedAccelerateEffect AccelerateEffect;
     public AttackArmorReduceEffect AtkArmorReduceEffect;
     public AttackSplashEffect AtkSplashEffect;
+    public BurnEffect BEffect;
 
-    private List<GameObject> AttackTargets;
-    private float time;
+    private float timer;
     public double attackTime;
+
+    private float burnTimer;
 
     private double accelerate20;
     private double accelerate30;
@@ -127,47 +123,51 @@ public class TowerController : MonoBehaviour
     
     private void PhysicalAttack()
     {
-        foreach (GameObject go in AttackTargets)
+        var targets = Physics2D.OverlapCircleAll(transform.position, AttackRange / 100f, LayerMask.GetMask("Enemy"));
+        
+        if (targets.Length == 0)
         {
-            go.GetComponent<EnemyController>().TakeTowerAttack(this);
+            return;
         }
-    }
-
-    private void EnemyIn(GameObject enemy)
-    {
-        if (MaxTargetAmount > AttackTargets.Count && !AttackTargets.Contains(enemy))
+        else if (targets.Length <= MaxTargetAmount)
         {
-            AttackTargets.Add(enemy);
+            foreach (Collider2D target in targets)
+            {
+                target.GetComponent<EnemyController>().TakeTowerAttack(this);
+            }
         }
-    }
-
-    private void EnemyExit(GameObject enemy)
-    {
-        if (AttackTargets.Contains(enemy))
+        else
         {
-            AttackTargets.Remove(enemy);
+            foreach (int i in Enumerable.Range(0,MaxTargetAmount))
+            {
+                targets[i].GetComponent<EnemyController>().TakeTowerAttack(this);
+            }
         }
+        timer = 0;
     }
 
     private void Start()
     {
-        AttackTargets = new List<GameObject>();
-        time = 0;
+        timer = 0;
+        burnTimer = 0;
     }
 
     private void Update()
     {
-        time += Time.deltaTime;
-        if (attackTime != 0 && time > attackTime)
+        timer += Time.deltaTime;
+        if (attackTime != 0 && timer > attackTime)
         {
             PhysicalAttack();
-            time = 0;
         }
 
         CheckTowerAroundForAcceleration();
         CheckAccelerateState();
+        CheckBurnAttack();
     }
 
+    /// <summary>
+    /// 如果有加速特性,给周围防御塔增加攻速
+    /// </summary>
     private void CheckTowerAroundForAcceleration()
     {
         if (AccelerateEffect != AttackSpeedAccelerateEffect.AccelerateEffect0)
@@ -224,6 +224,9 @@ public class TowerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 更新攻速加成状态
+    /// </summary>
     private void CheckAccelerateState()
     {
 
@@ -287,6 +290,23 @@ public class TowerController : MonoBehaviour
                 accelerate70 = 0;
                 AttackSpeed -= 70;
             }
+        }
+    }
+
+    private void CheckBurnAttack()
+    {
+        if (BEffect == BurnEffect.BurnEffect30)
+        {
+            var targets = Physics2D.OverlapCircleAll(transform.position, 5, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy"}));
+            if (burnTimer > 0.5f)
+            {
+                foreach (Collider2D target in targets)
+                {
+                    target.GetComponent<EnemyController>().TakeMagicDamage(30);
+                }
+                burnTimer = 0;
+            }
+            burnTimer += Time.deltaTime;
         }
     }
 }
