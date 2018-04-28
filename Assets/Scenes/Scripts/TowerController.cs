@@ -11,7 +11,7 @@ public class TowerController : MonoBehaviour
     public enum AttackPoisonEffect { PoisonEffect0, PoisonEffect1, PoisonEffect2, PoisonEffect4, PoisonEffect8, PoisonEffect16, PoisonEffect64};
     public enum AttackArmorReduceEffect { ArmorReduceEffect0, ArmorReduceEffect1, ArmorReduceEffect2, ArmorReduceEffect4, ArmorReduceEffect8, ArmorReduceEffect16, ArmorReduceEffect64 };
     public enum AttackSplashEffect { SplashEffect0 , SplashEffect1, SplashEffect2, SplashEffect3,SplashEffect4,SplashEffect5, SplashEffect6};
-    public enum BurnEffect { BurnEffect0, BurnEffect30};
+    public enum BurnEffect { BurnEffect0, BurnEffect30, BurnEffect160};
 
 
     private double attackSpeed;
@@ -90,6 +90,12 @@ public class TowerController : MonoBehaviour
                     case 600:
                         o = Instantiate(Resources.Load("AttackRange600"), transform);
                         break;
+                    case 700:
+                        o = Instantiate(Resources.Load("AttackRange700"), transform);
+                        break;
+                    case 800:
+                        o = Instantiate(Resources.Load("AttackRange800"), transform);
+                        break;
                 }
             }
             transform.GetChild(0).transform.localScale = new Vector3(1f / transform.localScale.x,1f/transform.localScale.y,1f/transform.localScale.z);
@@ -109,7 +115,7 @@ public class TowerController : MonoBehaviour
     public AttackSplashEffect AtkSplashEffect;
     public BurnEffect BEffect;
 
-    private float timer;
+    public float attackTimer;
     public double attackTime;
 
     private float burnTimer;
@@ -143,19 +149,19 @@ public class TowerController : MonoBehaviour
                 targets[i].GetComponent<EnemyController>().TakeTowerAttack(this);
             }
         }
-        timer = 0;
+        attackTimer = 0;
     }
 
     private void Start()
     {
-        timer = 0;
+        attackTimer = 0;
         burnTimer = 0;
     }
 
     private void Update()
     {
-        timer += Time.deltaTime;
-        if (attackTime != 0 && timer > attackTime)
+        attackTimer += Time.deltaTime;
+        if (attackTime != 0 && attackTimer > attackTime)
         {
             PhysicalAttack();
         }
@@ -303,6 +309,19 @@ public class TowerController : MonoBehaviour
                 foreach (Collider2D target in targets)
                 {
                     target.GetComponent<EnemyController>().TakeMagicDamage(30);
+                }
+                burnTimer = 0;
+            }
+            burnTimer += Time.deltaTime;
+        }
+        else if (BEffect == BurnEffect.BurnEffect160)
+        {
+            var targets = Physics2D.OverlapCircleAll(transform.position, 6, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" }));
+            if (burnTimer > 0.5f)
+            {
+                foreach (Collider2D target in targets)
+                {
+                    target.GetComponent<EnemyController>().TakeMagicDamage(160);
                 }
                 burnTimer = 0;
             }

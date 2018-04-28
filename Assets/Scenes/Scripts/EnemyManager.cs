@@ -146,6 +146,77 @@ public class EnemyManager : MonoBehaviour
                 enemy.ExperienceAndGold = 300;
                 enemy.MaxAmount = 1;
                 break;
+            case 11:
+                enemy.MaxHealth = Convert.ToInt32(Mathf.Round(300 * hpFactor));
+                enemy.Health = enemy.MaxHealth;
+                enemy.Armor = 4;
+                enemy.MagicResistance = 0.1f;
+                enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(525 * movementSpeedFactor));
+                enemy.EnemyDescription = "敌人特性:\n无";
+                enemy.ExperienceAndGold = 10;
+                enemy.MaxAmount = 8;
+                break;
+            case 12:
+                enemy.MaxHealth = Convert.ToInt32(Mathf.Round(450 * hpFactor));
+                enemy.Health = enemy.MaxHealth;
+                enemy.Armor = 4;
+                enemy.MagicResistance = 0.2f;
+                enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(600 * movementSpeedFactor));
+                enemy.EnemyDescription = "敌人特性:\n缴械(1.2格内防御塔无法攻击)";
+                enemy.ExperienceAndGold = 10;
+                enemy.MaxAmount = 8;
+                enemy.Disarmble = true;
+                break;
+            case 13:
+                enemy.MaxHealth = Convert.ToInt32(Mathf.Round(800 * hpFactor));
+                enemy.Health = enemy.MaxHealth;
+                enemy.Armor = 4;
+                enemy.MagicResistance = 0.1f;
+                enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(600 * movementSpeedFactor));
+                enemy.EnemyDescription = "敌人特性:\n无)";
+                enemy.ExperienceAndGold = 10;
+                enemy.MaxAmount = 9;
+                break;
+            case 14:
+                enemy.MaxHealth = Convert.ToInt32(Mathf.Round(1100 * hpFactor));
+                enemy.Health = enemy.MaxHealth;
+                enemy.Armor = 4;
+                enemy.MagicResistance = 0.1f;
+                enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(600 * movementSpeedFactor));
+                enemy.EnemyDescription = "敌人特性:\n折射(在受到伤害时有20%概率生成3层抵御伤害的防护罩)";
+                enemy.ExperienceAndGold = 10;
+                enemy.MaxAmount = 9;
+                enemy.Refractable = true;
+                break;
+            case 15:
+                if (UnityEngine.Random.value < 0.5)
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(400 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(700 * movementSpeedFactor));
+                }
+                else
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(440 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(600 * movementSpeedFactor));
+                }
+                enemy.Health = enemy.MaxHealth;
+                enemy.Armor = 4;
+                enemy.MagicResistance = 0.1f;
+                enemy.IsFlying = true;
+                enemy.EnemyDescription = "敌人特性:\n飞行(无视地形移动)";
+                enemy.ExperienceAndGold = 10;
+                enemy.MaxAmount = 9;
+                break;
+            default:
+                enemy.MaxHealth = Convert.ToInt32(Mathf.Round(1000 * hpFactor));
+                enemy.Health = enemy.MaxHealth;
+                enemy.Armor = 0;
+                enemy.MagicResistance = 0.1f;
+                enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(750 * movementSpeedFactor));
+                enemy.EnemyDescription = "敌人特性:\n普通BOSS";
+                enemy.ExperienceAndGold = 300;
+                enemy.MaxAmount = 5;
+                return;
         }
     }
 
@@ -161,10 +232,13 @@ public class EnemyManager : MonoBehaviour
                 return "下拨敌人: 闪避敌人(有概率闪避攻击)";
             case 10:
                 return "下拨敌人: 普通BOSS";
+            case 12:
+                return "下拨敌人: 缴械敌人(使周围防御塔无法攻击)";
+            case 14:
+                return "下拨敌人: 折射敌人(在受到伤害时有概率生成防护罩抵御伤害)";
             default:
                 return "下拨敌人: 普通敌人";
         }
-
     }
 
 }

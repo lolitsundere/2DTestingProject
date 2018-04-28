@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class WorldManager : MonoBehaviour {
@@ -30,16 +31,19 @@ public class WorldManager : MonoBehaviour {
     public Text ItemInfo3;
     public Text ItemInfo4;
     public Text ItemDescription;
+    public Text TopText;
 
 
     public HashSet<NavMeshSurface> NavSet = new HashSet<NavMeshSurface>();
     public int PlayerCount = 1;
 
-
-
     private const int WorldWidth = 39;
     private const int WorldHeight = 39;
-    private int Level = 1;
+
+    private int StageLevel = 1;
+    private int PlayerExp = 0;
+    private int PlayerLevel = 1;
+    private int PlayerGold = 0;
 
     private readonly Vector2 Enter = new Vector2(5f, 33f);
     private readonly Vector2 Exit = new Vector2(33f, 5f);
@@ -50,6 +54,7 @@ public class WorldManager : MonoBehaviour {
     private readonly Vector2 TurningPoint5 = new Vector2(19f, 5f);
 
     private GameObject SelectedObject;
+    private TowerManager.TowerType CombineTarget;
 
     private int EnemyPerLevel = 0;
     private int CurrentEnemyAcount = 0;
@@ -159,8 +164,8 @@ public class WorldManager : MonoBehaviour {
                             }
                         }
                     }
-                    Level++;
-                    EnemyInfo.text = EnemyManager.GetEenemyInfo(Level);
+                    StageLevel++;
+                    EnemyInfo.text = EnemyManager.GetEenemyInfo(StageLevel);
                 }
                 break;
         }
@@ -318,6 +323,27 @@ public class WorldManager : MonoBehaviour {
     /// <param name="go"></param>
     private void DestroyEnemy(GameObject go)
     {
+        PlayerExp += go.GetComponent<EnemyController>().ExperienceAndGold;
+        PlayerGold += go.GetComponent<EnemyController>().ExperienceAndGold;
+        if (PlayerExp >= 1700)
+        {
+            PlayerLevel = 5;
+        }
+        else if (PlayerExp >= 1050)
+        {
+            PlayerLevel = 4;
+        }
+        else if (PlayerExp >= 550)
+        {
+            PlayerLevel = 3;
+        }
+        else if (PlayerExp >= 200)
+        {
+            PlayerLevel = 2;
+        }
+
+        TopText.text = String.Format("等级: {0} 经验: {1} 金钱: {2}", PlayerLevel, PlayerExp, PlayerGold);
+
         Destroy(EnemyDic[go]);
         EnemyDic.Remove(go);
         Destroy(go);
@@ -337,7 +363,7 @@ public class WorldManager : MonoBehaviour {
         var enemyNav = enemy3D.transform.GetComponent<NavMeshAgent>();
 
         enemy.GetComponent<EnemyController>().nav = enemyNav;
-        EnemyManager.SetEnemy(enemy.GetComponent<EnemyController>(), Level, PlayerCount);
+        EnemyManager.SetEnemy(enemy.GetComponent<EnemyController>(), StageLevel, PlayerCount);
         float f = 0.275f;
         if (enemy.GetComponent<EnemyController>().IsFlying)
         {
@@ -485,7 +511,79 @@ public class WorldManager : MonoBehaviour {
 
         var tower = Instantiate(BasicTowerList[random.Next(BasicTowerList.Count)], transform.GetChild(1).GetChild(5).transform);
         tower.transform.position = pos;
-        tower.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        switch (PlayerLevel)
+        {
+            case 1:
+                tower.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                break;
+            case 2:
+                if (random.Next(5) == 0)
+                {
+                    tower.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+                }
+                else
+                {
+                    tower.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                }
+                break;
+            case 3:
+                int randomNumber = random.Next(10);
+                if (randomNumber == 0)
+                {
+                    tower.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
+                }
+                else if (randomNumber <= 3)
+                {
+                    tower.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+                }
+                else
+                {
+                    tower.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                }
+                break;
+            case 4:
+                randomNumber = random.Next(10);
+                if (randomNumber == 0)
+                {
+                    tower.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+                }
+                else if (randomNumber <= 2)
+                {
+                    tower.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
+                }
+                else if (randomNumber <= 5)
+                {
+                    tower.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+                }
+                else
+                {
+                    tower.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                }
+                break;
+            case 5:
+                randomNumber = random.Next(10);
+                if (randomNumber == 0)
+                {
+                    tower.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
+                }
+                else if (randomNumber <= 2)
+                {
+                    tower.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+                }
+                else if (randomNumber <= 5)
+                {
+                    tower.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
+                }
+                else if (randomNumber <= 8)
+                {
+                    tower.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+                }
+                else
+                {
+                    tower.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                }
+                break;
+        }
         OneTurnTowerList.Add(tower);
 
         TowerManager.SettingTower(tower.GetComponent<TowerController>(), TowerManager.GetTowerType(tower));
@@ -531,7 +629,7 @@ public class WorldManager : MonoBehaviour {
                     {
                         foreach (TowerManager.TowerType tt in updateTowers[SelectedObject])
                         {
-                            if (TowerCombiningManager.CanUpgrade(SelectedObject,tt))
+                            if (TowerCombiningManager.CanUpgrade(SelectedObject, tt))
                             {
                                 Button2.image.color = Color.white;
                                 Button2.GetComponentInChildren<Text>().text = "升级";
@@ -545,29 +643,9 @@ public class WorldManager : MonoBehaviour {
                                 Button3.onClick = new Button.ButtonClickedEvent();
                                 Button3.onClick.AddListener(SuperUpgradeSelectedTower);
                             }
-                            else if (tt == TowerManager.TowerType.Sliver)
+                            else
                             {
-                                Button b = GetEmptyButtom();
-                                b.image.color = Color.white;
-                                b.GetComponentInChildren<Text>().text = "合成白银";
-                                b.onClick = new Button.ButtonClickedEvent();
-                                b.onClick.AddListener(LuckyCombine2Sliver);
-                            }
-                            else if (tt == TowerManager.TowerType.Malachite)
-                            {
-                                Button b = GetEmptyButtom();
-                                b.image.color = Color.white;
-                                b.GetComponentInChildren<Text>().text = "合成孔雀石";
-                                b.onClick = new Button.ButtonClickedEvent();
-                                b.onClick.AddListener(LuckyCombine2Malachite);
-                            }
-                            else if (tt == TowerManager.TowerType.AsteriatedRuby)
-                            {
-                                Button b = GetEmptyButtom();
-                                b.image.color = Color.white;
-                                b.GetComponentInChildren<Text>().text = "合成星彩红宝石";
-                                b.onClick = new Button.ButtonClickedEvent();
-                                b.onClick.AddListener(LuckyCombine2AsteriatedRuby);
+                                CheckAdvanceCombine(tt, LuckyCombine);
                             }
                         }
                     }
@@ -579,32 +657,7 @@ public class WorldManager : MonoBehaviour {
                 {
                     foreach (TowerManager.TowerType tt in updateTowers[SelectedObject])
                     {
-                        if (tt == TowerManager.TowerType.Sliver)
-                        {
-                            Button b = GetEmptyButtom();
-                            b.image.color = Color.white;
-                            b.GetComponentInChildren<Text>().text = "合成白银";
-                            b.onClick = new Button.ButtonClickedEvent();
-                            b.onClick.AddListener(Combine2Sliver);
-                        }
-
-                        if (tt == TowerManager.TowerType.Malachite)
-                        {
-                            Button b = GetEmptyButtom();
-                            b.image.color = Color.white;
-                            b.GetComponentInChildren<Text>().text = "合成孔雀石";
-                            b.onClick = new Button.ButtonClickedEvent();
-                            b.onClick.AddListener(Combine2Malachite);
-                        }
-                        
-                        if (tt == TowerManager.TowerType.AsteriatedRuby)
-                        {
-                            Button b = GetEmptyButtom();
-                            b.image.color = Color.white;
-                            b.GetComponentInChildren<Text>().text = "合成星彩红宝石";
-                            b.onClick = new Button.ButtonClickedEvent();
-                            b.onClick.AddListener(Combine2AsteriatedRuby);
-                        }
+                        CheckAdvanceCombine(tt, Combine);
                     }
                 }
                 break;
@@ -614,216 +667,65 @@ public class WorldManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// 在选择防御塔时合成孔雀石
+    /// 生成高级合成按钮
     /// </summary>
-    private void LuckyCombine2Malachite()
+    /// <param name="tt"></param>
+    /// <param name="action"></param>
+    private void CheckAdvanceCombine(TowerManager.TowerType tt, UnityAction action)
     {
-        GameObject malachite = Instantiate(Resources.Load("Malachite"), transform.GetChild(1).GetChild(5)) as GameObject;
-        malachite.transform.position = SelectedObject.transform.position;
+        Button b = GetEmptyButtom();
+        b.image.color = Color.white;
+        b.GetComponentInChildren<Text>().text = "合成" + TowerManager.GetTowerName(tt);
+        CombineTarget = tt;
+        b.onClick = new Button.ButtonClickedEvent();
+        b.onClick.AddListener(action);
+    }
+
+    /// <summary>
+    /// 在选择防御塔时合成
+    /// </summary>
+    private void LuckyCombine()
+    {
+        GameObject go = Instantiate(Resources.Load(TowerManager.GetTowerFileName(CombineTarget)), transform.GetChild(1).GetChild(5)) as GameObject;
+        go.transform.position = SelectedObject.transform.position;
         OneTurnTowerList.Remove(SelectedObject);
         Destroy(SelectedObject);
-        malachite.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
-        TowerManager.SettingTower(malachite.GetComponent<TowerController>(), TowerManager.TowerType.Malachite);
-        malachite.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
-        SelectedObject = malachite;
+        TowerManager.SettingTower(go.GetComponent<TowerController>(), CombineTarget);
+        go.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
+        SelectedObject = go;
         RemainSelectedTower();
     }
     /// <summary>
-    /// 在消灭敌人时合成孔雀石
+    /// 在消灭敌人时合成
     /// </summary>
-    private void Combine2Malachite()
+    private void Combine()
     {
-        GameObject malachite = Instantiate(Resources.Load("Malachite"), transform.GetChild(1).GetChild(5)) as GameObject;
-        malachite.transform.position = SelectedObject.transform.position;
+        GameObject go = Instantiate(Resources.Load(TowerManager.GetTowerFileName(CombineTarget)), transform.GetChild(1).GetChild(5)) as GameObject;
+        go.transform.position = SelectedObject.transform.position;
 
-        TowerManager.TowerType thisType = TowerManager.GetTowerType(SelectedObject);
-        TowerManager.TowerType type1;
-        TowerManager.TowerType type2;
-        if (thisType == TowerManager.TowerType.E1)
+        foreach (TowerManager.TowerType tt in TowerCombiningManager.CombineDic[CombineTarget])
         {
-            type1 = TowerManager.TowerType.G1;
-            type2 = TowerManager.TowerType.Q1;
-        }
-        else if (thisType == TowerManager.TowerType.Q1)
-        {
-            type1 = TowerManager.TowerType.G1;
-            type2 = TowerManager.TowerType.E1;
-        }
-        else
-        {
-            type1 = TowerManager.TowerType.Q1;
-            type2 = TowerManager.TowerType.E1;
-        }
-
-        foreach (GameObject t in TowerList)
-        {
-            if (TowerManager.GetTowerType(t) == type1)
+            if (tt == TowerManager.GetTowerType(SelectedObject))
             {
-                CreateInnerWall(t.transform.position);
-                TowerList.Remove(t);
-                Destroy(t);
-                break;
+                continue;
             }
-        }
-        foreach (GameObject t in TowerList)
-        {
-            if (TowerManager.GetTowerType(t) == type2)
+            foreach (GameObject t in TowerList)
             {
-                CreateInnerWall(t.transform.position);
-                TowerList.Remove(t);
-                Destroy(t);
-                break;
+                if (TowerManager.GetTowerType(t) == tt)
+                {
+                    CreateInnerWall(t.transform.position);
+                    TowerList.Remove(t);
+                    Destroy(t);
+                    break;
+                }
             }
         }
         TowerList.Remove(SelectedObject);
         Destroy(SelectedObject);
-        malachite.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
-        TowerManager.SettingTower(malachite.GetComponent<TowerController>(), TowerManager.TowerType.Malachite);
-        malachite.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
-        SelectedObject = malachite;
-        ClearUI();
-    }
-
-
-    /// <summary>
-    /// 在选择防御塔时合成星彩红宝石
-    /// </summary>
-    private void LuckyCombine2AsteriatedRuby()
-    {
-        GameObject asteriatedRuby = Instantiate(Resources.Load("AsteriatedRuby"), transform.GetChild(1).GetChild(5)) as GameObject;
-        asteriatedRuby.transform.position = SelectedObject.transform.position;
-        OneTurnTowerList.Remove(SelectedObject);
-        Destroy(SelectedObject);
-        TowerManager.SettingTower(asteriatedRuby.GetComponent<TowerController>(), TowerManager.TowerType.AsteriatedRuby);
-        asteriatedRuby.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
-        SelectedObject = asteriatedRuby;
-        RemainSelectedTower();
-    }
-    /// <summary>
-    /// 在消灭敌人时合成星彩红宝石
-    /// </summary>
-    private void Combine2AsteriatedRuby()
-    {
-        GameObject asteriatedRuby = Instantiate(Resources.Load("AsteriatedRuby"), transform.GetChild(1).GetChild(5)) as GameObject;
-        asteriatedRuby.transform.position = SelectedObject.transform.position;
-
-        TowerManager.TowerType thisType = TowerManager.GetTowerType(SelectedObject);
-        TowerManager.TowerType type1;
-        TowerManager.TowerType type2;
-        if (thisType == TowerManager.TowerType.R1)
-        {
-            type1 = TowerManager.TowerType.R2;
-            type2 = TowerManager.TowerType.P1;
-        }
-        else if (thisType == TowerManager.TowerType.R2)
-        {
-            type1 = TowerManager.TowerType.R1;
-            type2 = TowerManager.TowerType.P1;
-        }
-        else
-        {
-            type1 = TowerManager.TowerType.R1;
-            type2 = TowerManager.TowerType.R2;
-        }
-
-        foreach (GameObject t in TowerList)
-        {
-            if (TowerManager.GetTowerType(t) == type1)
-            {
-                CreateInnerWall(t.transform.position);
-                TowerList.Remove(t);
-                Destroy(t);
-                break;
-            }
-        }
-        foreach (GameObject t in TowerList)
-        {
-            if (TowerManager.GetTowerType(t) == type2)
-            {
-                CreateInnerWall(t.transform.position);
-                TowerList.Remove(t);
-                Destroy(t);
-                break;
-            }
-        }
-        TowerList.Remove(SelectedObject);
-        Destroy(SelectedObject);
-        asteriatedRuby.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
-        TowerManager.SettingTower(asteriatedRuby.GetComponent<TowerController>(), TowerManager.TowerType.AsteriatedRuby);
-        asteriatedRuby.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
-        SelectedObject = asteriatedRuby;
-        ClearUI();
-    }
-
-    /// <summary>
-    /// 在选择防御塔时合成白银
-    /// </summary>
-    private void LuckyCombine2Sliver()
-    {
-        GameObject sliver = Instantiate(Resources.Load("Sliver"), transform.GetChild(1).GetChild(5)) as GameObject;
-        sliver.transform.position = SelectedObject.transform.position;
-        OneTurnTowerList.Remove(SelectedObject);
-        Destroy(SelectedObject);
-        sliver.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
-        TowerManager.SettingTower(sliver.GetComponent<TowerController>(), TowerManager.TowerType.Sliver);
-        sliver.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
-        SelectedObject = sliver;
-        RemainSelectedTower();
-    }
-
-    /// <summary>
-    /// 在消灭敌人时合成白银
-    /// </summary>
-    private void Combine2Sliver()
-    {
-        GameObject sliver = Instantiate(Resources.Load("Sliver"), transform.GetChild(1).GetChild(5)) as GameObject;
-        sliver.transform.position = SelectedObject.transform.position;
-
-        TowerManager.TowerType thisType = TowerManager.GetTowerType(SelectedObject);
-        TowerManager.TowerType type1;
-        TowerManager.TowerType type2;
-        if (thisType == TowerManager.TowerType.B1)
-        {
-            type1 = TowerManager.TowerType.Y1;
-            type2 = TowerManager.TowerType.D1;
-        }
-        else if (thisType == TowerManager.TowerType.D1)
-        {
-            type1 = TowerManager.TowerType.Y1;
-            type2 = TowerManager.TowerType.B1;
-        }
-        else
-        {
-            type1 = TowerManager.TowerType.B1;
-            type2 = TowerManager.TowerType.D1;
-        }
-
-        foreach (GameObject t in TowerList)
-        {
-            if (TowerManager.GetTowerType(t) == type1)
-            {
-                CreateInnerWall(t.transform.position);
-                TowerList.Remove(t);
-                Destroy(t);
-                break;
-            }
-        }
-        foreach (GameObject t in TowerList)
-        {
-            if (TowerManager.GetTowerType(t) == type2)
-            {
-                CreateInnerWall(t.transform.position);
-                TowerList.Remove(t);
-                Destroy(t);
-                break;
-            }
-        }
-        TowerList.Remove(SelectedObject);
-        Destroy(SelectedObject);
-        sliver.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
-        TowerManager.SettingTower(sliver.GetComponent<TowerController>(), TowerManager.TowerType.Sliver);
-        sliver.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
-        SelectedObject = sliver;
+        TowerManager.SettingTower(go.GetComponent<TowerController>(), CombineTarget);
+        go.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
+        SelectedObject = go;
+        TowerList.Add(go);
         ClearUI();
     }
 

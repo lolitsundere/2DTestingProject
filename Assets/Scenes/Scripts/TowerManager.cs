@@ -8,7 +8,7 @@ public class TowerManager : MonoBehaviour
     public enum TowerType
     { Unkown, R1, R2, R3, R4, R5, R6, B1, B2, B3, B4, B5, B6, Y1, Y2, Y3, Y4, Y5, Y6, G1, G2, G3, G4, G5, G6,
         P1, P2, P3, P4, P5, P6, Q1, Q2, Q3, Q4, Q5, Q6, D1, D2, D3, D4, D5, D6, E1, E2, E3, E4, E5, E6,
-        Sliver, Malachite, AsteriatedRuby };
+        Sliver, Malachite, AsteriatedRuby, SliverKnight, MalachiteHuge, Jade, Volcano };
 
     /// <summary>
     /// 设置输入防御塔的基础数值
@@ -398,6 +398,7 @@ public class TowerManager : MonoBehaviour
                 tower.PhysicalDamage = 25;
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect90;
                 tower.TowerDescription = "防御塔特性:\n高攻击\n减少攻击目标的移动速度(减90移动速度,持续2秒)\n同种效果不可叠加";
+                tower.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
                 break;
             case TowerType.Malachite:
                 tower.AttackRange = 600;
@@ -405,7 +406,8 @@ public class TowerManager : MonoBehaviour
                 tower.BasicAttackTime = 0.8;
                 tower.PhysicalDamage = 15;
                 tower.MaxTargetAmount = 3;
-                tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击三个目标)";
+                tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击3个目标)";
+                tower.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
                 break;
             case TowerType.AsteriatedRuby:
                 tower.AttackRange = 600;
@@ -414,6 +416,41 @@ public class TowerManager : MonoBehaviour
                 tower.PhysicalDamage = 0;
                 tower.BEffect = TowerController.BurnEffect.BurnEffect30; 
                 tower.TowerDescription = "防御塔特性:\n灼烧攻击(5格内敌人每0.5秒受到30魔法伤害)";
+                break;
+            case TowerType.SliverKnight:
+                tower.AttackRange = 700;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.7;
+                tower.PhysicalDamage = 60;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect120;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect3;
+                tower.TowerDescription = "防御塔特性:\n分裂攻击(4格内敌人受到主攻击目标所受50%的伤害\n减少攻击目标的移动速度(减120移动速度,持续2秒)\n同种效果不可叠加)";
+                tower.transform.localScale = new Vector3(1f, 1f, 1f);
+                break;
+            case TowerType.MalachiteHuge:
+                tower.AttackRange = 700;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.7;
+                tower.PhysicalDamage = 50;
+                tower.MaxTargetAmount = 5;
+                tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击5个目标)";
+                tower.transform.localScale = new Vector3(1f, 1f, 1f);
+                break;
+            case TowerType.Jade:
+                tower.AttackRange = 800;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.5;
+                tower.PhysicalDamage = 10;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect8;
+                tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒8点魔法伤害)\n同种效果不可叠加";
+                break;
+            case TowerType.Volcano:
+                tower.AttackRange = 600;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 1;
+                tower.PhysicalDamage = 0;
+                tower.BEffect = TowerController.BurnEffect.BurnEffect160;
+                tower.TowerDescription = "防御塔特性:\n灼烧攻击(6格内敌人每0.5秒受到160魔法伤害)";
                 break;
         }
     }
@@ -676,7 +713,7 @@ public class TowerManager : MonoBehaviour
             }
             else
             {
-                return TowerType.Unkown;
+                return TowerType.SliverKnight;
             }
         }
 
@@ -688,7 +725,7 @@ public class TowerManager : MonoBehaviour
             }
             else
             {
-                return TowerType.Unkown;
+                return TowerType.MalachiteHuge;
             }
         }
 
@@ -697,6 +734,15 @@ public class TowerManager : MonoBehaviour
             return TowerType.AsteriatedRuby;
         }
 
+        else if (tower.name.StartsWith("Jade"))
+        {
+            return TowerType.Jade;
+        }
+
+        else if (tower.name.StartsWith("Vol"))
+        {
+            return TowerType.Volcano;
+        }
         else return TowerType.Unkown;
 
     }
@@ -783,17 +829,17 @@ public class TowerManager : MonoBehaviour
             case TowerType.Q6:
                 return "海晶石6级";
             case TowerType.R1:
-                return "蓝宝石1级";
+                return "红宝石1级";
             case TowerType.R2:
-                return "蓝宝石2级";
+                return "红宝石2级";
             case TowerType.R3:
-                return "蓝宝石3级";
+                return "红宝石3级";
             case TowerType.R4:
-                return "蓝宝石4级";
+                return "红宝石4级";
             case TowerType.R5:
-                return "蓝宝石5级";
+                return "红宝石5级";
             case TowerType.R6:
-                return "蓝宝石6级";
+                return "红宝石6级";
             case TowerType.Y1:
                 return "黄宝石1级";
             case TowerType.Y2:
@@ -812,8 +858,44 @@ public class TowerManager : MonoBehaviour
                 return "孔雀石";
             case TowerType.AsteriatedRuby:
                 return "星彩红宝石";
+            case TowerType.SliverKnight:
+                return "白银骑士";
+            case TowerType.MalachiteHuge:
+                return "巨大孔雀石";
+            case TowerType.Jade:
+                return "玉";
+            case TowerType.Volcano:
+                return "火山";
         }
         return "未知类型";
+    }
+
+    /// <summary>
+    /// 输出输入物体的文件名
+    /// </summary>
+    /// <param name="tt"></param>
+    /// <returns></returns>
+    public static string GetTowerFileName(TowerType tt)
+    {
+        switch (tt)
+        {
+            case TowerType.AsteriatedRuby:
+                return "AsteriatedRuby";
+            case TowerType.Malachite:
+                return "Malachite";
+            case TowerType.Sliver:
+                return "Sliver";
+            case TowerType.SliverKnight:
+                return "Sliver";
+            case TowerType.MalachiteHuge:
+                return "Malachite";
+            case TowerType.Jade:
+                return "Jade";
+            case TowerType.Volcano:
+                return "Volcano";
+        }
+
+        return "";
     }
 
 }

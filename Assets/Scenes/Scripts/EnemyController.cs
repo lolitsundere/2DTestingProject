@@ -6,7 +6,36 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     public int MaxHealth;
-    public int Health;
+    public int Health
+    {
+        get
+        {
+            return health;
+        }
+        set
+        {
+            if (Refractable)
+            {
+                if (RefractionCharge <= 0)
+                {
+                    if (UnityEngine.Random.value < 0.2f)
+                    {
+                        RefractionCharge = 3;
+                    }
+                    health = value;
+                }
+                else
+                {
+                    RefractionCharge--;
+                }
+            }
+            else
+            {
+                health = value;
+            }
+        }
+    }
+    private int health;
 
     private float movementSpeed;
     public float MovementSpeed
@@ -32,6 +61,10 @@ public class EnemyController : MonoBehaviour
     public bool IsFlying;
     public bool IsInvisible;
     public float Evation;
+    public bool Disarmble;
+    public bool Refractable;
+
+    private int RefractionCharge = 0;
 
     public int ExperienceAndGold;
     public int MaxAmount;
@@ -305,30 +338,9 @@ public class EnemyController : MonoBehaviour
         CheckArmorReduceState();
         CheckColor();
 
-        if (IsInvisible)
-        {
-            var temp =Physics2D.OverlapCircleAll(transform.position, 6f, LayerMask.GetMask("Tower"));
-            bool breaked = false;
-            foreach (Collider2D tower in temp)
-            {
-                if (tower.GetComponent<TowerController>().CanBreakInvisibility)
-                {
-                    transform.GetComponent<SpriteRenderer>().enabled = true;
-                    transform.tag = "Enemy";
-                    gameObject.layer = 9;
-                    breaked = true;
-                }
-            }
-
-            if (!breaked)
-            {
-                transform.GetComponent<SpriteRenderer>().enabled = false;
-                transform.tag = "InvisibleEnemy";
-                gameObject.layer = 11;
-            }
-        }
- 
-
+        CheckForDisArm();
+        CheckForInvision();
+        
 
         if (MovementSpeed <100)
         {
@@ -592,6 +604,51 @@ public class EnemyController : MonoBehaviour
             {
                 attackArmorReduce64Timer = 0;
                 Armor += 64;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 更新周围防御塔缴械状态
+    /// </summary>
+    private void CheckForDisArm()
+    {
+        if (Disarmble)
+        {
+            var targets = Physics2D.OverlapCircleAll(transform.position, 1.3f, LayerMask.GetMask("Tower"));
+            foreach (Collider2D target in targets)
+            {
+                target.GetComponent<TowerController>().attackTimer = 0f;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 更新隐身状态
+    /// </summary>
+    private void CheckForInvision()
+    {
+
+        if (IsInvisible)
+        {
+            var temp = Physics2D.OverlapCircleAll(transform.position, 6f, LayerMask.GetMask("Tower"));
+            bool breaked = false;
+            foreach (Collider2D tower in temp)
+            {
+                if (tower.GetComponent<TowerController>().CanBreakInvisibility)
+                {
+                    transform.GetComponent<SpriteRenderer>().enabled = true;
+                    transform.tag = "Enemy";
+                    gameObject.layer = 9;
+                    breaked = true;
+                }
+            }
+
+            if (!breaked)
+            {
+                transform.GetComponent<SpriteRenderer>().enabled = false;
+                transform.tag = "InvisibleEnemy";
+                gameObject.layer = 11;
             }
         }
     }
