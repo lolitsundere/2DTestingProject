@@ -11,7 +11,8 @@ public class TowerController : MonoBehaviour
     public enum AttackPoisonEffect { PoisonEffect0, PoisonEffect1, PoisonEffect2, PoisonEffect4, PoisonEffect8, PoisonEffect16, PoisonEffect64};
     public enum AttackArmorReduceEffect { ArmorReduceEffect0, ArmorReduceEffect1, ArmorReduceEffect2, ArmorReduceEffect4, ArmorReduceEffect8, ArmorReduceEffect16, ArmorReduceEffect64 };
     public enum AttackSplashEffect { SplashEffect0 , SplashEffect1, SplashEffect2, SplashEffect3,SplashEffect4,SplashEffect5, SplashEffect6};
-    public enum BurnEffect { BurnEffect0, BurnEffect30, BurnEffect160};
+    public enum BurnEffect { BurnEffect0, BurnEffect30, BurnEffect160, BurnEffect1250};
+    public enum AntiFlyEffect { AnitFly0, AntiFly1}
 
 
     private double attackSpeed;
@@ -70,14 +71,19 @@ public class TowerController : MonoBehaviour
     private int attackRange;
     public int AttackRange
     {
-        get
-        {
-            return attackRange;
-        }
+        get { return attackRange; }
         set
         {
+            if (value > 5000)
+            {
+                value = 5000;
+            }
             if (attackRange != value)
             {
+                if (transform.childCount > 0)
+                {
+                    Destroy(transform.GetChild(0).gameObject);
+                }
                 UnityEngine.Object o = null;
                 switch (value)
                 {
@@ -96,16 +102,47 @@ public class TowerController : MonoBehaviour
                     case 800:
                         o = Instantiate(Resources.Load("AttackRange800"), transform);
                         break;
+                    case 900:
+                        o = Instantiate(Resources.Load("AttackRange900"), transform);
+                        break;
+                    case 1000:
+                        o = Instantiate(Resources.Load("AttackRange1000"), transform);
+                        break;
+                    case 1100:
+                        o = Instantiate(Resources.Load("AttackRange1100"), transform);
+                        break;
+                    case 5000:
+                        o = Instantiate(Resources.Load("AttackRange5000"), transform);
+                        break;
                 }
             }
-            transform.GetChild(0).transform.localScale = new Vector3(1f / transform.localScale.x,1f/transform.localScale.y,1f/transform.localScale.z);
+            transform.GetChild(transform.childCount - 1).transform.localScale = new Vector3(1f / transform.localScale.x, 1f / transform.localScale.y, 1f / transform.localScale.z);
             attackRange = value;
         }
     }
+    public int BasicAttackRange
+    {
+        get
+        {
+            return attackRange;
+        }
+        set
+        {
+            addRange300 = 0;
+            AttackRange = value;
+        }
+    }
+
     public int MaxTargetAmount;
 
     public bool CanBreakInvisibility;
-
+    public bool CanCrit;
+    public bool CanLightingChain;
+    public bool CanAddRange;
+    public bool ProvideCanNotMiss;
+    public bool CanNotMiss;
+    private double canNotMissTimer;
+    public int LightingChainDamage;
     public String TowerDescription;
 
     public AttackSlowEffect AtkSlowEffect;
@@ -114,6 +151,7 @@ public class TowerController : MonoBehaviour
     public AttackArmorReduceEffect AtkArmorReduceEffect;
     public AttackSplashEffect AtkSplashEffect;
     public BurnEffect BEffect;
+    public AntiFlyEffect AFlyEffect;
 
     public float attackTimer;
     public double attackTime;
@@ -126,10 +164,12 @@ public class TowerController : MonoBehaviour
     private double accelerate50;
     private double accelerate60;
     private double accelerate70;
+
+    private double addRange300;
     
     private void PhysicalAttack()
     {
-        var targets = Physics2D.OverlapCircleAll(transform.position, AttackRange / 100f, LayerMask.GetMask("Enemy"));
+        var targets = Physics2D.OverlapCircleAll(transform.position, BasicAttackRange / 100f, LayerMask.GetMask("Enemy"));
         
         if (targets.Length == 0)
         {
@@ -169,6 +209,51 @@ public class TowerController : MonoBehaviour
         CheckTowerAroundForAcceleration();
         CheckAccelerateState();
         CheckBurnAttack();
+        CheckAntiFly();
+
+        if (CanAddRange)
+        {
+            foreach (Collider2D go1 in Physics2D.OverlapCircleAll(transform.position, 3, LayerMask.GetMask("Tower")))
+            {
+                if (go1.GetComponent<TowerController>().addRange300 == 0)
+                {
+                    go1.GetComponent<TowerController>().AttackRange += 300;
+                }
+                go1.GetComponent<TowerController>().addRange300 = 0.5;
+            }
+        }
+
+        if (addRange300 > 0)
+        {
+            addRange300 -= Time.deltaTime;
+            if (addRange300 <= 0)
+            {
+                addRange300 = 0;
+                AttackRange -= 300;
+            }
+        }
+
+        if (ProvideCanNotMiss)
+        {
+            foreach (Collider2D go1 in Physics2D.OverlapCircleAll(transform.position, 3, LayerMask.GetMask("Tower")))
+            {
+                if (go1.GetComponent<TowerController>().canNotMissTimer == 0)
+                {
+                    go1.GetComponent<TowerController>().CanNotMiss = true;
+                }
+                go1.GetComponent<TowerController>().canNotMissTimer = 0.5;
+            }
+        }
+
+        if (canNotMissTimer > 0)
+        {
+            canNotMissTimer -= Time.deltaTime;
+            if (canNotMissTimer <= 0)
+            {
+                canNotMissTimer = 0;
+                CanNotMiss = false;
+            }
+        }
     }
 
     /// <summary>
@@ -326,6 +411,39 @@ public class TowerController : MonoBehaviour
                 burnTimer = 0;
             }
             burnTimer += Time.deltaTime;
+        }
+        else if (BEffect == BurnEffect.BurnEffect1250)
+        {
+            var targets = Physics2D.OverlapCircleAll(transform.position, 7, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" }));
+            if (burnTimer > 0.5f)
+            {
+                foreach (Collider2D target in targets)
+                {
+                    target.GetComponent<EnemyController>().TakeMagicDamage(1250);
+                }
+                burnTimer = 0;
+            }
+            burnTimer += Time.deltaTime;
+        }
+    }
+
+    private void CheckAntiFly()
+    {
+        if (AFlyEffect == AntiFlyEffect.AntiFly1)
+        {
+            var targets = Physics2D.OverlapCircleAll(transform.position, 6, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" }));
+            foreach (var target in targets)
+            {
+                if (target.GetComponent<EnemyController>().IsFlying)
+                {
+                    if (target.GetComponent<EnemyController>().flyingDisable1Timer == 0)
+                    {
+                        target.GetComponent<EnemyController>().MovementSpeed -= 250;
+                        target.GetComponent<EnemyController>().Armor -= 10;
+                    }
+                    target.GetComponent<EnemyController>().flyingDisable1Timer = 0.5f;
+                }
+            }
         }
     }
 }

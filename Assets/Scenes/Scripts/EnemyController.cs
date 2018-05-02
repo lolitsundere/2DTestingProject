@@ -77,6 +77,8 @@ public class EnemyController : MonoBehaviour
     private double attackSlow180Timer;
     private double attackSlow480Timer;
 
+    public double flyingDisable1Timer;
+
     private double poison1Timer;
     private double poison2Timer;
     private double poison4Timer;
@@ -98,7 +100,7 @@ public class EnemyController : MonoBehaviour
     /// <param name="tower"></param>
     public void TakeTowerAttack(TowerController tower)
     {
-        if (Evation <= UnityEngine.Random.value)
+        if (tower.CanNotMiss || Evation <= UnityEngine.Random.value)
         {
             switch (tower.AtkSlowEffect)
             {
@@ -214,7 +216,20 @@ public class EnemyController : MonoBehaviour
                     break;
             }
 
-            double damage = Mathf.Round((1 - (0.05f * Armor / (1 + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage);
+            if (tower.CanLightingChain && UnityEngine.Random.value <= 0.3)
+            {
+                TakeLightingChain(tower.LightingChainDamage, 5);
+            }
+
+            double damage=0;
+            if (tower.CanCrit && UnityEngine.Random.value <= 0.1)
+            {
+                damage = Mathf.Round((1 - (0.05f * Armor / (1 + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage * 5);
+            }
+            else
+            {
+                damage = Mathf.Round((1 - (0.05f * Armor / (1 + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage);
+            }
             Health -= Convert.ToInt32(damage);
 
             switch (tower.AtkSplashEffect)
@@ -290,6 +305,28 @@ public class EnemyController : MonoBehaviour
     }
 
     /// <summary>
+    /// 受到闪电链伤害
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <param name="count"></param>
+    public void TakeLightingChain(int damage, int count)
+    {
+        if (count == 0)
+        {
+            return;
+        }
+
+        TakeMagicDamage(damage);
+
+        var targets = Physics2D.OverlapCircleAll(transform.position, 30, LayerMask.GetMask("Enemy"));
+        if (targets.Length > 0)
+        {
+            int i = new System.Random().Next(targets.Length);
+            targets[i].GetComponent<EnemyController>().TakeLightingChain(damage, --count);
+        }
+    }
+
+    /// <summary>
     /// 受到魔法伤害
     /// </summary>
     /// <param name="damageAmount"></param>
@@ -336,6 +373,7 @@ public class EnemyController : MonoBehaviour
         CheckSlowState();
         CheckPoisonState();
         CheckArmorReduceState();
+        CheckForFlyingDisable();
         CheckColor();
 
         CheckForDisArm();
@@ -649,6 +687,23 @@ public class EnemyController : MonoBehaviour
                 transform.GetComponent<SpriteRenderer>().enabled = false;
                 transform.tag = "InvisibleEnemy";
                 gameObject.layer = 11;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 更新飞行控制状态
+    /// </summary>
+    private void CheckForFlyingDisable()
+    {
+        if (flyingDisable1Timer > 0)
+        {
+            flyingDisable1Timer -= Time.deltaTime;
+            if (flyingDisable1Timer <= 0)
+            {
+                flyingDisable1Timer = 0;
+                MovementSpeed += 250;
+                Armor += 10;
             }
         }
     }

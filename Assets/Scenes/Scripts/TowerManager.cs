@@ -6,9 +6,13 @@ using UnityEngine;
 public class TowerManager : MonoBehaviour
 {
     public enum TowerType
-    { Unkown, R1, R2, R3, R4, R5, R6, B1, B2, B3, B4, B5, B6, Y1, Y2, Y3, Y4, Y5, Y6, G1, G2, G3, G4, G5, G6,
+    {
+        Unkown, R1, R2, R3, R4, R5, R6, B1, B2, B3, B4, B5, B6, Y1, Y2, Y3, Y4, Y5, Y6, G1, G2, G3, G4, G5, G6,
         P1, P2, P3, P4, P5, P6, Q1, Q2, Q3, Q4, Q5, Q6, D1, D2, D3, D4, D5, D6, E1, E2, E3, E4, E5, E6,
-        Sliver, Malachite, AsteriatedRuby, SliverKnight, MalachiteHuge, Jade, Volcano };
+        Sliver, Malachite, AsteriatedRuby, SliverKnight, MalachiteHuge, Jade, Volcano, PinkDiamond, PinkDiamondHuge,
+        KDiamond, Uranium238, Uranium235, DepletedKyparium, BloodStone, BloodStoneAntique, TheCrownPrince, Quartz,
+        GreyJade, MonkeyKingJade
+    };
 
     /// <summary>
     /// 设置输入防御塔的基础数值
@@ -20,7 +24,7 @@ public class TowerManager : MonoBehaviour
         switch (tt)
         {
             case TowerType.B1:
-                tower.AttackRange = 600;
+                tower.BasicAttackRange = 600;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 2;
@@ -28,7 +32,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n减少攻击目标的移动速度(减60移动速度,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.B2:
-                tower.AttackRange = 600;
+                tower.BasicAttackRange = 600;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 4;
@@ -36,7 +40,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n减少攻击目标的移动速度(减90移动速度,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.B3:
-                tower.AttackRange = 600;
+                tower.BasicAttackRange = 600;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 6;
@@ -44,7 +48,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n减少攻击目标的移动速度(减120移动速度,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.B4:
-                tower.AttackRange = 600;
+                tower.BasicAttackRange = 600;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 8;
@@ -52,7 +56,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n减少攻击目标的移动速度(减150移动速度,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.B5:
-                tower.AttackRange = 600;
+                tower.BasicAttackRange = 600;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 10;
@@ -60,7 +64,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:减少攻击目标的移动速度(减180移动速度,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.B6:
-                tower.AttackRange = 600;
+                tower.BasicAttackRange = 600;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 36;
@@ -68,49 +72,49 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n减少攻击目标的移动速度(减480移动速度,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.D1:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 5;
                 tower.TowerDescription = "防御塔特性:\n高攻击";
                 break;
             case TowerType.D2:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 10;
                 tower.TowerDescription = "防御塔特性:\n高攻击";
                 break;
             case TowerType.D3:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 20;
                 tower.TowerDescription = "防御塔特性:\n高攻击";
                 break;
             case TowerType.D4:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 40;
                 tower.TowerDescription = "防御塔特性:\n高攻击";
                 break;
             case TowerType.D5:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 80;
                 tower.TowerDescription = "防御塔特性:\n高攻击";
                 break;
             case TowerType.D6:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.7;
                 tower.PhysicalDamage = 460;
                 tower.TowerDescription = "防御塔特性:\n高攻击";
                 break;
             case TowerType.E1:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 1;
@@ -119,7 +123,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加20)\n同种效果不可叠加\n显示6格范围内的隐形敌人";
                 break;
             case TowerType.E2:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 2;
@@ -128,7 +132,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加30)\n同种效果不可叠加\n显示6格范围内的隐形敌人";
                 break;
             case TowerType.E3:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 3;
@@ -137,7 +141,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加40)\n同种效果不可叠加\n显示6格范围内的隐形敌人";
                 break;
             case TowerType.E4:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 4;
@@ -146,7 +150,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加50)\n同种效果不可叠加\n显示6格范围内的隐形敌人";
                 break;
             case TowerType.E5:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 5;
@@ -155,7 +159,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加60)\n同种效果不可叠加\n显示6格范围内的隐形敌人";
                 break;
             case TowerType.E6:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 6;
@@ -164,7 +168,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加70)\n同种效果不可叠加\n显示6格范围内的隐形敌人";
                 break;
             case TowerType.G1:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 2;
@@ -172,7 +176,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒1点魔法伤害)\n同种效果不可叠加";
                 break;
             case TowerType.G2:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 4;
@@ -180,7 +184,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒2点魔法伤害)\n同种效果不可叠加";
                 break;
             case TowerType.G3:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 6;
@@ -188,7 +192,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒4点魔法伤害)\n同种效果不可叠加";
                 break;
             case TowerType.G4:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 8;
@@ -196,7 +200,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒8点魔法伤害)\n同种效果不可叠加";
                 break;
             case TowerType.G5:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 10;
@@ -204,7 +208,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒16点魔法伤害)\n同种效果不可叠加";
                 break;
             case TowerType.G6:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 12;
@@ -212,7 +216,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒64点魔法伤害)\n同种效果不可叠加";
                 break;
             case TowerType.P1:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 2;
@@ -220,7 +224,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n减少攻击目标的护甲值(减1点护甲,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.P2:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 4;
@@ -228,7 +232,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n减少攻击目标的护甲值(减2点护甲,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.P3:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 6;
@@ -236,7 +240,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n减少攻击目标的护甲值(减4点护甲,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.P4:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 8;
@@ -244,7 +248,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n减少攻击目标的护甲值(减8点护甲,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.P5:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 10;
@@ -252,7 +256,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n减少攻击目标的护甲值(减16点护甲,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.P6:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 70;
@@ -260,49 +264,49 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n减少攻击目标的护甲值(减64点护甲,持续2秒)\n同种效果不可叠加";
                 break;
             case TowerType.Q1:
-                tower.AttackRange = 400;
+                tower.BasicAttackRange = 400;
                 tower.BasicAttackSpeed = 300;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 2;
                 tower.TowerDescription = "防御塔特性:\n高攻击速度";
                 break;
             case TowerType.Q2:
-                tower.AttackRange = 400;
+                tower.BasicAttackRange = 400;
                 tower.BasicAttackSpeed = 300;
                 tower.BasicAttackTime = 0.9;
                 tower.PhysicalDamage = 4;
                 tower.TowerDescription = "防御塔特性:\n高攻击速度";
                 break;
             case TowerType.Q3:
-                tower.AttackRange = 400;
+                tower.BasicAttackRange = 400;
                 tower.BasicAttackSpeed = 300;
                 tower.BasicAttackTime = 0.8;
                 tower.PhysicalDamage = 8;
                 tower.TowerDescription = "防御塔特性:\n高攻击速度";
                 break;
             case TowerType.Q4:
-                tower.AttackRange = 400;
+                tower.BasicAttackRange = 400;
                 tower.BasicAttackSpeed = 300;
                 tower.BasicAttackTime = 0.7;
                 tower.PhysicalDamage = 16;
                 tower.TowerDescription = "防御塔特性:\n高攻击速度";
                 break;
             case TowerType.Q5:
-                tower.AttackRange = 400;
+                tower.BasicAttackRange = 400;
                 tower.BasicAttackSpeed = 300;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 24;
                 tower.TowerDescription = "防御塔特性:\n高攻击速度";
                 break;
             case TowerType.Q6:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 300;
                 tower.BasicAttackTime = 0.5;
                 tower.PhysicalDamage = 80;
                 tower.TowerDescription = "防御塔特性:\n高攻击速度";
                 break;
             case TowerType.R1:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 4;
@@ -310,7 +314,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n分裂攻击(3格内敌人受到主攻击目标所受30%的伤害)";
                 break;
             case TowerType.R2:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 8;
@@ -318,7 +322,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n分裂攻击(3.5格内敌人受到主攻击目标所受40%的伤害)";
                 break;
             case TowerType.R3:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 12;
@@ -326,7 +330,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n分裂攻击(4格内敌人受到主攻击目标所受50%的伤害)";
                 break;
             case TowerType.R4:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 24;
@@ -334,7 +338,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n分裂攻击(4.5格内敌人受到主攻击目标所受60%的伤害)";
                 break;
             case TowerType.R5:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 48;
@@ -342,7 +346,7 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n分裂攻击(5格内敌人受到主攻击目标所受70%的伤害)";
                 break;
             case TowerType.R6:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 150;
@@ -350,67 +354,67 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n分裂攻击(7格内敌人受到主攻击目标所受100%的伤害)";
                 break;
             case TowerType.Y1:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1.3;
                 tower.PhysicalDamage = 3;
                 tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击3个目标)";
                 break;
             case TowerType.Y2:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1.3;
                 tower.PhysicalDamage = 6;
                 tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击3个目标)";
                 break;
             case TowerType.Y3:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1.3;
                 tower.PhysicalDamage = 9;
                 tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击3个目标)";
                 break;
             case TowerType.Y4:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1.3;
                 tower.PhysicalDamage = 18;
                 tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击3个目标)";
                 break;
             case TowerType.Y5:
-                tower.AttackRange = 500;
+                tower.BasicAttackRange = 500;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1.3;
                 tower.PhysicalDamage = 36;
                 tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击3个目标)";
                 break;
             case TowerType.Y6:
-                tower.AttackRange = 5000;
+                tower.BasicAttackRange = 5000;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.6;
                 tower.PhysicalDamage = 200;
-                tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击3个目标)";
+                tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击3个目标)\n全屏攻击";
                 break;
             case TowerType.Sliver:
-                tower.AttackRange = 600;
+                tower.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                tower.BasicAttackRange = 600;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.9;
                 tower.PhysicalDamage = 25;
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect90;
                 tower.TowerDescription = "防御塔特性:\n高攻击\n减少攻击目标的移动速度(减90移动速度,持续2秒)\n同种效果不可叠加";
-                tower.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
                 break;
             case TowerType.Malachite:
-                tower.AttackRange = 600;
+                tower.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                tower.BasicAttackRange = 600;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.8;
                 tower.PhysicalDamage = 15;
                 tower.MaxTargetAmount = 3;
                 tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击3个目标)";
-                tower.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
                 break;
             case TowerType.AsteriatedRuby:
-                tower.AttackRange = 600;
+                tower.BasicAttackRange = 600;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 0;
@@ -418,26 +422,26 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n灼烧攻击(5格内敌人每0.5秒受到30魔法伤害)";
                 break;
             case TowerType.SliverKnight:
-                tower.AttackRange = 700;
+                tower.transform.localScale = new Vector3(1f, 1f, 1f);
+                tower.BasicAttackRange = 700;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.7;
                 tower.PhysicalDamage = 60;
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect120;
                 tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect3;
                 tower.TowerDescription = "防御塔特性:\n分裂攻击(4格内敌人受到主攻击目标所受50%的伤害\n减少攻击目标的移动速度(减120移动速度,持续2秒)\n同种效果不可叠加)";
-                tower.transform.localScale = new Vector3(1f, 1f, 1f);
                 break;
             case TowerType.MalachiteHuge:
-                tower.AttackRange = 700;
+                tower.transform.localScale = new Vector3(1f, 1f, 1f);
+                tower.BasicAttackRange = 700;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.7;
                 tower.PhysicalDamage = 50;
                 tower.MaxTargetAmount = 5;
                 tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击5个目标)";
-                tower.transform.localScale = new Vector3(1f, 1f, 1f);
                 break;
             case TowerType.Jade:
-                tower.AttackRange = 800;
+                tower.BasicAttackRange = 800;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.5;
                 tower.PhysicalDamage = 10;
@@ -445,14 +449,129 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒8点魔法伤害)\n同种效果不可叠加";
                 break;
             case TowerType.Volcano:
-                tower.AttackRange = 600;
+                tower.BasicAttackRange = 600;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.PhysicalDamage = 0;
                 tower.BEffect = TowerController.BurnEffect.BurnEffect160;
                 tower.TowerDescription = "防御塔特性:\n灼烧攻击(6格内敌人每0.5秒受到160魔法伤害)";
                 break;
+            case TowerType.PinkDiamond:
+                tower.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                tower.BasicAttackRange = 600;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 1;
+                tower.PhysicalDamage = 100;
+                tower.CanCrit = true;
+                tower.TowerDescription = "防御塔特性:\n暴击(10%概率打出5倍暴击)";
+                break;
+            case TowerType.PinkDiamondHuge:
+                tower.transform.localScale = new Vector3(1f, 1f, 1f);
+                tower.BasicAttackRange = 700;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.7;
+                tower.PhysicalDamage = 260;
+                tower.CanCrit = true;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect3;
+                tower.TowerDescription = "防御塔特性:\n暴击(10%概率打出5倍暴击)\n分裂攻击(4格内敌人受到主攻击目标所受50%的伤害)";
+                break;
+            case TowerType.KDiamond:
+                tower.BasicAttackRange = 700;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.6;
+                tower.PhysicalDamage = 1300;
+                tower.CanCrit = true;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect3;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect64;
+                tower.TowerDescription = "防御塔特性:\n暴击(10%概率打出5倍暴击)\n分裂攻击(4格内敌人受到主攻击目标所受50%的伤害\n减少攻击目标的护甲值(减64点护甲,持续2秒)\n同种效果不可叠加)";
+                break;
+            case TowerType.Uranium238:
+                tower.transform.localScale = new Vector3(1f, 1f, 1f);
+                tower.BasicAttackRange = 700;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.7;
+                tower.PhysicalDamage = 120;
+                tower.MaxTargetAmount = 10;
+                tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击10个目标)";
+                tower.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                break;
+            case TowerType.Uranium235:
+                tower.BasicAttackRange = 800;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.7;
+                tower.PhysicalDamage = 250;
+                tower.MaxTargetAmount = 10;
+                tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击10个目标)";
+                break;
+            case TowerType.DepletedKyparium:
+                tower.BasicAttackRange = 5000;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.4;
+                tower.PhysicalDamage = 410;
+                tower.MaxTargetAmount = 10;
+                tower.TowerDescription = "防御塔特性:\n多重攻击(可同时攻击10个目标)\n全屏攻击";
+                break;
+            case TowerType.BloodStone:
+                tower.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                tower.BasicAttackRange = 700;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 1;
+                tower.PhysicalDamage = 35;
+                tower.CanLightingChain = true;
+                tower.LightingChainDamage = 150;
+                tower.TowerDescription = "防御塔特性:\n闪电链(攻击时有30%概率触发闪电链,对敌人造成150魔法伤害,弹射5次)";
+                break;
+            case TowerType.BloodStoneAntique:
+                tower.transform.localScale = new Vector3(1f, 1f, 1f);
+                tower.BasicAttackRange = 800;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 1;
+                tower.PhysicalDamage = 70;
+                tower.CanLightingChain = true;
+                tower.LightingChainDamage = 3400;
+                tower.BEffect = TowerController.BurnEffect.BurnEffect160;
+                tower.TowerDescription = "防御塔特性:\n闪电链(攻击时有30%概率触发闪电链,对敌人造成3400魔法伤害,弹射5次)\n灼烧攻击(6格内敌人每0.5秒受到160魔法伤害)";
+                break;
+            case TowerType.TheCrownPrince:
+                tower.BasicAttackRange = 800;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 1;
+                tower.PhysicalDamage = 70;
+                tower.CanLightingChain = true;
+                tower.LightingChainDamage = 3400;
+                tower.BEffect = TowerController.BurnEffect.BurnEffect1250;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect64;
+                tower.TowerDescription = "防御塔特性:\n闪电链(攻击时有30%概率触发闪电链,对敌人造成3400魔法伤害,弹射5次)\n灼烧攻击(7格内敌人每0.5秒受到1250魔法伤害)\n使攻击目标中毒(持续5秒,每秒64点魔法伤害)\n同种效果不可叠加";
+                break;
+            case TowerType.Quartz:
+                tower.BasicAttackRange = 500;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.6;
+                tower.PhysicalDamage = 15;
+                tower.AFlyEffect = TowerController.AntiFlyEffect.AntiFly1;
+                tower.TowerDescription = "防御塔特性:\n飞行控制(使6格内的飞行敌人移动速度减少250,护甲减少10)\n同种效果不可叠加";
+                break;
+            case TowerType.GreyJade:
+                tower.BasicAttackRange = 800;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.5;
+                tower.PhysicalDamage = 30;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect16;
+                tower.CanAddRange = true;
+                tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒16点魔法伤害)\n瞭望(增加3格周围3格内防御塔的攻击距离)\n同种效果不可叠加";
+                break;
+            case TowerType.MonkeyKingJade:
+                tower.BasicAttackRange = 1000;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.5;
+                tower.PhysicalDamage = 80;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect16;
+                tower.CanAddRange = true;
+                tower.ProvideCanNotMiss = true;
+                tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒16点魔法伤害)\n瞭望(增加3格周围3格内防御塔的攻击距离)\n必中(使周围3格内防御塔的攻击不会被闪避)\n同种效果不可叠加";
+                break;
         }
+
     }
 
     /// <summary>
@@ -743,6 +862,66 @@ public class TowerManager : MonoBehaviour
         {
             return TowerType.Volcano;
         }
+
+        else if (tower.name.StartsWith("Pink"))
+        {
+            if (tower.transform.localScale.x < 0.8f)
+            {
+                return TowerType.PinkDiamond;
+            }
+            else
+            {
+                return TowerType.PinkDiamondHuge;
+            }
+        }
+        else if (tower.name.StartsWith("Koh"))
+        {
+            return TowerType.KDiamond;
+        }
+        else if (tower.name.StartsWith("Uranium"))
+        {
+            if (tower.transform.localScale.x < 0.8f)
+            {
+                return TowerType.Uranium238;
+            }
+            else
+            {
+                return TowerType.Uranium235;
+            }
+        }
+        else if (tower.name.StartsWith("Depleted"))
+        {
+            return TowerType.DepletedKyparium;
+        }
+        else if (tower.name.StartsWith("Blood"))
+        {
+            if (tower.transform.localScale.x < 0.8f)
+            {
+                return TowerType.BloodStone;
+            }
+            else
+            {
+                return TowerType.BloodStoneAntique;
+            }
+        }
+        else if (tower.name.StartsWith("TheCrown"))
+        {
+            return TowerType.TheCrownPrince;
+        }
+        else if (tower.name.StartsWith("Quartz"))
+        {
+            return TowerType.Quartz;
+        }
+        else if (tower.name.StartsWith("GreyJade"))
+        {
+            return TowerType.GreyJade;
+        }
+        else if (tower.name.StartsWith("MonkeyKingJade"))
+        {
+            return TowerType.MonkeyKingJade;
+        }
+
+
         else return TowerType.Unkown;
 
     }
@@ -866,6 +1045,30 @@ public class TowerManager : MonoBehaviour
                 return "玉";
             case TowerType.Volcano:
                 return "火山";
+            case TowerType.PinkDiamond:
+                return "粉红钻石";
+            case TowerType.PinkDiamondHuge:
+                return "巨大粉红钻石";
+            case TowerType.KDiamond:
+                return "光之山";
+            case TowerType.Uranium235:
+                return "铀235";
+            case TowerType.Uranium238:
+                return "铀238";
+            case TowerType.DepletedKyparium:
+                return "衰变凯帕铀";
+            case TowerType.BloodStone:
+                return "鸡血石";
+            case TowerType.BloodStoneAntique:
+                return "远古鸡血石";
+            case TowerType.TheCrownPrince:
+                return "黑王子红宝石";
+            case TowerType.Quartz:
+                return "石英";
+            case TowerType.GreyJade:
+                return "青玉";
+            case TowerType.MonkeyKingJade:
+                return "猴王玉";
         }
         return "未知类型";
     }
@@ -893,6 +1096,30 @@ public class TowerManager : MonoBehaviour
                 return "Jade";
             case TowerType.Volcano:
                 return "Volcano";
+            case TowerType.PinkDiamond:
+                return "PinkDiamond";
+            case TowerType.PinkDiamondHuge:
+                return "PinkDiamond";
+            case TowerType.KDiamond:
+                return "Koh-i-noorDiamond";
+            case TowerType.Uranium235:
+                return "Uranium";
+            case TowerType.Uranium238:
+                return "Uranium";
+            case TowerType.DepletedKyparium:
+                return "DepletedKyparium";
+            case TowerType.BloodStone:
+                return "BloodStone";
+            case TowerType.BloodStoneAntique:
+                return "BooldStone";
+            case TowerType.TheCrownPrince:
+                return "TheCrownPrince";
+            case TowerType.Quartz:
+                return "Quartz";
+            case TowerType.GreyJade:
+                return "GreyJade";
+            case TowerType.MonkeyKingJade:
+                return "MonkeyKingJade";
         }
 
         return "";
