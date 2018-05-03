@@ -11,7 +11,7 @@ public class TowerManager : MonoBehaviour
         P1, P2, P3, P4, P5, P6, Q1, Q2, Q3, Q4, Q5, Q6, D1, D2, D3, D4, D5, D6, E1, E2, E3, E4, E5, E6,
         Sliver, Malachite, AsteriatedRuby, SliverKnight, MalachiteHuge, Jade, Volcano, PinkDiamond, PinkDiamondHuge,
         KDiamond, Uranium238, Uranium235, DepletedKyparium, BloodStone, BloodStoneAntique, TheCrownPrince, Quartz,
-        GreyJade, MonkeyKingJade
+        GreyJade, MonkeyKingJade, GullinanDiamond, ChineseJade, Lazurite, GoldenJubilee
     };
 
     /// <summary>
@@ -570,6 +570,43 @@ public class TowerManager : MonoBehaviour
                 tower.ProvideCanNotMiss = true;
                 tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒16点魔法伤害)\n瞭望(增加3格周围3格内防御塔的攻击距离)\n必中(使周围3格内防御塔的攻击不会被闪避)\n同种效果不可叠加";
                 break;
+            case TowerType.GullinanDiamond:
+                tower.BasicAttackRange = 1200;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.6;
+                tower.PhysicalDamage = 3154;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect16;
+                tower.CanAddRange = true;
+                tower.ProvideCanNotMiss = true;
+                tower.CanCrit = true;
+                tower.TowerDescription = "防御塔特性:\n暴击(10%概率打出5倍暴击)\n使攻击目标中毒(持续5秒,每秒16点魔法伤害)\n瞭望(增加3格周围3格内防御塔的攻击距离)\n必中(使周围3格内防御塔的攻击不会被闪避)\n同种效果不可叠加";
+                break;
+            case TowerType.ChineseJade:
+                tower.BasicAttackRange = 900;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.5;
+                tower.PhysicalDamage = 30;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect16;
+                tower.CanHeal = true;
+                tower.AFlyEffect = TowerController.AntiFlyEffect.AntiFly1;
+                tower.TowerDescription = "防御塔特性:\n飞行控制(使6格内的飞行敌人移动速度减少250,护甲减少10)\n使攻击目标中毒(持续5秒,每秒16点魔法伤害)\n同种效果不可叠加\n回春(攻击有1%的几率回复基地1点生命)";
+                break;
+            case TowerType.Lazurite:
+                tower.BasicAttackRange = 800;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.6;
+                tower.PhysicalDamage = 30;
+                tower.AFlyEffect = TowerController.AntiFlyEffect.AntiFly2;
+                tower.TowerDescription = "防御塔特性:\n飞行控制(使6格内的飞行敌人移动速度减少250,护甲减少10,魔法抗性减少50%,无视魔法免疫)\n同种效果不可叠加";
+                break;
+            case TowerType.GoldenJubilee:
+                tower.BasicAttackRange = 800;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.7;
+                tower.PhysicalDamage = new System.Random().Next(1,1025);
+                tower.AFlyEffect = TowerController.AntiFlyEffect.AntiFly2;
+                tower.TowerDescription = "防御塔特性:\n随机攻击力(1-1024)\n魔法溅射(攻击时对目标周围2格内敌人造成等同于攻击力的魔法伤害)";
+                break;
         }
 
     }
@@ -920,7 +957,22 @@ public class TowerManager : MonoBehaviour
         {
             return TowerType.MonkeyKingJade;
         }
-
+        else if (tower.name.StartsWith("Gullinan"))
+        {
+            return TowerType.GullinanDiamond;
+        }
+        else if (tower.name.StartsWith("Chinese"))
+        {
+            return TowerType.ChineseJade;
+        }
+        else if (tower.name.StartsWith("Lazurite"))
+        {
+            return TowerType.Lazurite;
+        }
+        else if (tower.name.StartsWith("Golden"))
+        {
+            return TowerType.GoldenJubilee;
+        }
 
         else return TowerType.Unkown;
 
@@ -1069,6 +1121,14 @@ public class TowerManager : MonoBehaviour
                 return "青玉";
             case TowerType.MonkeyKingJade:
                 return "猴王玉";
+            case TowerType.GullinanDiamond:
+                return "卡利南钻石";
+            case TowerType.ChineseJade:
+                return "中国玉";
+            case TowerType.Lazurite:
+                return "青金石";
+            case TowerType.GoldenJubilee:
+                return "金色陛下";
         }
         return "未知类型";
     }
@@ -1120,6 +1180,14 @@ public class TowerManager : MonoBehaviour
                 return "GreyJade";
             case TowerType.MonkeyKingJade:
                 return "MonkeyKingJade";
+            case TowerType.GullinanDiamond:
+                return "GullinanDiamond";
+            case TowerType.ChineseJade:
+                return "ChineseJade";
+            case TowerType.Lazurite:
+                return "Lazurite";
+            case TowerType.GoldenJubilee:
+                return "GoldenJubilee";
         }
 
         return "";

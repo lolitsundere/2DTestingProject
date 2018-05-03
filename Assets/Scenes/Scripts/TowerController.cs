@@ -12,8 +12,7 @@ public class TowerController : MonoBehaviour
     public enum AttackArmorReduceEffect { ArmorReduceEffect0, ArmorReduceEffect1, ArmorReduceEffect2, ArmorReduceEffect4, ArmorReduceEffect8, ArmorReduceEffect16, ArmorReduceEffect64 };
     public enum AttackSplashEffect { SplashEffect0 , SplashEffect1, SplashEffect2, SplashEffect3,SplashEffect4,SplashEffect5, SplashEffect6};
     public enum BurnEffect { BurnEffect0, BurnEffect30, BurnEffect160, BurnEffect1250};
-    public enum AntiFlyEffect { AnitFly0, AntiFly1}
-
+    public enum AntiFlyEffect { AnitFly0, AntiFly1, AntiFly2}
 
     private double attackSpeed;
     public double AttackSpeed
@@ -29,7 +28,14 @@ public class TowerController : MonoBehaviour
 
             if (basicAttackTime > 0)
             {
-                attackTime = basicAttackTime / (attackSpeed * 0.01);
+                if (attackSpeed >= 20)
+                {
+                    attackTime = basicAttackTime / (attackSpeed * 0.01);
+                }
+                else
+                {
+                    attackTime = basicAttackTime / (20 * 0.01);
+                }
             }
         }
     }
@@ -59,9 +65,13 @@ public class TowerController : MonoBehaviour
         set
         {
             basicAttackTime = value;
-            if (AttackSpeed > 0)
+            if (attackSpeed >= 20)
             {
                 attackTime = basicAttackTime / (attackSpeed * 0.01);
+            }
+            else
+            {
+                attackTime = basicAttackTime / (20 * 0.01);
             }
         }
     }
@@ -132,6 +142,7 @@ public class TowerController : MonoBehaviour
             AttackRange = value;
         }
     }
+    public bool CanMagicSplash;
 
     public int MaxTargetAmount;
 
@@ -140,8 +151,11 @@ public class TowerController : MonoBehaviour
     public bool CanLightingChain;
     public bool CanAddRange;
     public bool ProvideCanNotMiss;
-    public bool CanNotMiss;
+    public bool CanHeal;
+
+    internal bool canNotMiss;
     private double canNotMissTimer;
+
     public int LightingChainDamage;
     public String TowerDescription;
 
@@ -164,6 +178,8 @@ public class TowerController : MonoBehaviour
     private double accelerate50;
     private double accelerate60;
     private double accelerate70;
+
+    public double UntouchableTimer;
 
     private double addRange300;
     
@@ -239,7 +255,7 @@ public class TowerController : MonoBehaviour
             {
                 if (go1.GetComponent<TowerController>().canNotMissTimer == 0)
                 {
-                    go1.GetComponent<TowerController>().CanNotMiss = true;
+                    go1.GetComponent<TowerController>().canNotMiss = true;
                 }
                 go1.GetComponent<TowerController>().canNotMissTimer = 0.5;
             }
@@ -251,7 +267,17 @@ public class TowerController : MonoBehaviour
             if (canNotMissTimer <= 0)
             {
                 canNotMissTimer = 0;
-                CanNotMiss = false;
+                canNotMiss = false;
+            }
+        }
+
+        if (UntouchableTimer > 0)
+        {
+            UntouchableTimer -= Time.deltaTime;
+            if (UntouchableTimer <= 0)
+            {
+                UntouchableTimer = 0;
+                AttackSpeed += 300;
             }
         }
     }
@@ -434,14 +460,31 @@ public class TowerController : MonoBehaviour
             var targets = Physics2D.OverlapCircleAll(transform.position, 6, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" }));
             foreach (var target in targets)
             {
-                if (target.GetComponent<EnemyController>().IsFlying)
+                if (target.GetComponent<EnemyController>().IsFlying && !target.GetComponent<EnemyController>().SpellImmunity)
                 {
-                    if (target.GetComponent<EnemyController>().flyingDisable1Timer == 0)
+                    if (target.GetComponent<EnemyController>().flyingDisable1Timer1 == 0)
                     {
                         target.GetComponent<EnemyController>().MovementSpeed -= 250;
                         target.GetComponent<EnemyController>().Armor -= 10;
                     }
-                    target.GetComponent<EnemyController>().flyingDisable1Timer = 0.5f;
+                    target.GetComponent<EnemyController>().flyingDisable1Timer1 = 0.5f;
+                }
+            }
+        }
+        else if (AFlyEffect == AntiFlyEffect.AntiFly2)
+        {
+            var targets = Physics2D.OverlapCircleAll(transform.position, 6, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" }));
+            foreach (var target in targets)
+            {
+                if (target.GetComponent<EnemyController>().IsFlying)
+                {
+                    if (target.GetComponent<EnemyController>().flyingDisable1Timer2 == 0)
+                    {
+                        target.GetComponent<EnemyController>().MovementSpeed -= 250;
+                        target.GetComponent<EnemyController>().Armor -= 10;
+                        target.GetComponent<EnemyController>().MagicResistance -= 0.5f;
+                    }
+                    target.GetComponent<EnemyController>().flyingDisable1Timer2 = 0.5f;
                 }
             }
         }

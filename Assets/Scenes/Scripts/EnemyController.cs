@@ -18,7 +18,7 @@ public class EnemyController : MonoBehaviour
             {
                 if (RefractionCharge <= 0)
                 {
-                    if (UnityEngine.Random.value < 0.2f)
+                    if (UnityEngine.Random.value < 0.15f)
                     {
                         RefractionCharge = 3;
                     }
@@ -36,6 +36,7 @@ public class EnemyController : MonoBehaviour
         }
     }
     private int health;
+    private Vector2 LastLocation;
 
     private float movementSpeed;
     public float MovementSpeed
@@ -63,11 +64,14 @@ public class EnemyController : MonoBehaviour
     public float Evation;
     public bool Disarmble;
     public bool Refractable;
+    public bool SpellImmunity;
+    public bool Untouchable;
 
     private int RefractionCharge = 0;
 
     public int ExperienceAndGold;
     public int MaxAmount;
+    public int MaxDamageToPlayer;
     public String EnemyDescription;
 
     private double attackSlow60Timer;
@@ -77,7 +81,8 @@ public class EnemyController : MonoBehaviour
     private double attackSlow180Timer;
     private double attackSlow480Timer;
 
-    public double flyingDisable1Timer;
+    public double flyingDisable1Timer1;
+    public double flyingDisable1Timer2;
 
     private double poison1Timer;
     private double poison2Timer;
@@ -100,125 +105,136 @@ public class EnemyController : MonoBehaviour
     /// <param name="tower"></param>
     public void TakeTowerAttack(TowerController tower)
     {
-        if (tower.CanNotMiss || Evation <= UnityEngine.Random.value)
+        if (Untouchable)
         {
-            switch (tower.AtkSlowEffect)
+            if (tower.UntouchableTimer == 0)
             {
-                case TowerController.AttackSlowEffect.SlowEffect60:
-                    if (attackSlow60Timer == 0)
-                    {
-                        MovementSpeed -= 60;
-                    }
-                    attackSlow60Timer = 2f;
-                    break;
-                case TowerController.AttackSlowEffect.SlowEffect90:
-                    if (attackSlow90Timer == 0)
-                    {
-                        MovementSpeed -= 90;
-                    }
-                    attackSlow90Timer = 2f;
-                    break;
-                case TowerController.AttackSlowEffect.SlowEffect120:
-                    if (attackSlow120Timer == 0)
-                    {
-                        MovementSpeed -= 120;
-                    }
-                    attackSlow120Timer = 2f;
-                    break;
-                case TowerController.AttackSlowEffect.SlowEffect150:
-                    if (attackSlow150Timer == 0)
-                    {
-                        MovementSpeed -= 150;
-                    }
-                    attackSlow150Timer = 2f;
-                    break;
-                case TowerController.AttackSlowEffect.SlowEffect180:
-                    if (attackSlow180Timer == 0)
-                    {
-                        MovementSpeed -= 180;
-                    }
-                    attackSlow180Timer = 2f;
-                    break;
-                case TowerController.AttackSlowEffect.SlowEffect480:
-                    if (attackSlow480Timer == 0)
-                    {
-                        MovementSpeed -= 480;
-                    }
-                    attackSlow480Timer = 2f;
-                    break;
+                tower.AttackSpeed -= 300;
             }
-
-            switch (tower.AtkPoisonEffect)
+            tower.UntouchableTimer = 5f;
+        }
+        if (tower.canNotMiss || Evation <= UnityEngine.Random.value)
+        {
+            if (!SpellImmunity)
             {
-                case TowerController.AttackPoisonEffect.PoisonEffect1:
-                    poison1Timer = 5.1f;
-                    break;
-                case TowerController.AttackPoisonEffect.PoisonEffect2:
-                    poison2Timer = 5.1f;
-                    break;
-                case TowerController.AttackPoisonEffect.PoisonEffect4:
-                    poison4Timer = 5.1f;
-                    break;
-                case TowerController.AttackPoisonEffect.PoisonEffect8:
-                    poison8Timer = 5.1f;
-                    break;
-                case TowerController.AttackPoisonEffect.PoisonEffect16:
-                    poison16Timer = 5.1f;
-                    break;
-                case TowerController.AttackPoisonEffect.PoisonEffect64:
-                    poison64Timer = 5.1f;
-                    break;
-            }
+                switch (tower.AtkSlowEffect)
+                {
+                    case TowerController.AttackSlowEffect.SlowEffect60:
+                        if (attackSlow60Timer == 0)
+                        {
+                            MovementSpeed -= 60;
+                        }
+                        attackSlow60Timer = 2f;
+                        break;
+                    case TowerController.AttackSlowEffect.SlowEffect90:
+                        if (attackSlow90Timer == 0)
+                        {
+                            MovementSpeed -= 90;
+                        }
+                        attackSlow90Timer = 2f;
+                        break;
+                    case TowerController.AttackSlowEffect.SlowEffect120:
+                        if (attackSlow120Timer == 0)
+                        {
+                            MovementSpeed -= 120;
+                        }
+                        attackSlow120Timer = 2f;
+                        break;
+                    case TowerController.AttackSlowEffect.SlowEffect150:
+                        if (attackSlow150Timer == 0)
+                        {
+                            MovementSpeed -= 150;
+                        }
+                        attackSlow150Timer = 2f;
+                        break;
+                    case TowerController.AttackSlowEffect.SlowEffect180:
+                        if (attackSlow180Timer == 0)
+                        {
+                            MovementSpeed -= 180;
+                        }
+                        attackSlow180Timer = 2f;
+                        break;
+                    case TowerController.AttackSlowEffect.SlowEffect480:
+                        if (attackSlow480Timer == 0)
+                        {
+                            MovementSpeed -= 480;
+                        }
+                        attackSlow480Timer = 2f;
+                        break;
+                }
 
-            switch (tower.AtkArmorReduceEffect)
-            {
-                case TowerController.AttackArmorReduceEffect.ArmorReduceEffect1:
-                    if (attackArmorReduce1Timer == 0)
-                    {
-                        Armor -= 1;
-                    }
-                    attackArmorReduce1Timer = 2f;
-                    break;
-                case TowerController.AttackArmorReduceEffect.ArmorReduceEffect2:
-                    if (attackArmorReduce2Timer == 0)
-                    {
-                        Armor -= 2;
-                    }
-                    attackArmorReduce2Timer = 2f;
-                    break;
-                case TowerController.AttackArmorReduceEffect.ArmorReduceEffect4:
-                    if (attackArmorReduce4Timer == 0)
-                    {
-                        Armor -= 4;
-                    }
-                    attackArmorReduce4Timer = 2f;
-                    break;
-                case TowerController.AttackArmorReduceEffect.ArmorReduceEffect8:
-                    if (attackArmorReduce8Timer == 0)
-                    {
-                        Armor -= 8;
-                    }
-                    attackArmorReduce8Timer = 2f;
-                    break;
-                case TowerController.AttackArmorReduceEffect.ArmorReduceEffect16:
-                    if (attackArmorReduce16Timer == 0)
-                    {
-                        Armor -= 16;
-                    }
-                    attackArmorReduce16Timer = 2f;
-                    break;
-                case TowerController.AttackArmorReduceEffect.ArmorReduceEffect64:
-                    if (attackArmorReduce64Timer == 0)
-                    {
-                        Armor -= 64;
-                    }
-                    attackArmorReduce64Timer = 2f;
-                    break;
-            }
+                switch (tower.AtkPoisonEffect)
+                {
+                    case TowerController.AttackPoisonEffect.PoisonEffect1:
+                        poison1Timer = 5.1f;
+                        break;
+                    case TowerController.AttackPoisonEffect.PoisonEffect2:
+                        poison2Timer = 5.1f;
+                        break;
+                    case TowerController.AttackPoisonEffect.PoisonEffect4:
+                        poison4Timer = 5.1f;
+                        break;
+                    case TowerController.AttackPoisonEffect.PoisonEffect8:
+                        poison8Timer = 5.1f;
+                        break;
+                    case TowerController.AttackPoisonEffect.PoisonEffect16:
+                        poison16Timer = 5.1f;
+                        break;
+                    case TowerController.AttackPoisonEffect.PoisonEffect64:
+                        poison64Timer = 5.1f;
+                        break;
+                }
 
-            if (tower.CanLightingChain && UnityEngine.Random.value <= 0.3)
-            {
-                TakeLightingChain(tower.LightingChainDamage, 5);
+                switch (tower.AtkArmorReduceEffect)
+                {
+                    case TowerController.AttackArmorReduceEffect.ArmorReduceEffect1:
+                        if (attackArmorReduce1Timer == 0)
+                        {
+                            Armor -= 1;
+                        }
+                        attackArmorReduce1Timer = 2f;
+                        break;
+                    case TowerController.AttackArmorReduceEffect.ArmorReduceEffect2:
+                        if (attackArmorReduce2Timer == 0)
+                        {
+                            Armor -= 2;
+                        }
+                        attackArmorReduce2Timer = 2f;
+                        break;
+                    case TowerController.AttackArmorReduceEffect.ArmorReduceEffect4:
+                        if (attackArmorReduce4Timer == 0)
+                        {
+                            Armor -= 4;
+                        }
+                        attackArmorReduce4Timer = 2f;
+                        break;
+                    case TowerController.AttackArmorReduceEffect.ArmorReduceEffect8:
+                        if (attackArmorReduce8Timer == 0)
+                        {
+                            Armor -= 8;
+                        }
+                        attackArmorReduce8Timer = 2f;
+                        break;
+                    case TowerController.AttackArmorReduceEffect.ArmorReduceEffect16:
+                        if (attackArmorReduce16Timer == 0)
+                        {
+                            Armor -= 16;
+                        }
+                        attackArmorReduce16Timer = 2f;
+                        break;
+                    case TowerController.AttackArmorReduceEffect.ArmorReduceEffect64:
+                        if (attackArmorReduce64Timer == 0)
+                        {
+                            Armor -= 64;
+                        }
+                        attackArmorReduce64Timer = 2f;
+                        break;
+                }
+
+                if (tower.CanLightingChain && UnityEngine.Random.value <= 0.3)
+                {
+                    TakeLightingChain(tower.LightingChainDamage, 5);
+                }
             }
 
             double damage=0;
@@ -232,10 +248,26 @@ public class EnemyController : MonoBehaviour
             }
             Health -= Convert.ToInt32(damage);
 
+            if (tower.CanMagicSplash)
+            {
+                foreach (Collider2D enemy in Physics2D.OverlapCircleAll(transform.position, 2, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" })))
+                {
+                    enemy.GetComponent<EnemyController>().TakeMagicDamage(tower.PhysicalDamage);
+                }
+            }
+
+            if (tower.CanHeal && UnityEngine.Random.value <= 0.01)
+            {
+                var wm = FindObjectOfType<WorldManager>();
+                if (wm.Health < 100)
+                {
+                    wm.Health++;
+                }
+            }
             switch (tower.AtkSplashEffect)
             {
                 case TowerController.AttackSplashEffect.SplashEffect1:
-                    var enemyNear = Physics2D.OverlapCircleAll(transform.position, 3, LayerMask.GetMask("Enemy"));
+                    var enemyNear = Physics2D.OverlapCircleAll(transform.position, 3, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" }));
                     foreach (Collider2D enemy in enemyNear)
                     {
                         if (enemy.gameObject != transform.gameObject)
@@ -246,7 +278,7 @@ public class EnemyController : MonoBehaviour
                     break;
 
                 case TowerController.AttackSplashEffect.SplashEffect2:
-                    enemyNear = Physics2D.OverlapCircleAll(transform.position, 3.5f, LayerMask.GetMask("Enemy"));
+                    enemyNear = Physics2D.OverlapCircleAll(transform.position, 3.5f, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" }));
                     foreach (Collider2D enemy in enemyNear)
                     {
                         if (enemy.gameObject != transform.gameObject)
@@ -257,7 +289,7 @@ public class EnemyController : MonoBehaviour
                     break;
 
                 case TowerController.AttackSplashEffect.SplashEffect3:
-                    enemyNear = Physics2D.OverlapCircleAll(transform.position, 4, LayerMask.GetMask("Enemy"));
+                    enemyNear = Physics2D.OverlapCircleAll(transform.position, 4, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" }));
                     foreach (Collider2D enemy in enemyNear)
                     {
                         if (enemy.gameObject != transform.gameObject)
@@ -268,7 +300,7 @@ public class EnemyController : MonoBehaviour
                     break;
 
                 case TowerController.AttackSplashEffect.SplashEffect4:
-                    enemyNear = Physics2D.OverlapCircleAll(transform.position, 4.5f, LayerMask.GetMask("Enemy"));
+                    enemyNear = Physics2D.OverlapCircleAll(transform.position, 4.5f, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" }));
                     foreach (Collider2D enemy in enemyNear)
                     {
                         if (enemy.gameObject != transform.gameObject)
@@ -279,7 +311,7 @@ public class EnemyController : MonoBehaviour
                     break;
 
                 case TowerController.AttackSplashEffect.SplashEffect5:
-                    enemyNear = Physics2D.OverlapCircleAll(transform.position, 5, LayerMask.GetMask("Enemy"));
+                    enemyNear = Physics2D.OverlapCircleAll(transform.position, 5, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" }));
                     foreach (Collider2D enemy in enemyNear)
                     {
                         if (enemy.gameObject != transform.gameObject)
@@ -290,7 +322,7 @@ public class EnemyController : MonoBehaviour
                     break;
 
                 case TowerController.AttackSplashEffect.SplashEffect6:
-                    enemyNear = Physics2D.OverlapCircleAll(transform.position, 7, LayerMask.GetMask("Enemy"));
+                    enemyNear = Physics2D.OverlapCircleAll(transform.position, 7, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" }));
                     foreach (Collider2D enemy in enemyNear)
                     {
                         if (enemy.gameObject != transform.gameObject)
@@ -326,16 +358,34 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+
+    private void FixedUpdate()
+    {
+        if (LastLocation.x < transform.localPosition.x)
+        {
+            transform.GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else
+        {
+            transform.GetComponent<SpriteRenderer>().flipX = false;
+        }
+        LastLocation = transform.localPosition;
+
+    }
+
     /// <summary>
     /// 受到魔法伤害
     /// </summary>
     /// <param name="damageAmount"></param>
     public void TakeMagicDamage(int damageAmount)
     {
-        double damage = Mathf.Round((1 - MagicResistance) * damageAmount);
-        Health -= Convert.ToInt32(damage);
+        if (!SpellImmunity)
+        {
+            double damage = Mathf.Round((1 - MagicResistance) * damageAmount);
+            Health -= Convert.ToInt32(damage);
 
-        HealthBarChange();
+            HealthBarChange();
+        }
     }
 
     /// <summary>
@@ -366,6 +416,7 @@ public class EnemyController : MonoBehaviour
         Back = Instantiate(Back, transform);
         Front.localPosition = new Vector3(0, 0.8f, 0);
         Back.localPosition = new Vector3(0, 0.8f, 0);
+        MaxDamageToPlayer = 13;
     }
 
     private void Update()
@@ -696,14 +747,26 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     private void CheckForFlyingDisable()
     {
-        if (flyingDisable1Timer > 0)
+        if (flyingDisable1Timer1 > 0)
         {
-            flyingDisable1Timer -= Time.deltaTime;
-            if (flyingDisable1Timer <= 0)
+            flyingDisable1Timer1 -= Time.deltaTime;
+            if (flyingDisable1Timer1 <= 0)
             {
-                flyingDisable1Timer = 0;
+                flyingDisable1Timer1 = 0;
                 MovementSpeed += 250;
                 Armor += 10;
+            }
+        }
+
+        if (flyingDisable1Timer2 > 0)
+        {
+            flyingDisable1Timer2 -= Time.deltaTime;
+            if (flyingDisable1Timer2 <= 0)
+            {
+                flyingDisable1Timer2 = 0;
+                MovementSpeed += 250;
+                Armor += 10;
+                MagicResistance += 0.5f;
             }
         }
     }

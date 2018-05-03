@@ -32,6 +32,7 @@ public class WorldManager : MonoBehaviour {
     public Text ItemInfo4;
     public Text ItemDescription;
     public Text TopText;
+    public int Health;
 
 
     public HashSet<NavMeshSurface> NavSet = new HashSet<NavMeshSurface>();
@@ -85,6 +86,7 @@ public class WorldManager : MonoBehaviour {
         CreateWorld();
         MazeLengthMessage.text = "迷宫长度:" + GetMazeLength();
         EnemyInfo.text = "下拨敌人: 普通敌人";
+        Health = 100;
     }
 
 
@@ -116,6 +118,8 @@ public class WorldManager : MonoBehaviour {
 
     private void Update()
     {
+        TopText.text = String.Format("等级: {0} 经验: {1} 金钱: {2} HP:{3}/100", PlayerLevel, PlayerExp, PlayerGold, Health);
+
         if (SelectedObject != null && SelectedObject.tag == "Tower")
         {
             ItemInfo1.text = TowerManager.GetTowerName(TowerManager.GetTowerType(SelectedObject));
@@ -231,6 +235,8 @@ public class WorldManager : MonoBehaviour {
                         var nav = EnemyDic[go].transform.GetComponent<NavMeshAgent>();
                         if (nav.destination.x == posX && nav.destination.z == posY)
                         {
+                            var ec = go.GetComponent<EnemyController>();
+                            Health -= Convert.ToInt32(Mathf.Round((0f + ec.MaxDamageToPlayer) * ec.Health / ec.MaxHealth + 1));
                             DestroyEnemy(go);
                         }
                     };
@@ -341,9 +347,6 @@ public class WorldManager : MonoBehaviour {
         {
             PlayerLevel = 2;
         }
-
-        TopText.text = String.Format("等级: {0} 经验: {1} 金钱: {2}", PlayerLevel, PlayerExp, PlayerGold);
-
         Destroy(EnemyDic[go]);
         EnemyDic.Remove(go);
         Destroy(go);
