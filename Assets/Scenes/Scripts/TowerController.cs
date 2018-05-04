@@ -40,6 +40,19 @@ public class TowerController : MonoBehaviour
         }
     }
 
+    public int DamageDealed;
+    private int mvpLevel;
+    public int MVPLevel
+    {
+        get { return mvpLevel;}
+        set
+        {
+            mvpLevel = value;
+            PhysicalDamage = Mathf.RoundToInt(BasicPhysicalDamage * (1f + 0.1f * mvpLevel));
+        }
+    }
+    private HashSet<GameObject> mvpAuraTargetsSet = new HashSet<GameObject>();
+
     public double BasicAttackSpeed
     {
         set
@@ -76,6 +89,7 @@ public class TowerController : MonoBehaviour
         }
     }
 
+    public int BasicPhysicalDamage;
     public int PhysicalDamage;
 
     private int attackRange;
@@ -226,6 +240,9 @@ public class TowerController : MonoBehaviour
         CheckAccelerateState();
         CheckBurnAttack();
         CheckAntiFly();
+
+        var targets = Physics2D.OverlapCircleAll(transform.position, 6, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" }));
+        
 
         if (CanAddRange)
         {
@@ -419,7 +436,7 @@ public class TowerController : MonoBehaviour
             {
                 foreach (Collider2D target in targets)
                 {
-                    target.GetComponent<EnemyController>().TakeMagicDamage(30);
+                    target.GetComponent<EnemyController>().TakeMagicDamage(this,30);
                 }
                 burnTimer = 0;
             }
@@ -432,7 +449,7 @@ public class TowerController : MonoBehaviour
             {
                 foreach (Collider2D target in targets)
                 {
-                    target.GetComponent<EnemyController>().TakeMagicDamage(160);
+                    target.GetComponent<EnemyController>().TakeMagicDamage(this,160);
                 }
                 burnTimer = 0;
             }
@@ -445,7 +462,7 @@ public class TowerController : MonoBehaviour
             {
                 foreach (Collider2D target in targets)
                 {
-                    target.GetComponent<EnemyController>().TakeMagicDamage(1250);
+                    target.GetComponent<EnemyController>().TakeMagicDamage(this,1250);
                 }
                 burnTimer = 0;
             }

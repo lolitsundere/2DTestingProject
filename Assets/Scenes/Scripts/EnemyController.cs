@@ -14,19 +14,60 @@ public class EnemyController : MonoBehaviour
         }
         set
         {
-            if (Refractable)
+            if (value < health)
             {
-                if (RefractionCharge <= 0)
+                if (CanRun && UnityEngine.Random.value <= 0.15)
                 {
-                    if (UnityEngine.Random.value < 0.15f)
+                    if (runingTimer == 0)
                     {
-                        RefractionCharge = 3;
+                        float movementSpeedDiff = 0;
+                        if (attackSlow60Timer > 0)
+                        {
+                            movementSpeedDiff += 60;
+                        }
+                        if (attackSlow90Timer > 0)
+                        {
+                            movementSpeedDiff += 90;
+                        }
+                        if (attackSlow120Timer > 0)
+                        {
+                            movementSpeedDiff += 120;
+                        }
+                        if (attackSlow150Timer > 0)
+                        {
+                            movementSpeedDiff += 150;
+                        }
+                        if (attackSlow180Timer > 0)
+                        {
+                            movementSpeedDiff += 180;
+                        }
+                        if (attackSlow480Timer > 0)
+                        {
+                            movementSpeedDiff += 480;
+                        }
+
+                        MovementSpeed = (MovementSpeed + movementSpeedDiff) * 1.5f - movementSpeedDiff;
                     }
-                    health = value;
+                    runingTimer = 2;
+                }
+                if (Refractable)
+                {
+                    if (RefractionCharge <= 0)
+                    {
+                        if (UnityEngine.Random.value < 0.15f)
+                        {
+                            RefractionCharge = 3;
+                        }
+                        health = value;
+                    }
+                    else
+                    {
+                        RefractionCharge--;
+                    }
                 }
                 else
                 {
-                    RefractionCharge--;
+                    health = value;
                 }
             }
             else
@@ -40,7 +81,7 @@ public class EnemyController : MonoBehaviour
 
     private float movementSpeed;
     public float MovementSpeed
-    {
+    { 
         get
         {
             return movementSpeed;
@@ -50,10 +91,18 @@ public class EnemyController : MonoBehaviour
             if (value != movementSpeed)
             {
                 movementSpeed = value;
-                nav.speed = movementSpeed / 400 * 3;
+                if (movementSpeed > 100)
+                {
+                    nav.speed = movementSpeed / 400 * 3;
+                }
+                else
+                {
+                    nav.speed = 100 / 400 * 3;
+                }
             }
         }
     }
+
     public int Armor;
     public float MagicResistance;
     public Transform Front;
@@ -66,6 +115,8 @@ public class EnemyController : MonoBehaviour
     public bool Refractable;
     public bool SpellImmunity;
     public bool Untouchable;
+    public bool CanRun;
+    public bool CanStackArmor;
 
     private int RefractionCharge = 0;
 
@@ -91,12 +142,21 @@ public class EnemyController : MonoBehaviour
     private double poison16Timer;
     private double poison64Timer;
 
+    internal TowerController poison1Tower;
+    internal TowerController poison2Tower;
+    internal TowerController poison4Tower;
+    internal TowerController poison8Tower;
+    internal TowerController poison16Tower;
+    internal TowerController poison64Tower;
+
     private double attackArmorReduce1Timer;
     private double attackArmorReduce2Timer;
     private double attackArmorReduce4Timer;
     private double attackArmorReduce8Timer;
     private double attackArmorReduce16Timer;
     private double attackArmorReduce64Timer;
+
+    private double runingTimer;
 
 
     /// <summary>
@@ -166,21 +226,27 @@ public class EnemyController : MonoBehaviour
                 switch (tower.AtkPoisonEffect)
                 {
                     case TowerController.AttackPoisonEffect.PoisonEffect1:
+                        poison1Tower = tower;
                         poison1Timer = 5.1f;
                         break;
                     case TowerController.AttackPoisonEffect.PoisonEffect2:
                         poison2Timer = 5.1f;
+                        poison2Tower = tower;
                         break;
                     case TowerController.AttackPoisonEffect.PoisonEffect4:
+                        poison4Tower = tower;
                         poison4Timer = 5.1f;
                         break;
                     case TowerController.AttackPoisonEffect.PoisonEffect8:
+                        poison8Tower = tower;
                         poison8Timer = 5.1f;
                         break;
                     case TowerController.AttackPoisonEffect.PoisonEffect16:
+                        poison16Tower = tower;
                         poison16Timer = 5.1f;
                         break;
                     case TowerController.AttackPoisonEffect.PoisonEffect64:
+                        poison64Tower = tower;
                         poison64Timer = 5.1f;
                         break;
                 }
@@ -233,26 +299,38 @@ public class EnemyController : MonoBehaviour
 
                 if (tower.CanLightingChain && UnityEngine.Random.value <= 0.3)
                 {
-                    TakeLightingChain(tower.LightingChainDamage, 5);
+                    TakeLightingChain(tower, tower.LightingChainDamage, 5);
                 }
             }
 
-            double damage=0;
+
+            int damage=0;
             if (tower.CanCrit && UnityEngine.Random.value <= 0.1)
             {
-                damage = Mathf.Round((1 - (0.05f * Armor / (1 + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage * 5);
+                damage = Mathf.RoundToInt((1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage * 5);
             }
             else
             {
-                damage = Mathf.Round((1 - (0.05f * Armor / (1 + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage);
+                damage = Mathf.RoundToInt((1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage);
             }
-            Health -= Convert.ToInt32(damage);
+            
+            if (damage > Health)
+            {
+                tower.DamageDealed += Health;
+            }
+            else
+            {
+                tower.DamageDealed += damage;
+            }
+
+            Health -= damage;
+
 
             if (tower.CanMagicSplash)
             {
                 foreach (Collider2D enemy in Physics2D.OverlapCircleAll(transform.position, 2, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" })))
                 {
-                    enemy.GetComponent<EnemyController>().TakeMagicDamage(tower.PhysicalDamage);
+                    enemy.GetComponent<EnemyController>().TakeMagicDamage(tower, tower.PhysicalDamage);
                 }
             }
 
@@ -264,6 +342,12 @@ public class EnemyController : MonoBehaviour
                     wm.Health++;
                 }
             }
+
+            if (CanStackArmor)
+            {
+                Armor += 5;
+            }
+
             switch (tower.AtkSplashEffect)
             {
                 case TowerController.AttackSplashEffect.SplashEffect1:
@@ -272,7 +356,7 @@ public class EnemyController : MonoBehaviour
                     {
                         if (enemy.gameObject != transform.gameObject)
                         {
-                            enemy.GetComponent<EnemyController>().TakePureDamage(Convert.ToInt32(Mathf.Round((1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage * 0.3f)));
+                            enemy.GetComponent<EnemyController>().TakePureDamage(tower,Convert.ToInt32(damage * 0.3f));
                         }
                     }
                     break;
@@ -283,7 +367,7 @@ public class EnemyController : MonoBehaviour
                     {
                         if (enemy.gameObject != transform.gameObject)
                         {
-                            enemy.GetComponent<EnemyController>().TakePureDamage(Convert.ToInt32(Mathf.Round((1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage * 0.4f)));
+                            enemy.GetComponent<EnemyController>().TakePureDamage(tower,Convert.ToInt32(damage * 0.4f));
                         }
                     }
                     break;
@@ -294,7 +378,7 @@ public class EnemyController : MonoBehaviour
                     {
                         if (enemy.gameObject != transform.gameObject)
                         {
-                            enemy.GetComponent<EnemyController>().TakePureDamage(Convert.ToInt32(Mathf.Round((1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage * 0.5f)));
+                            enemy.GetComponent<EnemyController>().TakePureDamage(tower,Convert.ToInt32(damage * 0.5f));
                         }
                     }
                     break;
@@ -305,7 +389,7 @@ public class EnemyController : MonoBehaviour
                     {
                         if (enemy.gameObject != transform.gameObject)
                         {
-                            enemy.GetComponent<EnemyController>().TakePureDamage(Convert.ToInt32(Mathf.Round((1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage * 0.6f)));
+                            enemy.GetComponent<EnemyController>().TakePureDamage(tower,Convert.ToInt32(damage * 0.6f));
                         }
                     }
                     break;
@@ -316,7 +400,7 @@ public class EnemyController : MonoBehaviour
                     {
                         if (enemy.gameObject != transform.gameObject)
                         {
-                            enemy.GetComponent<EnemyController>().TakePureDamage(Convert.ToInt32(Mathf.Round((1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage * 0.7f)));
+                            enemy.GetComponent<EnemyController>().TakePureDamage(tower,Convert.ToInt32(damage * 0.7f));
                         }
                     }
                     break;
@@ -327,7 +411,7 @@ public class EnemyController : MonoBehaviour
                     {
                         if (enemy.gameObject != transform.gameObject)
                         {
-                            enemy.GetComponent<EnemyController>().TakePureDamage(Convert.ToInt32(Mathf.Round((1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage)));
+                            enemy.GetComponent<EnemyController>().TakePureDamage(tower, damage);
                         }
                     }
                     break;
@@ -341,20 +425,20 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     /// <param name="damage"></param>
     /// <param name="count"></param>
-    public void TakeLightingChain(int damage, int count)
+    public void TakeLightingChain(TowerController tower,int damage, int count)
     {
         if (count == 0)
         {
             return;
         }
 
-        TakeMagicDamage(damage);
+        TakeMagicDamage(tower,damage);
 
         var targets = Physics2D.OverlapCircleAll(transform.position, 30, LayerMask.GetMask("Enemy"));
         if (targets.Length > 0)
         {
             int i = new System.Random().Next(targets.Length);
-            targets[i].GetComponent<EnemyController>().TakeLightingChain(damage, --count);
+            targets[i].GetComponent<EnemyController>().TakeLightingChain(tower, damage, --count);
         }
     }
 
@@ -377,13 +461,22 @@ public class EnemyController : MonoBehaviour
     /// 受到魔法伤害
     /// </summary>
     /// <param name="damageAmount"></param>
-    public void TakeMagicDamage(int damageAmount)
+    public void TakeMagicDamage(TowerController tower, int damageAmount)
     {
         if (!SpellImmunity)
         {
             double damage = Mathf.Round((1 - MagicResistance) * damageAmount);
-            Health -= Convert.ToInt32(damage);
 
+            if (damage > Health)
+            {
+                tower.DamageDealed += Health;
+            }
+            else
+            {
+                tower.DamageDealed += Convert.ToInt32(damage);
+            }
+
+            Health -= Convert.ToInt32(damage);
             HealthBarChange();
         }
     }
@@ -392,8 +485,16 @@ public class EnemyController : MonoBehaviour
     /// 受到纯粹伤害
     /// </summary>
     /// <param name="damageAmount"></param>
-    public void TakePureDamage(int damageAmount)
+    public void TakePureDamage(TowerController tower, int damageAmount)
     {
+        if (damageAmount > Health)
+        {
+            tower.DamageDealed += Health;
+        }
+        else
+        {
+            tower.DamageDealed += damageAmount;
+        }
         Health -= damageAmount;
         HealthBarChange();
     }
@@ -416,7 +517,10 @@ public class EnemyController : MonoBehaviour
         Back = Instantiate(Back, transform);
         Front.localPosition = new Vector3(0, 0.8f, 0);
         Back.localPosition = new Vector3(0, 0.8f, 0);
-        MaxDamageToPlayer = 13;
+        if (MaxDamageToPlayer == 0)
+        {
+            MaxDamageToPlayer = 13;
+        }
     }
 
     private void Update()
@@ -426,15 +530,9 @@ public class EnemyController : MonoBehaviour
         CheckArmorReduceState();
         CheckForFlyingDisable();
         CheckColor();
-
+        CheckRuningState();
         CheckForDisArm();
         CheckForInvision();
-        
-
-        if (MovementSpeed <100)
-        {
-            MovementSpeed = 100;
-        }
     }
 
     /// <summary>
@@ -491,7 +589,7 @@ public class EnemyController : MonoBehaviour
             poison1Timer -= Time.deltaTime;
             if (Convert.ToInt32(poison1Timer*100)%100 == 0)
             {
-                TakeMagicDamage(1);
+                TakeMagicDamage(poison1Tower,1);
             }
             if (poison1Timer <= 0)
             {
@@ -504,7 +602,7 @@ public class EnemyController : MonoBehaviour
             poison2Timer -= Time.deltaTime;
             if (Convert.ToInt32(poison2Timer * 100) % 100 == 0)
             {
-                TakeMagicDamage(2);
+                TakeMagicDamage(poison2Tower,2);
             }
             if (poison2Timer <= 0)
             {
@@ -517,7 +615,7 @@ public class EnemyController : MonoBehaviour
             poison4Timer -= Time.deltaTime;
             if (Convert.ToInt32(poison4Timer * 100) % 100 == 0)
             {
-                TakeMagicDamage(4);
+                TakeMagicDamage(poison4Tower,4);
             }
             if (poison4Timer <= 0)
             {
@@ -530,7 +628,7 @@ public class EnemyController : MonoBehaviour
             poison8Timer -= Time.deltaTime;
             if (Convert.ToInt32(poison8Timer * 100) % 100 == 0)
             {
-                TakeMagicDamage(8);
+                TakeMagicDamage(poison8Tower,8);
             }
             if (poison8Timer <= 0)
             {
@@ -543,7 +641,7 @@ public class EnemyController : MonoBehaviour
             poison16Timer -= Time.deltaTime;
             if (Convert.ToInt32(poison16Timer * 100) % 100 == 0)
             {
-                TakeMagicDamage(16);
+                TakeMagicDamage(poison16Tower,16);
             }
             if (poison16Timer <= 0)
             {
@@ -556,7 +654,7 @@ public class EnemyController : MonoBehaviour
             poison64Timer -= Time.deltaTime;
             if (Convert.ToInt32(poison64Timer * 100) % 100 == 0)
             {
-                TakeMagicDamage(64);
+                TakeMagicDamage(poison64Tower,64);
             }
             if (poison64Timer <= 0)
             {
@@ -767,6 +865,47 @@ public class EnemyController : MonoBehaviour
                 MovementSpeed += 250;
                 Armor += 10;
                 MagicResistance += 0.5f;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 更新奔跑状态
+    /// </summary>
+    private void CheckRuningState()
+    {
+        if (runingTimer > 0)
+        {
+            runingTimer -= Time.deltaTime;
+            if (runingTimer <= 0)
+            {
+                runingTimer = 0;
+                int movementSpeedDiff = 0;
+                if (attackSlow60Timer > 0)
+                {
+                    movementSpeedDiff += 60;
+                }
+                if (attackSlow90Timer > 0)
+                {
+                    movementSpeedDiff += 90;
+                }
+                if (attackSlow120Timer > 0)
+                {
+                    movementSpeedDiff += 120;
+                }
+                if (attackSlow150Timer > 0)
+                {
+                    movementSpeedDiff += 150;
+                }
+                if (attackSlow180Timer > 0)
+                {
+                    movementSpeedDiff += 180;
+                }
+                if (attackSlow480Timer > 0)
+                {
+                    movementSpeedDiff += 480;
+                }
+                MovementSpeed = (MovementSpeed + movementSpeedDiff) / 1.5f - movementSpeedDiff;
             }
         }
     }
