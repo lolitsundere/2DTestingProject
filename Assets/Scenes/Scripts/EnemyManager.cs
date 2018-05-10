@@ -440,6 +440,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.ExperienceAndGold = 300;
                 enemy.MaxAmount = 1;
                 enemy.MaxDamageToPlayer = 100;
+                enemy.IsFlying = true;
                 break;
         }
     }

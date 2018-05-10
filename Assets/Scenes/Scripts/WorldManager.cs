@@ -32,6 +32,8 @@ public class WorldManager : MonoBehaviour {
     public Text ItemInfo4;
     public Text ItemDescription;
     public Text TopText;
+    public Button CombinePanelButton;
+    public GameObject CombinePanel;
     public int Health;
 
 
@@ -87,6 +89,33 @@ public class WorldManager : MonoBehaviour {
         MazeLengthMessage.text = "迷宫长度:" + GetMazeLength();
         EnemyInfo.text = "下拨敌人: 普通敌人";
         Health = 100;
+
+        CombinePanelButton.onClick.AddListener(() =>
+        {
+            CombinePanel.SetActive(true);
+
+            HashSet<TowerManager.TowerType> ConstructingTowerSet = new HashSet<TowerManager.TowerType>();
+
+            foreach (GameObject tower in OneTurnTowerList)
+            {
+                TowerManager.TowerType tt = TowerManager.GetTowerType(tower);
+                if (!ConstructingTowerSet.Contains(tt))
+                {
+                    ConstructingTowerSet.Add(tt);
+                }
+            }
+
+            foreach (TowerManager.TowerType tt in ConstructingTowerSet)
+            {
+                if (TowerManager.GetTowerTag(tt) != "Untagged")
+                {
+                    foreach (var go in GameObject.FindGameObjectsWithTag(TowerManager.GetTowerTag(tt)))
+                    {
+                        go.GetComponent<Text>().color = new Color32(0xF1,0xFF,0x00,0xFF);
+                    }
+                }
+            }
+        });
     }
 
 
@@ -123,7 +152,7 @@ public class WorldManager : MonoBehaviour {
         if (SelectedObject != null && SelectedObject.tag == "Tower")
         {
             ItemInfo1.text = TowerManager.GetTowerName(TowerManager.GetTowerType(SelectedObject));
-            ItemInfo2.text = String.Format("攻击力:{0}", SelectedObject.GetComponent<TowerController>().BasicPhysicalDamage);
+            ItemInfo2.text = String.Format("攻击力:{0}", Mathf.Round(SelectedObject.GetComponent<TowerController>().PhysicalDamage));
             ItemInfo3.text = String.Format("基础攻击间隔:{0}s", SelectedObject.GetComponent<TowerController>().BasicAttackTime);
             ItemInfo4.text = String.Format("攻击速度:{0}", SelectedObject.GetComponent<TowerController>().AttackSpeed);
             ItemDescription.text = SelectedObject.GetComponent<TowerController>().TowerDescription;
@@ -146,7 +175,7 @@ public class WorldManager : MonoBehaviour {
                 }
                 if (SelectedObject!=null && SelectedObject.tag == "Enemy")
                 {
-                    ItemInfo1.text = String.Format("生命值:{0}/{1}", SelectedObject.GetComponent<EnemyController>().Health, SelectedObject.GetComponent<EnemyController>().MaxHealth);
+                    ItemInfo1.text = String.Format("生命值:{0}/{1}", Mathf.RoundToInt(SelectedObject.GetComponent<EnemyController>().Health), SelectedObject.GetComponent<EnemyController>().MaxHealth);
                     ItemInfo2.text = String.Format("护甲:{0}", SelectedObject.GetComponent<EnemyController>().Armor);
                     ItemInfo3.text = String.Format("魔法抗性:{0}%", SelectedObject.GetComponent<EnemyController>().MagicResistance * 100);
                     ItemInfo4.text = String.Format("移动速度:{0}", SelectedObject.GetComponent<EnemyController>().MovementSpeed);
@@ -154,7 +183,7 @@ public class WorldManager : MonoBehaviour {
                 }
                 if (CurrentEnemyAcount == EnemyPerLevel && EnemyDic.Count == 0)
                 {
-                    SortedDictionary<int, GameObject> towerDamageDic = new SortedDictionary<int, GameObject>(new DescendingComparer<int>());
+                    SortedDictionary<float, GameObject> towerDamageDic = new SortedDictionary<float, GameObject>(new DescendingComparer<float>());
                     foreach (GameObject tower in TowerList)
                     {
                         while (towerDamageDic.ContainsKey(tower.GetComponent<TowerController>().DamageDealed))
@@ -413,7 +442,7 @@ public class WorldManager : MonoBehaviour {
             EnabledAttackRange.enabled = false;
         }
         ClearUI();
-        ItemInfo1.text = String.Format("生命值:{0}/{1}", SelectedObject.GetComponent<EnemyController>().Health, SelectedObject.GetComponent<EnemyController>().MaxHealth);
+        ItemInfo1.text = String.Format("生命值:{0}/{1}", Mathf.RoundToInt(SelectedObject.GetComponent<EnemyController>().Health), SelectedObject.GetComponent<EnemyController>().MaxHealth);
         ItemInfo2.text = String.Format("护甲:{0}", SelectedObject.GetComponent<EnemyController>().Armor);
         ItemInfo3.text = String.Format("魔法抗性:{0}%", SelectedObject.GetComponent<EnemyController>().MagicResistance*100);
         ItemInfo4.text = String.Format("移动速度:{0}", SelectedObject.GetComponent<EnemyController>().MovementSpeed);
@@ -610,6 +639,10 @@ public class WorldManager : MonoBehaviour {
 
         TowerManager.SettingTower(tower.GetComponent<TowerController>(), TowerManager.GetTowerType(tower));
 
+        var highlight = (GameObject)Instantiate(Resources.Load("TowerConstructingHighlight"), tower.transform);
+        highlight.transform.position = pos;
+        highlight.transform.localScale = new Vector3(1f / tower.transform.localScale.x, 1f / tower.transform.localScale.y, 1f / tower.transform.localScale.z);
+
         tower.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
 
         FloorMap[Convert.ToInt32(pos.x)][Convert.ToInt32(pos.y)].transform.GetComponent<BoxCollider2D>().enabled = false;
@@ -631,7 +664,7 @@ public class WorldManager : MonoBehaviour {
 
         ClearUI();
         ItemInfo1.text = TowerManager.GetTowerName(TowerManager.GetTowerType(SelectedObject));
-        ItemInfo2.text = String.Format("攻击力:{0}", SelectedObject.GetComponent<TowerController>().BasicPhysicalDamage);
+        ItemInfo2.text = String.Format("攻击力:{0}", Mathf.Round(SelectedObject.GetComponent<TowerController>().PhysicalDamage));
         ItemInfo3.text = String.Format("基础攻击间隔:{0}s", SelectedObject.GetComponent<TowerController>().BasicAttackTime);
         ItemInfo4.text = String.Format("攻击速度:{0}", SelectedObject.GetComponent<TowerController>().AttackSpeed);
         ItemDescription.text = SelectedObject.GetComponent<TowerController>().TowerDescription;
@@ -724,7 +757,7 @@ public class WorldManager : MonoBehaviour {
     {
         GameObject go = Instantiate(Resources.Load(TowerManager.GetTowerFileName(CombineTarget)), transform.GetChild(1).GetChild(5)) as GameObject;
         go.transform.position = SelectedObject.transform.position;
-
+        int MVP = 0;
         foreach (TowerManager.TowerType tt in TowerCombiningManager.CombineDic[CombineTarget])
         {
             if (tt == TowerManager.GetTowerType(SelectedObject))
@@ -735,6 +768,7 @@ public class WorldManager : MonoBehaviour {
             {
                 if (TowerManager.GetTowerType(t) == tt)
                 {
+                    MVP += t.GetComponent<TowerController>().MVPLevel;
                     CreateInnerWall(t.transform.position);
                     TowerList.Remove(t);
                     Destroy(t);
@@ -742,9 +776,11 @@ public class WorldManager : MonoBehaviour {
                 }
             }
         }
+        MVP += SelectedObject.GetComponent<TowerController>().MVPLevel;
         TowerList.Remove(SelectedObject);
         Destroy(SelectedObject);
         TowerManager.SettingTower(go.GetComponent<TowerController>(), CombineTarget);
+        go.GetComponent<TowerController>().MVPLevel = MVP < 10 ? MVP : 10;
         go.GetComponent<ClickEventHandler>().ClickEvent += TowerClickedAction;
         SelectedObject = go;
         TowerList.Add(go);
@@ -769,12 +805,15 @@ public class WorldManager : MonoBehaviour {
                 CreateInnerWall(t.transform.position);
                 Destroy(t);
             }
-
+            if (SelectedObject.transform.Find("TowerConstructingHighlight(Clone)"))
+            {
+                Destroy(SelectedObject.transform.Find("TowerConstructingHighlight(Clone)").gameObject);
+            }
             OneTurnTowerList = new List<GameObject>();
             TowerList.Add(SelectedObject);
             ClearUI();
             ItemInfo1.text = TowerManager.GetTowerName(TowerManager.GetTowerType(SelectedObject));
-            ItemInfo2.text = String.Format("攻击力:{0}", SelectedObject.GetComponent<TowerController>().BasicPhysicalDamage);
+            ItemInfo2.text = String.Format("攻击力:{0}", Mathf.RoundToInt(SelectedObject.GetComponent<TowerController>().PhysicalDamage));
             ItemInfo3.text = String.Format("基础攻击间隔:{0}s", SelectedObject.GetComponent<TowerController>().BasicAttackTime);
             ItemInfo4.text = String.Format("攻击速度:{0}", SelectedObject.GetComponent<TowerController>().AttackSpeed);
 
@@ -906,6 +945,7 @@ public class WorldManager : MonoBehaviour {
     /// <param name="_SelectedObject"></param>
     private void FloorClickedAction(GameObject _SelectedObject)
     {
+        ClearUI();
         if (EnabledAttackRange != null)
         {
             EnabledAttackRange.enabled = false;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TowerCombiningManager : MonoBehaviour {
+
     public static Dictionary<TowerManager.TowerType, HashSet<TowerManager.TowerType>> CombineDic;
 
     private void Start()
@@ -149,6 +150,7 @@ public class TowerCombiningManager : MonoBehaviour {
         CombineDic.Add(TowerManager.TowerType.GoldenJubilee, set);
 
     }
+
     /// <summary>
     /// 判断输入数组中所含的防御塔是否可以进行升级、合成操作
     /// </summary>

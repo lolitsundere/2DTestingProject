@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 
 public class EnemyController : MonoBehaviour
 {
-    public int MaxHealth;
-    public int Health
+    public float MaxHealth;
+    public float Health
     {
         get
         {
@@ -74,9 +75,10 @@ public class EnemyController : MonoBehaviour
             {
                 health = value;
             }
+            HealthBarChange();
         }
     }
-    private int health;
+    private float health;
     private Vector2 LastLocation;
 
     private float movementSpeed;
@@ -304,14 +306,14 @@ public class EnemyController : MonoBehaviour
             }
 
 
-            int damage=0;
+            float damage=0;
             if (tower.CanCrit && UnityEngine.Random.value <= 0.1)
             {
-                damage = Mathf.RoundToInt((1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage * 5);
+                damage = (1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage * 5;
             }
             else
             {
-                damage = Mathf.RoundToInt((1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage);
+                damage = (1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage;
             }
             
             if (damage > Health)
@@ -416,7 +418,6 @@ public class EnemyController : MonoBehaviour
                     }
                     break;
             }
-            HealthBarChange();
         }
     }
 
@@ -425,7 +426,7 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     /// <param name="damage"></param>
     /// <param name="count"></param>
-    public void TakeLightingChain(TowerController tower,int damage, int count)
+    public void TakeLightingChain(TowerController tower,float damage, int count)
     {
         if (count == 0)
         {
@@ -441,6 +442,8 @@ public class EnemyController : MonoBehaviour
             targets[i].GetComponent<EnemyController>().TakeLightingChain(tower, damage, --count);
         }
     }
+
+
 
 
     private void FixedUpdate()
@@ -461,11 +464,11 @@ public class EnemyController : MonoBehaviour
     /// 受到魔法伤害
     /// </summary>
     /// <param name="damageAmount"></param>
-    public void TakeMagicDamage(TowerController tower, int damageAmount)
+    public void TakeMagicDamage(TowerController tower, float damageAmount)
     {
         if (!SpellImmunity)
         {
-            double damage = Mathf.Round((1 - MagicResistance) * damageAmount);
+            float damage = (1 - MagicResistance) * damageAmount;
 
             if (damage > Health)
             {
@@ -473,11 +476,10 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                tower.DamageDealed += Convert.ToInt32(damage);
+                tower.DamageDealed += damage;
             }
 
-            Health -= Convert.ToInt32(damage);
-            HealthBarChange();
+            Health -= damage;
         }
     }
 
@@ -485,7 +487,7 @@ public class EnemyController : MonoBehaviour
     /// 受到纯粹伤害
     /// </summary>
     /// <param name="damageAmount"></param>
-    public void TakePureDamage(TowerController tower, int damageAmount)
+    public void TakePureDamage(TowerController tower, float damageAmount)
     {
         if (damageAmount > Health)
         {
@@ -496,7 +498,6 @@ public class EnemyController : MonoBehaviour
             tower.DamageDealed += damageAmount;
         }
         Health -= damageAmount;
-        HealthBarChange();
     }
 
     /// <summary>

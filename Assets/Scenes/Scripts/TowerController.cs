@@ -6,13 +6,13 @@ using UnityEngine;
 
 public class TowerController : MonoBehaviour
 {
-    public enum AttackSlowEffect { SlowEffect0, SlowEffect60, SlowEffect90, SlowEffect120, SlowEffect150, SlowEffect180, SlowEffect480};
+    public enum AttackSlowEffect { SlowEffect0, SlowEffect60, SlowEffect90, SlowEffect120, SlowEffect150, SlowEffect180, SlowEffect480 };
     public enum AttackSpeedAccelerateEffect { AccelerateEffect0, AccelerateEffect20, AccelerateEffect30, AccelerateEffect40, AccelerateEffect50, AccelerateEffect60, AccelerateEffect70 };
-    public enum AttackPoisonEffect { PoisonEffect0, PoisonEffect1, PoisonEffect2, PoisonEffect4, PoisonEffect8, PoisonEffect16, PoisonEffect64};
+    public enum AttackPoisonEffect { PoisonEffect0, PoisonEffect1, PoisonEffect2, PoisonEffect4, PoisonEffect8, PoisonEffect16, PoisonEffect64 };
     public enum AttackArmorReduceEffect { ArmorReduceEffect0, ArmorReduceEffect1, ArmorReduceEffect2, ArmorReduceEffect4, ArmorReduceEffect8, ArmorReduceEffect16, ArmorReduceEffect64 };
-    public enum AttackSplashEffect { SplashEffect0 , SplashEffect1, SplashEffect2, SplashEffect3,SplashEffect4,SplashEffect5, SplashEffect6};
-    public enum BurnEffect { BurnEffect0, BurnEffect30, BurnEffect160, BurnEffect1250};
-    public enum AntiFlyEffect { AnitFly0, AntiFly1, AntiFly2}
+    public enum AttackSplashEffect { SplashEffect0, SplashEffect1, SplashEffect2, SplashEffect3, SplashEffect4, SplashEffect5, SplashEffect6 };
+    public enum BurnEffect { BurnEffect0, BurnEffect30, BurnEffect160, BurnEffect1250 };
+    public enum AntiFlyEffect { AnitFly0, AntiFly1, AntiFly2 }
 
     private double attackSpeed;
     public double AttackSpeed
@@ -39,19 +39,18 @@ public class TowerController : MonoBehaviour
             }
         }
     }
-
-    public int DamageDealed;
+    public float DamageDealed;
     private int mvpLevel;
     public int MVPLevel
     {
-        get { return mvpLevel;}
+        get { return mvpLevel; }
         set
         {
             mvpLevel = value;
-            PhysicalDamage = Mathf.RoundToInt(BasicPhysicalDamage * (1f + 0.1f * mvpLevel));
+            PhysicalDamage = BasicPhysicalDamage * (1f + 0.1f * mvpLevel);
         }
     }
-    private HashSet<GameObject> mvpAuraTargetsSet = new HashSet<GameObject>();
+    public List<Collider2D> MvpAuraTargetsList = new List<Collider2D>();
 
     public double BasicAttackSpeed
     {
@@ -89,8 +88,21 @@ public class TowerController : MonoBehaviour
         }
     }
 
-    public int BasicPhysicalDamage;
-    public int PhysicalDamage;
+    private float basicPhysicalDamage;
+    public float BasicPhysicalDamage
+    {
+        set
+        {
+            basicPhysicalDamage = value;
+            PhysicalDamage = value;
+        }
+        get
+        {
+            return basicPhysicalDamage;
+        }
+    }
+    public float PhysicalDamage;
+    public Color AttackColor;
 
     private int attackRange;
     public int AttackRange
@@ -108,35 +120,34 @@ public class TowerController : MonoBehaviour
                 {
                     Destroy(transform.GetChild(0).gameObject);
                 }
-                UnityEngine.Object o = null;
                 switch (value)
                 {
                     case 400:
-                        o = Instantiate(Resources.Load("AttackRange400"), transform);
+                        Instantiate(Resources.Load("AttackRange400"), transform);
                         break;
                     case 500:
-                        o = Instantiate(Resources.Load("AttackRange500"), transform);
+                        Instantiate(Resources.Load("AttackRange500"), transform);
                         break;
                     case 600:
-                        o = Instantiate(Resources.Load("AttackRange600"), transform);
+                        Instantiate(Resources.Load("AttackRange600"), transform);
                         break;
                     case 700:
-                        o = Instantiate(Resources.Load("AttackRange700"), transform);
+                        Instantiate(Resources.Load("AttackRange700"), transform);
                         break;
                     case 800:
-                        o = Instantiate(Resources.Load("AttackRange800"), transform);
+                        Instantiate(Resources.Load("AttackRange800"), transform);
                         break;
                     case 900:
-                        o = Instantiate(Resources.Load("AttackRange900"), transform);
+                        Instantiate(Resources.Load("AttackRange900"), transform);
                         break;
                     case 1000:
-                        o = Instantiate(Resources.Load("AttackRange1000"), transform);
+                        Instantiate(Resources.Load("AttackRange1000"), transform);
                         break;
                     case 1100:
-                        o = Instantiate(Resources.Load("AttackRange1100"), transform);
+                        Instantiate(Resources.Load("AttackRange1100"), transform);
                         break;
                     case 5000:
-                        o = Instantiate(Resources.Load("AttackRange5000"), transform);
+                        Instantiate(Resources.Load("AttackRange5000"), transform);
                         break;
                 }
             }
@@ -199,27 +210,49 @@ public class TowerController : MonoBehaviour
     
     private void PhysicalAttack()
     {
-        var targets = Physics2D.OverlapCircleAll(transform.position, BasicAttackRange / 100f, LayerMask.GetMask("Enemy"));
-        
-        if (targets.Length == 0)
+        if (PhysicalDamage > 0)
         {
-            return;
-        }
-        else if (targets.Length <= MaxTargetAmount)
-        {
-            foreach (Collider2D target in targets)
+            var targets = Physics2D.OverlapCircleAll(transform.position, BasicAttackRange / 100f, LayerMask.GetMask("Enemy"));
+
+            if (targets.Length == 0)
             {
-                target.GetComponent<EnemyController>().TakeTowerAttack(this);
+                return;
             }
-        }
-        else
-        {
-            foreach (int i in Enumerable.Range(0,MaxTargetAmount))
+            else if (targets.Length <= MaxTargetAmount)
             {
-                targets[i].GetComponent<EnemyController>().TakeTowerAttack(this);
+                foreach (Collider2D target in targets)
+                {
+                    target.GetComponent<EnemyController>().TakeTowerAttack(this);
+                    DrawAttackLine(target.gameObject);
+                }
             }
+            else
+            {
+                foreach (int i in Enumerable.Range(0, MaxTargetAmount))
+                {
+                    targets[i].GetComponent<EnemyController>().TakeTowerAttack(this);
+                    DrawAttackLine(targets[i].gameObject);
+                }
+            }
+            attackTimer = 0;
         }
-        attackTimer = 0;
+    }
+
+    private void DrawAttackLine(GameObject enemy)
+    {
+        var temp = (GameObject)Instantiate(Resources.Load("Line"), transform);
+        var line = temp.GetComponent<LineRenderer>();
+        line.SetPosition(0, new Vector3(transform.position.x, transform.position.y, transform.position.z - 1));
+        line.SetPosition(1, new Vector3(enemy.transform.position.x, enemy.transform.position.y, enemy.transform.position.z - 1));
+        line.startColor = AttackColor;
+        line.endColor = AttackColor;
+        StartCoroutine(ClearAttackLine(line));
+    }
+
+    private IEnumerator ClearAttackLine(LineRenderer line)
+    {
+        yield return new WaitForSeconds(0.1f);
+        Destroy(line.gameObject);
     }
 
     private void Start()
@@ -242,7 +275,29 @@ public class TowerController : MonoBehaviour
         CheckAntiFly();
 
         var targets = Physics2D.OverlapCircleAll(transform.position, 6, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" }));
-        
+        foreach (var target in targets)
+        {
+            if (!MvpAuraTargetsList.Contains(target))
+            {
+                target.GetComponent<EnemyController>().MagicResistance -= 0.1f * MVPLevel;
+            }
+        }
+        foreach (var target in MvpAuraTargetsList)
+        {
+            try
+            {
+                if (!targets.Contains(target))
+                {
+                    target.GetComponent<EnemyController>().MagicResistance += 0.1f * MVPLevel;
+                }
+            }
+            catch (Exception)
+            {
+                continue;
+            }
+        }
+
+        MvpAuraTargetsList = targets.ToList();
 
         if (CanAddRange)
         {
