@@ -34,8 +34,8 @@ public class WorldManager : MonoBehaviour {
     public Text TopText;
     public Button CombinePanelButton;
     public GameObject CombinePanel;
-    public int Health;
-
+    public static int Health;
+    public static int PlayerGold = 0;
 
     public HashSet<NavMeshSurface> NavSet = new HashSet<NavMeshSurface>();
     public int PlayerCount = 1;
@@ -46,7 +46,6 @@ public class WorldManager : MonoBehaviour {
     private int StageLevel = 1;
     private int PlayerExp = 0;
     private int PlayerLevel = 1;
-    private int PlayerGold = 0;
 
     private readonly Vector2 Enter = new Vector2(5f, 33f);
     private readonly Vector2 Exit = new Vector2(33f, 5f);
@@ -115,6 +114,30 @@ public class WorldManager : MonoBehaviour {
                     }
                 }
             }
+
+            HashSet<TowerManager.TowerType> ConstructedTowerSet = new HashSet<TowerManager.TowerType>();
+
+            foreach (GameObject tower in TowerList)
+            {
+                TowerManager.TowerType tt = TowerManager.GetTowerType(tower);
+                if (!ConstructedTowerSet.Contains(tt))
+                {
+                    ConstructedTowerSet.Add(tt);
+                }
+            }
+
+            foreach (TowerManager.TowerType tt in ConstructedTowerSet)
+            {
+                if (TowerManager.GetTowerTag(tt) != "Untagged")
+                {
+                    foreach (var go in GameObject.FindGameObjectsWithTag(TowerManager.GetTowerTag(tt)))
+                    {
+                        go.GetComponent<Text>().color = new Color32(0xFF, 0x00, 0x00, 0xFF);
+                    }
+                }
+            }
+
+            
         });
     }
 
@@ -703,6 +726,23 @@ public class WorldManager : MonoBehaviour {
                                 CheckAdvanceCombine(tt, LuckyCombine);
                             }
                         }
+                    }
+
+                    TowerManager.TowerType t = TowerManager.GetTowerType(SelectedObject);
+                    if ((int)t % 6 != 1 && PlayerGold >= 200)
+                    {
+                        Button b = GetEmptyButtom();
+                        b.image.color = Color.white;
+                        b.GetComponentInChildren<Text>().text = "随机降级\n(200金币)";
+                        b.onClick = new Button.ButtonClickedEvent();
+                        b.onClick.AddListener(()=>
+                        {
+                            int downgradeValue = random.Next((int)t % 6 - 1);
+                            SelectedObject.transform.localScale -= Vector3.one * 0.1f * (downgradeValue + 1);
+                            TowerManager.SettingTower(SelectedObject.GetComponent<TowerController>(), (TowerManager.TowerType)((int)t - downgradeValue - 1));
+                            PlayerGold -= 200;
+                            RemainSelectedTower();
+                        });
                     }
                 }
                 break;

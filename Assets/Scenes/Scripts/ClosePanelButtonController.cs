@@ -12,6 +12,11 @@ public class ClosePanelButtonController : MonoBehaviour {
         {
             transform.parent.gameObject.SetActive(false);
             MouseMoveInHandler.MouseIn = false;
+            var texts = transform.parent.GetChild(4).GetComponentsInChildren<Text>();
+            foreach (Text t in texts)
+            {
+                t.color = Color.black;
+            }
         });
 	}
 	

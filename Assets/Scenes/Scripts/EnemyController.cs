@@ -338,10 +338,9 @@ public class EnemyController : MonoBehaviour
 
             if (tower.CanHeal && UnityEngine.Random.value <= 0.01)
             {
-                var wm = FindObjectOfType<WorldManager>();
-                if (wm.Health < 100)
+                if (WorldManager.Health < 100)
                 {
-                    wm.Health++;
+                    WorldManager.Health++;
                 }
             }
 

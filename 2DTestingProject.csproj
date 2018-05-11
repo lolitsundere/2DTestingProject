@@ -295,17 +295,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\ClosePanelButtonController.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshLink.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifier.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifierVolume.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshSurface.cs" />
+    <Compile Include="Assets\Scenes\Scripts\BufferPool.cs" />
     <Compile Include="Assets\Scenes\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scenes\Scripts\ClickEventHandler.cs" />
+    <Compile Include="Assets\Scenes\Scripts\ClosePanelButtonController.cs" />
     <Compile Include="Assets\Scenes\Scripts\ColliderEventHandler.cs" />
     <Compile Include="Assets\Scenes\Scripts\EnemyController.cs" />
     <Compile Include="Assets\Scenes\Scripts\EnemyManager.cs" />
     <Compile Include="Assets\Scenes\Scripts\MouseMoveInHandler.cs" />
+    <Compile Include="Assets\Scenes\Scripts\RecoverButtonController.cs" />
     <Compile Include="Assets\Scenes\Scripts\TowerCombiningManager.cs" />
     <Compile Include="Assets\Scenes\Scripts\TowerController.cs" />
     <Compile Include="Assets\Scenes\Scripts\TowerManager.cs" />

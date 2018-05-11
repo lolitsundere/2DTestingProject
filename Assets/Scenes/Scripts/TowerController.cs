@@ -123,31 +123,37 @@ public class TowerController : MonoBehaviour
                 switch (value)
                 {
                     case 400:
-                        Instantiate(Resources.Load("AttackRange400"), transform);
+                        Instantiate(Resources.Load("AttackRanges/AttackRange400"), transform);
                         break;
                     case 500:
-                        Instantiate(Resources.Load("AttackRange500"), transform);
+                        Instantiate(Resources.Load("AttackRanges/AttackRange500"), transform);
                         break;
                     case 600:
-                        Instantiate(Resources.Load("AttackRange600"), transform);
+                        Instantiate(Resources.Load("AttackRanges/AttackRange600"), transform);
                         break;
                     case 700:
-                        Instantiate(Resources.Load("AttackRange700"), transform);
+                        Instantiate(Resources.Load("AttackRanges/AttackRange700"), transform);
                         break;
                     case 800:
-                        Instantiate(Resources.Load("AttackRange800"), transform);
+                        Instantiate(Resources.Load("AttackRanges/AttackRange800"), transform);
                         break;
                     case 900:
-                        Instantiate(Resources.Load("AttackRange900"), transform);
+                        Instantiate(Resources.Load("AttackRanges/AttackRange900"), transform);
                         break;
                     case 1000:
-                        Instantiate(Resources.Load("AttackRange1000"), transform);
+                        Instantiate(Resources.Load("AttackRanges/AttackRange1000"), transform);
                         break;
                     case 1100:
-                        Instantiate(Resources.Load("AttackRange1100"), transform);
+                        Instantiate(Resources.Load("AttackRanges/AttackRange1100"), transform);
+                        break;
+                    case 1200:
+                        Instantiate(Resources.Load("AttackRanges/AttackRange1200"), transform);
+                        break;
+                    case 1300:
+                        Instantiate(Resources.Load("AttackRanges/AttackRange1300"), transform);
                         break;
                     case 5000:
-                        Instantiate(Resources.Load("AttackRange5000"), transform);
+                        Instantiate(Resources.Load("AttackRanges/AttackRange5000"), transform);
                         break;
                 }
             }
