@@ -90,9 +90,13 @@ public class EnemyController : MonoBehaviour
         }
         set
         {
-            if (value != movementSpeed)
+            movementSpeed = value;
+            if (stunTimer > 0)
             {
-                movementSpeed = value;
+                nav.speed = 0;
+            }
+            else
+            {
                 if (movementSpeed > 100)
                 {
                     nav.speed = movementSpeed / 400 * 3;
@@ -122,7 +126,8 @@ public class EnemyController : MonoBehaviour
 
     private int RefractionCharge = 0;
 
-    public int ExperienceAndGold;
+    public int Experience;
+    public int Gold;
     public int MaxAmount;
     public int MaxDamageToPlayer;
     public String EnemyDescription;
@@ -156,9 +161,18 @@ public class EnemyController : MonoBehaviour
     private double attackArmorReduce4Timer;
     private double attackArmorReduce8Timer;
     private double attackArmorReduce16Timer;
+    private double attackArmorReduce20Timer;
+    private double attackArmorReduce30Timer;
     private double attackArmorReduce64Timer;
 
+    public double ArmorReduce15Timer;
+    public double ArmorReduce30Timer;
+
+    private double frozenAttackTimer;
+
     private double runingTimer;
+
+    private double stunTimer;
 
 
     /// <summary>
@@ -167,7 +181,7 @@ public class EnemyController : MonoBehaviour
     /// <param name="tower"></param>
     public void TakeTowerAttack(TowerController tower)
     {
-        if (Untouchable)
+        if (Untouchable && !tower.GetComponent<TowerController>().SpellImmunity)
         {
             if (tower.UntouchableTimer == 0)
             {
@@ -179,6 +193,44 @@ public class EnemyController : MonoBehaviour
         {
             if (!SpellImmunity)
             {
+                if (tower.CanFrozenAttack)
+                {
+                    foreach (Collider2D enemy in Physics2D.OverlapCircleAll(transform.position, 3, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" })))
+                    {
+                        if (enemy.GetComponent<EnemyController>().frozenAttackTimer == 0)
+                        {
+                            float movementSpeedDiff = 0;
+                            if (enemy.GetComponent<EnemyController>().attackSlow60Timer > 0)
+                            {
+                                movementSpeedDiff += 60;
+                            }
+                            if (enemy.GetComponent<EnemyController>().attackSlow90Timer > 0)
+                            {
+                                movementSpeedDiff += 90;
+                            }
+                            if (enemy.GetComponent<EnemyController>().attackSlow120Timer > 0)
+                            {
+                                movementSpeedDiff += 120;
+                            }
+                            if (enemy.GetComponent<EnemyController>().attackSlow150Timer > 0)
+                            {
+                                movementSpeedDiff += 150;
+                            }
+                            if (enemy.GetComponent<EnemyController>().attackSlow180Timer > 0)
+                            {
+                                movementSpeedDiff += 180;
+                            }
+                            if (enemy.GetComponent<EnemyController>().attackSlow480Timer > 0)
+                            {
+                                movementSpeedDiff += 480;
+                            }
+
+                            enemy.GetComponent<EnemyController>().MovementSpeed = (enemy.GetComponent<EnemyController>().MovementSpeed + movementSpeedDiff) * 0.5f - movementSpeedDiff;
+                        }
+                        enemy.GetComponent<EnemyController>().frozenAttackTimer = 3f;
+                    }
+
+                }
                 switch (tower.AtkSlowEffect)
                 {
                     case TowerController.AttackSlowEffect.SlowEffect60:
@@ -305,8 +357,34 @@ public class EnemyController : MonoBehaviour
                 }
             }
 
+            if (tower.CanStoneGaze && UnityEngine.Random.value <= 0.02)
+            {
+                foreach (Collider2D enemy in Physics2D.OverlapCircleAll(transform.position, 10, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" })))
+                {
+                    enemy.GetComponent<EnemyController>().stunTimer = 2f;
+                    MovementSpeed = movementSpeed;
+                }
 
-            float damage=0;
+            }
+
+            if (tower.AtkArmorReduceEffect == TowerController.AttackArmorReduceEffect.ArmorReduceEffect20)
+            {
+                if (attackArmorReduce20Timer == 0)
+                {
+                    Armor -= 20;
+                }
+                attackArmorReduce20Timer = 2f;
+            }
+            else if (tower.AtkArmorReduceEffect == TowerController.AttackArmorReduceEffect.ArmorReduceEffect30)
+            {
+                if (attackArmorReduce30Timer == 0)
+                {
+                    Armor -= 30;
+                }
+                attackArmorReduce30Timer = 2f;
+            }
+
+            float damage = 0;
             if (tower.CanCrit && UnityEngine.Random.value <= 0.1)
             {
                 damage = (1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage * 5;
@@ -315,10 +393,14 @@ public class EnemyController : MonoBehaviour
             {
                 damage = (1f - (0.05f * Armor / (1f + 0.05f * Mathf.Abs(Armor)))) * tower.PhysicalDamage;
             }
-            
+
             if (damage > Health)
             {
                 tower.DamageDealed += Health;
+                if (tower.Greedy && UnityEngine.Random.value <= 0.05)
+                {
+                    Gold = Gold * 10;
+                }
             }
             else
             {
@@ -357,7 +439,7 @@ public class EnemyController : MonoBehaviour
                     {
                         if (enemy.gameObject != transform.gameObject)
                         {
-                            enemy.GetComponent<EnemyController>().TakePureDamage(tower,Convert.ToInt32(damage * 0.3f));
+                            enemy.GetComponent<EnemyController>().TakePureDamage(tower, Convert.ToInt32(damage * 0.3f));
                         }
                     }
                     break;
@@ -368,7 +450,7 @@ public class EnemyController : MonoBehaviour
                     {
                         if (enemy.gameObject != transform.gameObject)
                         {
-                            enemy.GetComponent<EnemyController>().TakePureDamage(tower,Convert.ToInt32(damage * 0.4f));
+                            enemy.GetComponent<EnemyController>().TakePureDamage(tower, Convert.ToInt32(damage * 0.4f));
                         }
                     }
                     break;
@@ -379,7 +461,7 @@ public class EnemyController : MonoBehaviour
                     {
                         if (enemy.gameObject != transform.gameObject)
                         {
-                            enemy.GetComponent<EnemyController>().TakePureDamage(tower,Convert.ToInt32(damage * 0.5f));
+                            enemy.GetComponent<EnemyController>().TakePureDamage(tower, Convert.ToInt32(damage * 0.5f));
                         }
                     }
                     break;
@@ -390,7 +472,7 @@ public class EnemyController : MonoBehaviour
                     {
                         if (enemy.gameObject != transform.gameObject)
                         {
-                            enemy.GetComponent<EnemyController>().TakePureDamage(tower,Convert.ToInt32(damage * 0.6f));
+                            enemy.GetComponent<EnemyController>().TakePureDamage(tower, Convert.ToInt32(damage * 0.6f));
                         }
                     }
                     break;
@@ -401,7 +483,7 @@ public class EnemyController : MonoBehaviour
                     {
                         if (enemy.gameObject != transform.gameObject)
                         {
-                            enemy.GetComponent<EnemyController>().TakePureDamage(tower,Convert.ToInt32(damage * 0.7f));
+                            enemy.GetComponent<EnemyController>().TakePureDamage(tower, Convert.ToInt32(damage * 0.7f));
                         }
                     }
                     break;
@@ -416,6 +498,12 @@ public class EnemyController : MonoBehaviour
                         }
                     }
                     break;
+            }
+
+            if (tower.CanStun && UnityEngine.Random.value <= 0.1)
+            {
+                stunTimer = 2f;
+                MovementSpeed = movementSpeed;
             }
         }
     }
@@ -472,6 +560,10 @@ public class EnemyController : MonoBehaviour
             if (damage > Health)
             {
                 tower.DamageDealed += Health;
+                if (tower.Greedy && UnityEngine.Random.value <= 0.05)
+                {
+                    Gold = Gold * 10;
+                }
             }
             else
             {
@@ -491,6 +583,10 @@ public class EnemyController : MonoBehaviour
         if (damageAmount > Health)
         {
             tower.DamageDealed += Health;
+            if (tower.Greedy && UnityEngine.Random.value <= 0.05)
+            {
+                Gold = Gold * 10;
+            }
         }
         else
         {
@@ -533,6 +629,30 @@ public class EnemyController : MonoBehaviour
         CheckRuningState();
         CheckForDisArm();
         CheckForInvision();
+        CheckForzenAttackState();
+        if (stunTimer > 0)
+        {
+            stunTimer -= Time.deltaTime;
+            MovementSpeed = movementSpeed;
+        }
+        if (ArmorReduce15Timer >0)
+        {
+            ArmorReduce15Timer -= Time.deltaTime;
+            if (ArmorReduce15Timer <= 0)
+            {
+                ArmorReduce15Timer = 0;
+                Armor += 15;
+            }
+        }
+        if (ArmorReduce30Timer > 0)
+        {
+            ArmorReduce30Timer -= Time.deltaTime;
+            if (ArmorReduce30Timer <= 0)
+            {
+                ArmorReduce30Timer = 0;
+                Armor += 30;
+            }
+        }
     }
 
     /// <summary>
@@ -540,9 +660,10 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     private void CheckColor()
     {
-        bool isSlowed = attackSlow60Timer != 0 || attackSlow90Timer != 0 || attackSlow120Timer != 0 || attackSlow150Timer != 0 || attackSlow180Timer != 0 || attackSlow480Timer != 0;
+        bool isSlowed = attackSlow60Timer != 0 || attackSlow90Timer != 0 || attackSlow120Timer != 0 || attackSlow150Timer != 0 || attackSlow180Timer != 0 || attackSlow480Timer != 0 || frozenAttackTimer != 0;
         bool isPoisoned = poison1Timer != 0 || poison2Timer != 0 || poison4Timer != 0 || poison8Timer != 0 || poison16Timer != 0 || poison64Timer != 0;
-        bool isArmorReduced = attackArmorReduce1Timer != 0 || attackArmorReduce2Timer != 0 || attackArmorReduce4Timer != 0 || attackArmorReduce8Timer != 0 || attackArmorReduce16Timer != 0 || attackArmorReduce64Timer != 0;
+        bool isArmorReduced = attackArmorReduce1Timer != 0 || attackArmorReduce2Timer != 0 || attackArmorReduce4Timer != 0 || attackArmorReduce8Timer != 0 || attackArmorReduce16Timer != 0 || attackArmorReduce64Timer != 0 
+            || attackArmorReduce20Timer != 0 || attackArmorReduce30Timer != 0;
 
         if (isSlowed && isPoisoned && isArmorReduced)
         {
@@ -793,6 +914,26 @@ public class EnemyController : MonoBehaviour
                 Armor += 64;
             }
         }
+
+        if (attackArmorReduce20Timer > 0)
+        {
+            attackArmorReduce20Timer -= Time.deltaTime;
+            if (attackArmorReduce20Timer <= 0)
+            {
+                attackArmorReduce20Timer = 0;
+                Armor += 20;
+            }
+        }
+
+        if (attackArmorReduce30Timer > 0)
+        {
+            attackArmorReduce30Timer -= Time.deltaTime;
+            if (attackArmorReduce30Timer <= 0)
+            {
+                attackArmorReduce30Timer = 0;
+                Armor += 30;
+            }
+        }
     }
 
     /// <summary>
@@ -805,7 +946,10 @@ public class EnemyController : MonoBehaviour
             var targets = Physics2D.OverlapCircleAll(transform.position, 1.3f, LayerMask.GetMask("Tower"));
             foreach (Collider2D target in targets)
             {
-                target.GetComponent<TowerController>().attackTimer = 0f;
+                if (!target.GetComponent<TowerController>().SpellImmunity)
+                {
+                    target.GetComponent<TowerController>().attackTimer = 0f;
+                }
             }
         }
     }
@@ -909,5 +1053,44 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// 更新攻击冻结状态
+    /// </summary>
+    private void CheckForzenAttackState()
+    {
+        if (frozenAttackTimer > 0)
+        {
+            frozenAttackTimer -= Time.deltaTime;
+            if (frozenAttackTimer <= 0)
+            {
+                frozenAttackTimer = 0;
+                int movementSpeedDiff = 0;
+                if (attackSlow60Timer > 0)
+                {
+                    movementSpeedDiff += 60;
+                }
+                if (attackSlow90Timer > 0)
+                {
+                    movementSpeedDiff += 90;
+                }
+                if (attackSlow120Timer > 0)
+                {
+                    movementSpeedDiff += 120;
+                }
+                if (attackSlow150Timer > 0)
+                {
+                    movementSpeedDiff += 150;
+                }
+                if (attackSlow180Timer > 0)
+                {
+                    movementSpeedDiff += 180;
+                }
+                if (attackSlow480Timer > 0)
+                {
+                    movementSpeedDiff += 480;
+                }
+                MovementSpeed = (MovementSpeed + movementSpeedDiff) * 2f - movementSpeedDiff;
+            }
+        }
+    }
 }

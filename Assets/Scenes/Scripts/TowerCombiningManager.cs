@@ -149,6 +149,47 @@ public class TowerCombiningManager : MonoBehaviour {
         set.Add(TowerManager.TowerType.Y6);
         CombineDic.Add(TowerManager.TowerType.GoldenJubilee, set);
 
+        set = new HashSet<TowerManager.TowerType>();
+        set.Add(TowerManager.TowerType.P5);
+        set.Add(TowerManager.TowerType.P4);
+        set.Add(TowerManager.TowerType.D2);
+        CombineDic.Add(TowerManager.TowerType.Gold, set);
+
+        set = new HashSet<TowerManager.TowerType>();
+        set.Add(TowerManager.TowerType.Gold);
+        set.Add(TowerManager.TowerType.P5);
+        set.Add(TowerManager.TowerType.Q2);
+        CombineDic.Add(TowerManager.TowerType.EgyptGold, set);
+
+        set = new HashSet<TowerManager.TowerType>();
+        set.Add(TowerManager.TowerType.G5);
+        set.Add(TowerManager.TowerType.B4);
+        set.Add(TowerManager.TowerType.Y2);
+        CombineDic.Add(TowerManager.TowerType.DarkEmerald, set);
+
+        set = new HashSet<TowerManager.TowerType>();
+        set.Add(TowerManager.TowerType.Gold);
+        set.Add(TowerManager.TowerType.DarkEmerald);
+        set.Add(TowerManager.TowerType.D3);
+        CombineDic.Add(TowerManager.TowerType.EmeraldGolem, set);
+
+        set = new HashSet<TowerManager.TowerType>();
+        set.Add(TowerManager.TowerType.Q5);
+        set.Add(TowerManager.TowerType.E4);
+        set.Add(TowerManager.TowerType.G2);
+        CombineDic.Add(TowerManager.TowerType.ParaibaTourmaline, set);
+
+        set = new HashSet<TowerManager.TowerType>();
+        set.Add(TowerManager.TowerType.ParaibaTourmaline);
+        set.Add(TowerManager.TowerType.DarkEmerald);
+        set.Add(TowerManager.TowerType.G2);
+        CombineDic.Add(TowerManager.TowerType.ElaboratelyCarvedTourmaline, set);
+
+        set = new HashSet<TowerManager.TowerType>();
+        set.Add(TowerManager.TowerType.ElaboratelyCarvedTourmaline);
+        set.Add(TowerManager.TowerType.G6);
+        set.Add(TowerManager.TowerType.P6);
+        CombineDic.Add(TowerManager.TowerType.SapphireStarOfAdam, set);
     }
 
     /// <summary>
@@ -1383,6 +1424,50 @@ public class TowerCombiningManager : MonoBehaviour {
                             result.Add(go, new List<TowerManager.TowerType>());
                         }
                         result[go].Add(TowerManager.TowerType.GoldenJubilee);
+                    }
+
+                    if (towerDic.ContainsKey(TowerManager.TowerType.G1) && towerDic.ContainsKey(TowerManager.TowerType.G2) && towerDic.ContainsKey(TowerManager.TowerType.G3) && towerDic.ContainsKey(TowerManager.TowerType.G4) && towerDic.ContainsKey(TowerManager.TowerType.G5))
+                    {
+                        foreach (GameObject go in towerDic[TowerManager.TowerType.G1])
+                        {
+                            if (!result.ContainsKey(go))
+                            {
+                                result.Add(go, new List<TowerManager.TowerType>());
+                            }
+                            result[go].Add(TowerManager.TowerType.SapphireStarOfAdam);
+                        }
+                        foreach (GameObject go in towerDic[TowerManager.TowerType.G2])
+                        {
+                            if (!result.ContainsKey(go))
+                            {
+                                result.Add(go, new List<TowerManager.TowerType>());
+                            }
+                            result[go].Add(TowerManager.TowerType.SapphireStarOfAdam);
+                        }
+                        foreach (GameObject go in towerDic[TowerManager.TowerType.G3])
+                        {
+                            if (!result.ContainsKey(go))
+                            {
+                                result.Add(go, new List<TowerManager.TowerType>());
+                            }
+                            result[go].Add(TowerManager.TowerType.SapphireStarOfAdam);
+                        }
+                        foreach (GameObject go in towerDic[TowerManager.TowerType.G4])
+                        {
+                            if (!result.ContainsKey(go))
+                            {
+                                result.Add(go, new List<TowerManager.TowerType>());
+                            }
+                            result[go].Add(TowerManager.TowerType.SapphireStarOfAdam);
+                        }
+                        foreach (GameObject go in towerDic[TowerManager.TowerType.G5])
+                        {
+                            if (!result.ContainsKey(go))
+                            {
+                                result.Add(go, new List<TowerManager.TowerType>());
+                            }
+                            result[go].Add(TowerManager.TowerType.SapphireStarOfAdam);
+                        }
                     }
                 }
             }

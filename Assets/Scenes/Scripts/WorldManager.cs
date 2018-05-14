@@ -307,8 +307,8 @@ public class WorldManager : MonoBehaviour {
                         {
                             var ec = go.GetComponent<EnemyController>();
                             Health -= Mathf.RoundToInt((0f + ec.MaxDamageToPlayer) * ec.Health / ec.MaxHealth + 1);
-                            PlayerGold -= ec.ExperienceAndGold;
-                            PlayerExp -= ec.ExperienceAndGold;
+                            PlayerGold -= ec.Experience;
+                            PlayerExp -= ec.Experience;
                             DestroyEnemy(go);
                         }
                     };
@@ -401,8 +401,8 @@ public class WorldManager : MonoBehaviour {
     /// <param name="go"></param>
     private void DestroyEnemy(GameObject go)
     {
-        PlayerExp += go.GetComponent<EnemyController>().ExperienceAndGold;
-        PlayerGold += go.GetComponent<EnemyController>().ExperienceAndGold;
+        PlayerExp += go.GetComponent<EnemyController>().Experience;
+        PlayerGold += go.GetComponent<EnemyController>().Gold;
         if (PlayerExp >= 1700)
         {
             PlayerLevel = 5;
@@ -1138,7 +1138,7 @@ public class WorldManager : MonoBehaviour {
                 }
             }
         }
-
+       
         return GetMazeLength(intMapCopy, newList, endPoint, currentLength + 1);
     }
 }

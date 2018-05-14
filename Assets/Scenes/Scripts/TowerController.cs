@@ -9,7 +9,7 @@ public class TowerController : MonoBehaviour
     public enum AttackSlowEffect { SlowEffect0, SlowEffect60, SlowEffect90, SlowEffect120, SlowEffect150, SlowEffect180, SlowEffect480 };
     public enum AttackSpeedAccelerateEffect { AccelerateEffect0, AccelerateEffect20, AccelerateEffect30, AccelerateEffect40, AccelerateEffect50, AccelerateEffect60, AccelerateEffect70 };
     public enum AttackPoisonEffect { PoisonEffect0, PoisonEffect1, PoisonEffect2, PoisonEffect4, PoisonEffect8, PoisonEffect16, PoisonEffect64 };
-    public enum AttackArmorReduceEffect { ArmorReduceEffect0, ArmorReduceEffect1, ArmorReduceEffect2, ArmorReduceEffect4, ArmorReduceEffect8, ArmorReduceEffect16, ArmorReduceEffect64 };
+    public enum AttackArmorReduceEffect { ArmorReduceEffect0, ArmorReduceEffect1, ArmorReduceEffect2, ArmorReduceEffect4, ArmorReduceEffect8, ArmorReduceEffect16, ArmorReduceEffect20, ArmorReduceEffect30, ArmorReduceEffect64 };
     public enum AttackSplashEffect { SplashEffect0, SplashEffect1, SplashEffect2, SplashEffect3, SplashEffect4, SplashEffect5, SplashEffect6 };
     public enum BurnEffect { BurnEffect0, BurnEffect30, BurnEffect160, BurnEffect1250 };
     public enum AntiFlyEffect { AnitFly0, AntiFly1, AntiFly2 }
@@ -174,16 +174,24 @@ public class TowerController : MonoBehaviour
         }
     }
     public bool CanMagicSplash;
-
+    public bool CanStun;
+    public bool CanStoneGaze;
+    public bool ProvideGreedy;
+    public bool Greedy;
     public int MaxTargetAmount;
+    public bool CanFrozenAttack;
 
     public bool CanBreakInvisibility;
     public bool CanCrit;
     public bool CanLightingChain;
     public bool CanAddRange;
     public bool ProvideCanNotMiss;
+    public bool ProvideSpellImmunity;
+    public bool ProvideArmorReduceAura15;
+    public bool ProvideArmorReduceAura30;
     public bool CanHeal;
 
+    public bool SpellImmunity;
     internal bool canNotMiss;
     private double canNotMissTimer;
 
@@ -274,12 +282,12 @@ public class TowerController : MonoBehaviour
         {
             PhysicalAttack();
         }
-
+        SpellImmunity = false;
         CheckTowerAroundForAcceleration();
         CheckAccelerateState();
         CheckBurnAttack();
         CheckAntiFly();
-
+        CheckTowerAroundForSpellImmunity();
         var targets = Physics2D.OverlapCircleAll(transform.position, 6, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" }));
         foreach (var target in targets)
         {
@@ -357,6 +365,44 @@ public class TowerController : MonoBehaviour
                 UntouchableTimer = 0;
                 AttackSpeed += 300;
             }
+        }
+
+        if (ProvideGreedy)
+        {
+            foreach (Collider2D go1 in Physics2D.OverlapCircleAll(transform.position, 8, LayerMask.GetMask("Tower")))
+            {
+                go1.GetComponent<TowerController>().Greedy = true;
+            }
+        }
+
+        if (ProvideArmorReduceAura15)
+        {
+            foreach (var target in Physics2D.OverlapCircleAll(transform.position, 8, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" })))
+            {
+                if (!target.GetComponent<EnemyController>().SpellImmunity)
+                {
+                    if (target.GetComponent<EnemyController>().ArmorReduce15Timer == 0)
+                    {
+                        target.GetComponent<EnemyController>().Armor -= 15;
+                    }
+                    target.GetComponent<EnemyController>().ArmorReduce15Timer = 0.5f;
+                }
+            }
+        }
+        if (ProvideArmorReduceAura30)
+        {
+            foreach (var target in Physics2D.OverlapCircleAll(transform.position, 12, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" })))
+            {
+                if (!target.GetComponent<EnemyController>().SpellImmunity)
+                {
+                    if (target.GetComponent<EnemyController>().ArmorReduce30Timer == 0)
+                    {
+                        target.GetComponent<EnemyController>().Armor -= 30;
+                    }
+                    target.GetComponent<EnemyController>().ArmorReduce30Timer = 0.5f;
+                }
+            }
+
         }
     }
 
@@ -484,6 +530,21 @@ public class TowerController : MonoBehaviour
             {
                 accelerate70 = 0;
                 AttackSpeed -= 70;
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// 如果有魔免特性,给周围防御塔增加魔免
+    /// </summary>
+    private void CheckTowerAroundForSpellImmunity ()
+    {
+        if (ProvideSpellImmunity)
+        {
+            foreach (Collider2D go1 in Physics2D.OverlapCircleAll(transform.position, 6, LayerMask.GetMask("Tower")))
+            {
+                go1.GetComponent<TowerController>().SpellImmunity = true;
             }
         }
     }

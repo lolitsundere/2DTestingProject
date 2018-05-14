@@ -11,7 +11,8 @@ public class TowerManager : MonoBehaviour
         P1, P2, P3, P4, P5, P6, Q1, Q2, Q3, Q4, Q5, Q6, D1, D2, D3, D4, D5, D6, E1, E2, E3, E4, E5, E6,
         Sliver, Malachite, AsteriatedRuby, SliverKnight, MalachiteHuge, Jade, Volcano, PinkDiamond, PinkDiamondHuge,
         KDiamond, Uranium238, Uranium235, DepletedKyparium, BloodStone, BloodStoneAntique, TheCrownPrince, Quartz,
-        GreyJade, MonkeyKingJade, GullinanDiamond, ChineseJade, Lazurite, GoldenJubilee
+        GreyJade, MonkeyKingJade, GullinanDiamond, ChineseJade, Lazurite, GoldenJubilee, Gold, EgyptGold,
+        DarkEmerald, EmeraldGolem, ParaibaTourmaline, ElaboratelyCarvedTourmaline, SapphireStarOfAdam
     };
 
     /// <summary>
@@ -29,6 +30,7 @@ public class TowerManager : MonoBehaviour
                 tower.BasicAttackTime = 1;
                 tower.BasicPhysicalDamage = 2;
                 tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect60;
+                tower.ProvideSpellImmunity = true;
                 tower.TowerDescription = "防御塔特性:\n减少攻击目标的移动速度(减60移动速度,持续2秒)\n同种效果不可叠加";
                 tower.AttackColor = Color.blue;
                 break;
@@ -673,8 +675,81 @@ public class TowerManager : MonoBehaviour
                 tower.BasicAttackTime = 0.7;
                 tower.BasicPhysicalDamage = new System.Random().Next(1,1025);
                 tower.AFlyEffect = TowerController.AntiFlyEffect.AntiFly2;
+                tower.CanMagicSplash = true;
                 tower.TowerDescription = "防御塔特性:\n随机攻击力(1-1024)\n魔法溅射(攻击时对目标周围2格内敌人造成等同于攻击力的魔法伤害)";
                 tower.AttackColor = new Color32(0xd7, 0x64, 0x05, 0xff);
+                break;
+            case TowerType.Gold:
+                tower.BasicAttackRange = 600;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.8;
+                tower.BasicPhysicalDamage = 60;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect20;
+                tower.TowerDescription = "防御塔特性:\n减少攻击目标的护甲值(减20点护甲,持续2秒,无视魔法免疫)\n同种效果不可叠加)";
+                tower.AttackColor = new Color32(0xff,0xd1,0x0c, 0xff);
+                tower.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                break;
+            case TowerType.EgyptGold:
+                tower.BasicAttackRange = 700;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.8;
+                tower.BasicPhysicalDamage = 100;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect30;
+                tower.ProvideGreedy = true;
+                tower.TowerDescription = "防御塔特性:\n减少攻击目标的护甲值(减30点护甲,持续2秒,无视魔法免疫)\n贪婪(周围8格内防御塔在击杀敌人时有5%概率使击杀金钱x10)\n同种效果不可叠加)";
+                tower.AttackColor = new Color32(0xff, 0xd1, 0x0c, 0xff);
+                tower.transform.localScale = new Vector3(1f, 1f, 1f);
+                break;
+            case TowerType.DarkEmerald:
+                tower.BasicAttackRange = 700;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.5;
+                tower.BasicPhysicalDamage = 80;
+                tower.CanStun = true;
+                tower.TowerDescription = "防御塔特性:\n重击(在攻击时有10%概率眩晕敌人2秒)";
+                tower.AttackColor = new Color32(0x13, 0x45, 0x36, 0xff);
+                break;
+            case TowerType.EmeraldGolem:
+                tower.BasicAttackRange = 700;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.5;
+                tower.BasicPhysicalDamage = 170;
+                tower.CanStun = true;
+                tower.CanStoneGaze = true;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect20;
+                tower.TowerDescription = "防御塔特性:\n重击(在攻击时有10%概率眩晕敌人2秒\n减少攻击目标的护甲值(减20点护甲,持续2秒,无视魔法免疫)\n同种效果不可叠加\n在攻击时有2%概率使周围10格内敌人眩晕2秒)";
+                tower.AttackColor = Color.green;
+                break;
+            case TowerType.ParaibaTourmaline:
+                tower.BasicAttackRange = 600;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.6;
+                tower.BasicPhysicalDamage = 30;
+                tower.ProvideArmorReduceAura15 = true;
+                tower.TowerDescription = "防御塔特性:\n减少附近8格内敌人护甲15点\n同种效果不可叠加";
+                tower.AttackColor = new Color32(0x03, 0xf1, 0xfb, 0xff);
+                break;
+            case TowerType.ElaboratelyCarvedTourmaline:
+                tower.BasicAttackRange = 700;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.6;
+                tower.BasicPhysicalDamage = 130;
+                tower.ProvideArmorReduceAura30 = true;
+                tower.CanStun = true;
+                tower.TowerDescription = "防御塔特性:\n重击(在攻击时有10%概率眩晕敌人2秒)\n减少附近12格内敌人护甲30点\n同种效果不可叠加";
+                tower.AttackColor = new Color32(0x9b, 0x5a, 0x46, 0xff);
+                break;
+            case TowerType.SapphireStarOfAdam:
+                tower.BasicAttackRange = 800;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 1;
+                tower.BasicPhysicalDamage = 42;
+                tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect64;
+                tower.AtkArmorReduceEffect = TowerController.AttackArmorReduceEffect.ArmorReduceEffect64;
+                tower.ProvideArmorReduceAura30 = true;
+                tower.CanFrozenAttack = true;
+                tower.TowerDescription = "防御塔特性:\n减少附近12格内敌人护甲30点\n使攻击目标中毒(持续5秒,每秒64点魔法伤害)\n减少攻击目标的护甲值(减64点护甲,持续2秒)\n减少攻击目标以及周围3格内敌人一半的移速,持续3秒\n同种效果不可叠加";
+                tower.AttackColor = Color.blue;
                 break;
         }
 
@@ -687,8 +762,13 @@ public class TowerManager : MonoBehaviour
     /// <returns></returns>
     public static TowerType GetTowerType(GameObject tower)
     {
+        if (tower.name.StartsWith("EmeraldG"))
+        {
+            return TowerType.EmeraldGolem;
+        }
+
         #region 紫宝石
-        if (tower.name.StartsWith("Ame"))
+        else if (tower.name.StartsWith("Ame"))
         {
             if (tower.transform.localScale.x < 0.51)
             {
@@ -1042,6 +1122,29 @@ public class TowerManager : MonoBehaviour
         {
             return TowerType.GoldenJubilee;
         }
+        else if (tower.name.StartsWith("Gold"))
+        {
+            if (tower.transform.localScale.x < 0.8f)
+            {
+                return TowerType.Gold;
+            }
+            else
+            {
+                return TowerType.EgyptGold;
+            }
+        }
+        else if (tower.name.StartsWith("DarkEm"))
+        {
+            return TowerType.DarkEmerald;
+        }
+        else if (tower.name.StartsWith("ParaibaTour"))
+        {
+            return TowerType.ParaibaTourmaline;
+        }
+        else if (tower.name.StartsWith("ElaboratelyCar"))
+        {
+            return TowerType.ElaboratelyCarvedTourmaline;
+        }
 
         else return TowerType.Unkown;
 
@@ -1198,6 +1301,20 @@ public class TowerManager : MonoBehaviour
                 return "青金石";
             case TowerType.GoldenJubilee:
                 return "金色陛下";
+            case TowerType.Gold:
+                return "黄金";
+            case TowerType.EgyptGold:
+                return "埃及金";
+            case TowerType.DarkEmerald:
+                return "黑暗翡翠";
+            case TowerType.EmeraldGolem:
+                return "翡翠巨像";
+            case TowerType.ParaibaTourmaline:
+                return "帕拉伊巴碧玺";
+            case TowerType.ElaboratelyCarvedTourmaline:
+                return "精心雕琢的碧玺";
+            case TowerType.SapphireStarOfAdam:
+                return "斯里兰卡之星";
         }
         return "未知类型";
     }
@@ -1343,6 +1460,15 @@ public class TowerManager : MonoBehaviour
                 return "ChineseJade";
             case TowerType.Lazurite:
                 return "Lazurite";
+            case TowerType.Gold:
+                return "Gold";
+            case TowerType.DarkEmerald:
+                return "DarkEmerald";
+            case TowerType.ParaibaTourmaline:
+                return "ParaibaTourmaline";
+            case TowerType.ElaboratelyCarvedTourmaline:
+                return "ElaboratelyCarvedTourmaline";
+
         }
         return "Untagged";
     }
@@ -1402,8 +1528,21 @@ public class TowerManager : MonoBehaviour
                 return "Lazurite";
             case TowerType.GoldenJubilee:
                 return "GoldenJubilee";
+            case TowerType.Gold:
+                return "Gold";
+            case TowerType.EgyptGold:
+                return "Gold";
+            case TowerType.DarkEmerald:
+                return "DarkEmerald";
+            case TowerType.EmeraldGolem:
+                return "EmeraldGolem";
+            case TowerType.ParaibaTourmaline:
+                return "ParaibaTourmaline";
+            case TowerType.ElaboratelyCarvedTourmaline:
+                return "ElaboratelyCarvedTourmaline";
+            case TowerType.SapphireStarOfAdam:
+                return "SapphireStarOfAdam";
         }
-
         return "";
     }
 

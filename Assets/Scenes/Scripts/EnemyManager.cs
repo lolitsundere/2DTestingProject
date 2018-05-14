@@ -43,7 +43,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(525 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n无";
-                enemy.ExperienceAndGold = 5;
+                enemy.Experience = 5;
                 enemy.MaxAmount = 5;
                 break;
             case 2:
@@ -53,7 +53,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(600 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n无";
-                enemy.ExperienceAndGold = 5;
+                enemy.Experience = 5;
                 enemy.MaxAmount = 5;
                 break;
             case 3:
@@ -63,7 +63,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(525 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n无";
-                enemy.ExperienceAndGold = 5;
+                enemy.Experience = 5;
                 enemy.MaxAmount = 5;
                 break;
             case 4:
@@ -73,7 +73,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(1000 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n无";
-                enemy.ExperienceAndGold = 5;
+                enemy.Experience = 5;
                 enemy.MaxAmount = 6;
                 break;
             case 5:
@@ -91,7 +91,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(500 * movementSpeedFactor));
                 enemy.IsFlying = true;
                 enemy.EnemyDescription = "敌人特性:\n飞行(无视地形移动)";
-                enemy.ExperienceAndGold = 5;
+                enemy.Experience = 5;
                 enemy.MaxAmount = 6;
                 break;
             case 6:
@@ -101,7 +101,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(450 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n无";
-                enemy.ExperienceAndGold = 5;
+                enemy.Experience = 5;
                 enemy.MaxAmount = 6;
                 break;
             case 7:
@@ -111,7 +111,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(600 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n无";
-                enemy.ExperienceAndGold = 5;
+                enemy.Experience = 5;
                 enemy.MaxAmount = 7;
                 break;
             case 8:
@@ -121,7 +121,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(750 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n隐形";
-                enemy.ExperienceAndGold = 5;
+                enemy.Experience = 5;
                 enemy.MaxAmount = 7;
                 enemy.IsInvisible = true;
                 break;
@@ -132,7 +132,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(600 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n闪避(50%)";
-                enemy.ExperienceAndGold = 5;
+                enemy.Experience = 5;
                 enemy.MaxAmount = 7;
                 enemy.Evation = 0.5f;
                 break;
@@ -143,7 +143,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(750 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n普通BOSS";
-                enemy.ExperienceAndGold = 300;
+                enemy.Experience = 300;
                 enemy.MaxAmount = 1;
                 enemy.MaxDamageToPlayer = 100;
                 break;
@@ -154,7 +154,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(525 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n无";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 8;
                 break;
             case 12:
@@ -164,7 +164,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.2f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(600 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n缴械(1.2格内防御塔无法攻击)";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 8;
                 enemy.Disarmble = true;
                 break;
@@ -175,7 +175,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(600 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n无)";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 9;
                 break;
             case 14:
@@ -185,7 +185,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(600 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n折射(在受到伤害时有15%概率生成3层防护罩抵御伤害)";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 9;
                 enemy.Refractable = true;
                 break;
@@ -205,7 +205,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.IsFlying = true;
                 enemy.EnemyDescription = "敌人特性:\n飞行(无视地形移动)";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 9;
                 break;
             case 16:
@@ -215,7 +215,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(800 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n魔法免疫(无视魔法伤害,无视Debuff)";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 10;
                 enemy.SpellImmunity = true;
                 break;
@@ -226,7 +226,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.5f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(600 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n不可侵犯(-300攻击它的防御塔的攻速)";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 10;
                 enemy.Untouchable = true;
                 break;
@@ -237,7 +237,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(675 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n隐形+缴械";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 10;
                 enemy.IsInvisible = true;
                 enemy.Disarmble = true;
@@ -258,7 +258,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.CanRun = true;
                 enemy.EnemyDescription = "敌人特性:\n奔跑(在受到伤害时有15%概率加速50%)";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 11;
                 break;
             case 20:
@@ -268,7 +268,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(900 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n普通BOSS";
-                enemy.ExperienceAndGold = 300;
+                enemy.Experience = 300;
                 enemy.MaxAmount = 1;
                 enemy.MaxDamageToPlayer = 100;
                 break;
@@ -287,7 +287,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.Armor = 8;
                 enemy.MagicResistance = 0.1f;
                 enemy.EnemyDescription = "敌人特性:\n无";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 11;
                 break;
             case 22:
@@ -297,7 +297,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(600 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n高护甲";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 11;
                 break;
             case 23:
@@ -315,7 +315,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.Armor = 99999;
                 enemy.MagicResistance = 0.1f;
                 enemy.EnemyDescription = "敌人特性:\n物免(不会受到物理伤害)+折射";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 12;
                 break;
             case 24:
@@ -333,7 +333,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.Armor = 8;
                 enemy.MagicResistance = 0.1f;
                 enemy.EnemyDescription = "敌人特性:\n叠甲(每受到攻击护甲增加5)";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 12;
                 enemy.CanStackArmor = true ;
                 break;
@@ -352,7 +352,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.Armor = 43;
                 enemy.MagicResistance = 0.1f;
                 enemy.EnemyDescription = "敌人特性:\n飞行+高护甲";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 12;
                 enemy.IsFlying = true;
                 break;
@@ -363,7 +363,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(900 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n魔法免疫(无视魔法伤害,无视Debuff)";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 13;
                 enemy.SpellImmunity = true;
                 break;
@@ -383,7 +383,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.Health = enemy.MaxHealth;
                 enemy.MagicResistance = 0.5f;
                 enemy.EnemyDescription = "敌人特性:\n飞行+不可侵犯或飞行+不可侵犯+物免";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 13;
                 enemy.IsFlying = true;
                 enemy.Untouchable = true;
@@ -404,7 +404,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.Health = enemy.MaxHealth;
                 enemy.MagicResistance = 0.1f;
                 enemy.EnemyDescription = "敌人特性:\n飞行+叠甲";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 13;
                 enemy.IsFlying = true;
                 enemy.CanStackArmor = true;
@@ -424,7 +424,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.Armor = 8;
                 enemy.MagicResistance = 0.1f;
                 enemy.EnemyDescription = "敌人特性:\n飞行+闪避+折射";
-                enemy.ExperienceAndGold = 10;
+                enemy.Experience = 10;
                 enemy.MaxAmount = 14;
                 enemy.IsFlying = true;
                 enemy.Evation = 0.5f;
@@ -437,12 +437,13 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(750 * movementSpeedFactor));
                 enemy.EnemyDescription = "敌人特性:\n飞行BOSS";
-                enemy.ExperienceAndGold = 300;
+                enemy.Experience = 300;
                 enemy.MaxAmount = 1;
                 enemy.MaxDamageToPlayer = 100;
                 enemy.IsFlying = true;
                 break;
         }
+        enemy.Gold = enemy.Experience;
     }
 
     public static String GetEenemyInfo(int level)

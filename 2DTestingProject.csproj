@@ -299,7 +299,6 @@
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifier.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifierVolume.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshSurface.cs" />
-    <Compile Include="Assets\Scenes\Scripts\BufferPool.cs" />
     <Compile Include="Assets\Scenes\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scenes\Scripts\ClickEventHandler.cs" />
     <Compile Include="Assets\Scenes\Scripts\ClosePanelButtonController.cs" />
