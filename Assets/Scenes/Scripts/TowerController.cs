@@ -6,14 +6,20 @@ using UnityEngine;
 
 public class TowerController : MonoBehaviour
 {
-    public enum AttackSlowEffect { SlowEffect0, SlowEffect60, SlowEffect90, SlowEffect120, SlowEffect150, SlowEffect180, SlowEffect480 };
-    public enum AttackSpeedAccelerateEffect { AccelerateEffect0, AccelerateEffect20, AccelerateEffect30, AccelerateEffect40, AccelerateEffect50, AccelerateEffect60, AccelerateEffect70 };
-    public enum AttackPoisonEffect { PoisonEffect0, PoisonEffect1, PoisonEffect2, PoisonEffect4, PoisonEffect8, PoisonEffect16, PoisonEffect64 };
-    public enum AttackArmorReduceEffect { ArmorReduceEffect0, ArmorReduceEffect1, ArmorReduceEffect2, ArmorReduceEffect4, ArmorReduceEffect8, ArmorReduceEffect16, ArmorReduceEffect20, ArmorReduceEffect30, ArmorReduceEffect64 };
-    public enum AttackSplashEffect { SplashEffect0, SplashEffect1, SplashEffect2, SplashEffect3, SplashEffect4, SplashEffect5, SplashEffect6 };
-    public enum BurnEffect { BurnEffect0, BurnEffect30, BurnEffect160, BurnEffect1250 };
-    public enum AntiFlyEffect { AnitFly0, AntiFly1, AntiFly2 }
 
+    public double BasicAttackSpeed
+    {
+        set
+        {
+            accelerate20 = 0;
+            accelerate30 = 0;
+            accelerate40 = 0;
+            accelerate50 = 0;
+            accelerate60 = 0;
+            accelerate70 = 0;
+            AttackSpeed = value;
+        }
+    }
     private double attackSpeed;
     public double AttackSpeed
     {
@@ -39,32 +45,6 @@ public class TowerController : MonoBehaviour
             }
         }
     }
-    public float DamageDealed;
-    private int mvpLevel;
-    public int MVPLevel
-    {
-        get { return mvpLevel; }
-        set
-        {
-            mvpLevel = value;
-            PhysicalDamage = BasicPhysicalDamage * (1f + 0.1f * mvpLevel);
-        }
-    }
-    public List<Collider2D> MvpAuraTargetsList = new List<Collider2D>();
-
-    public double BasicAttackSpeed
-    {
-        set
-        {
-            accelerate20 = 0;
-            accelerate30 = 0;
-            accelerate40 = 0;
-            accelerate50 = 0;
-            accelerate60 = 0;
-            accelerate70 = 0;
-            AttackSpeed = value;
-        }
-    }
 
     private double basicAttackTime;
     public double BasicAttackTime
@@ -88,6 +68,7 @@ public class TowerController : MonoBehaviour
         }
     }
 
+    public int MaxTargetAmount;
     private float basicPhysicalDamage;
     public float BasicPhysicalDamage
     {
@@ -173,43 +154,67 @@ public class TowerController : MonoBehaviour
             AttackRange = value;
         }
     }
-    public bool CanMagicSplash;
-    public bool CanStun;
-    public bool CanStoneGaze;
-    public bool ProvideGreedy;
-    public bool Greedy;
-    public int MaxTargetAmount;
-    public bool CanFrozenAttack;
-
-    public bool CanBreakInvisibility;
-    public bool CanCrit;
-    public bool CanLightingChain;
-    public bool CanAddRange;
-    public bool ProvideCanNotMiss;
-    public bool ProvideSpellImmunity;
-    public bool ProvideArmorReduceAura15;
-    public bool ProvideArmorReduceAura30;
-    public bool CanHeal;
-
-    public bool SpellImmunity;
-    internal bool canNotMiss;
-    private double canNotMissTimer;
-
-    public int LightingChainDamage;
-    public String TowerDescription;
-
-    public AttackSlowEffect AtkSlowEffect;
-    public AttackPoisonEffect AtkPoisonEffect;
-    public AttackSpeedAccelerateEffect AccelerateEffect;
-    public AttackArmorReduceEffect AtkArmorReduceEffect;
-    public AttackSplashEffect AtkSplashEffect;
-    public BurnEffect BEffect;
-    public AntiFlyEffect AFlyEffect;
 
     public float attackTimer;
     public double attackTime;
 
+    public float DamageDealed;
+    private int mvpLevel;
+    public int MVPLevel
+    {
+        get { return mvpLevel; }
+        set
+        {
+            mvpLevel = value;
+            PhysicalDamage = BasicPhysicalDamage * (1f + 0.1f * mvpLevel);
+        }
+    }
+    public List<Collider2D> MvpAuraTargetsList = new List<Collider2D>();
+
+    public String TowerDescription;
+
+    public enum AttackSlowEffect { SlowEffect0, SlowEffect60, SlowEffect90, SlowEffect120, SlowEffect150, SlowEffect180, SlowEffect480 };
+    public enum AttackSpeedAccelerateEffect { AccelerateEffect0, AccelerateEffect20, AccelerateEffect30, AccelerateEffect40, AccelerateEffect50, AccelerateEffect60, AccelerateEffect70, AccelerateEffect250 };
+    public enum AttackPoisonEffect { PoisonEffect0, PoisonEffect1, PoisonEffect2, PoisonEffect4, PoisonEffect8, PoisonEffect16, PoisonEffect64 };
+    public enum AttackArmorReduceEffect { ArmorReduceEffect0, ArmorReduceEffect1, ArmorReduceEffect2, ArmorReduceEffect4, ArmorReduceEffect8, ArmorReduceEffect16, ArmorReduceEffect20, ArmorReduceEffect30, ArmorReduceEffect64 };
+    public enum AttackSplashEffect { SplashEffect0, SplashEffect1, SplashEffect2, SplashEffect3, SplashEffect4, SplashEffect5, SplashEffect6 };
+    public enum BurnEffect { BurnEffect0, BurnEffect30, BurnEffect160, BurnEffect1250 };
+    public enum AntiFlyEffect { AnitFly0, AntiFly1, AntiFly2 }
+
+    public bool CanMagicSplash;
+    public bool CanStun;
+    public bool CanStoneGaze;
+    public bool CanFrozenAttack;
+    public bool CanBreakInvisibility;
+    public bool CanCrit;
+    public bool CanLightingChain;
+    public bool CanHeal;
+    public bool ProvideAddRange;
+    public bool ProvideCanNotMiss;
+    public bool ProvideSpellImmunity;
+    public bool ProvideArmorReduceAura15;
+    public bool ProvideArmorReduceAura30;
+    public bool ProvideGreedy;
+    public bool ProvideInspire;
+    public bool ProvideLightingChain;
+    public bool HasFrozenAura;
+
+    public bool Greedy;
+    public bool SpellImmunity;
+    internal bool canNotMiss;
+    private double canNotMissTimer;
     private float burnTimer;
+    private double addRange300;
+
+    public int LightingChainDamage;
+
+    public AttackSlowEffect AtkSlowEffect;
+    public AttackPoisonEffect AtkPoisonEffect;
+    public List<AttackSpeedAccelerateEffect> AccelerateEffectList = new List<AttackSpeedAccelerateEffect>();
+    public AttackArmorReduceEffect AtkArmorReduceEffect;
+    public AttackSplashEffect AtkSplashEffect;
+    public BurnEffect BEffect;
+    public AntiFlyEffect AFlyEffect;
 
     private double accelerate20;
     private double accelerate30;
@@ -217,10 +222,11 @@ public class TowerController : MonoBehaviour
     private double accelerate50;
     private double accelerate60;
     private double accelerate70;
+    private double accelerate250;
+
+    private double inspireTimer;
 
     public double UntouchableTimer;
-
-    private double addRange300;
     
     private void PhysicalAttack()
     {
@@ -288,32 +294,31 @@ public class TowerController : MonoBehaviour
         CheckBurnAttack();
         CheckAntiFly();
         CheckTowerAroundForSpellImmunity();
-        var targets = Physics2D.OverlapCircleAll(transform.position, 6, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" }));
-        foreach (var target in targets)
+        UpdateMVPMagicResistanceDownAura();
+
+        if (ProvideInspire)
         {
-            if (!MvpAuraTargetsList.Contains(target))
+            foreach (Collider2D go1 in Physics2D.OverlapCircleAll(transform.position, 5, LayerMask.GetMask("Tower")))
             {
-                target.GetComponent<EnemyController>().MagicResistance -= 0.1f * MVPLevel;
-            }
-        }
-        foreach (var target in MvpAuraTargetsList)
-        {
-            try
-            {
-                if (!targets.Contains(target))
+                if (go1.GetComponent<TowerController>().inspireTimer == 0)
                 {
-                    target.GetComponent<EnemyController>().MagicResistance += 0.1f * MVPLevel;
+                    go1.GetComponent<TowerController>().PhysicalDamage += basicPhysicalDamage/2;
                 }
+                go1.GetComponent<TowerController>().inspireTimer = 0.5;
             }
-            catch (Exception)
+        }
+        if (inspireTimer > 0)
+        {
+            inspireTimer -= Time.deltaTime;
+            if (inspireTimer <= 0)
             {
-                continue;
+                inspireTimer = 0;
+                PhysicalDamage -= basicPhysicalDamage / 2;
             }
         }
 
-        MvpAuraTargetsList = targets.ToList();
 
-        if (CanAddRange)
+        if (ProvideAddRange)
         {
             foreach (Collider2D go1 in Physics2D.OverlapCircleAll(transform.position, 3, LayerMask.GetMask("Tower")))
             {
@@ -332,6 +337,45 @@ public class TowerController : MonoBehaviour
             {
                 addRange300 = 0;
                 AttackRange -= 300;
+            }
+        }
+
+        if (HasFrozenAura)
+        {
+            var targets = Physics2D.OverlapCircleAll(transform.position, 3, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" }));
+            foreach (var target in targets)
+            {
+                if (target.GetComponent<EnemyController>().frozenTimer == 0)
+                {
+                    float movementSpeedDiff = 0;
+                    if (target.GetComponent<EnemyController>().attackSlow60Timer > 0)
+                    {
+                        movementSpeedDiff += 60;
+                    }
+                    if (target.GetComponent<EnemyController>().attackSlow90Timer > 0)
+                    {
+                        movementSpeedDiff += 90;
+                    }
+                    if (target.GetComponent<EnemyController>().attackSlow120Timer > 0)
+                    {
+                        movementSpeedDiff += 120;
+                    }
+                    if (target.GetComponent<EnemyController>().attackSlow150Timer > 0)
+                    {
+                        movementSpeedDiff += 150;
+                    }
+                    if (target.GetComponent<EnemyController>().attackSlow180Timer > 0)
+                    {
+                        movementSpeedDiff += 180;
+                    }
+                    if (target.GetComponent<EnemyController>().attackSlow480Timer > 0)
+                    {
+                        movementSpeedDiff += 480;
+                    }
+
+                    target.GetComponent<EnemyController>().MovementSpeed = (target.GetComponent<EnemyController>().MovementSpeed + movementSpeedDiff) * 0.25f - movementSpeedDiff;
+                }
+                target.GetComponent<EnemyController>().frozenTimer = 0.5f;
             }
         }
 
@@ -404,6 +448,19 @@ public class TowerController : MonoBehaviour
             }
 
         }
+
+        if (ProvideLightingChain)
+        {
+            foreach (Collider2D go1 in Physics2D.OverlapCircleAll(transform.position, 2, LayerMask.GetMask("Tower")))
+            {
+                go1.GetComponent<TowerController>().CanLightingChain = true;
+                if (go1.GetComponent<TowerController>().LightingChainDamage < 500)
+                {
+                    go1.GetComponent<TowerController>().LightingChainDamage = 500;
+                }
+            }
+
+        }
     }
 
     /// <summary>
@@ -411,7 +468,7 @@ public class TowerController : MonoBehaviour
     /// </summary>
     private void CheckTowerAroundForAcceleration()
     {
-        if (AccelerateEffect != AttackSpeedAccelerateEffect.AccelerateEffect0)
+        foreach (AttackSpeedAccelerateEffect AccelerateEffect in AccelerateEffectList)
         {
             foreach (Collider2D go1 in Physics2D.OverlapCircleAll(transform.position, 6, LayerMask.GetMask("Tower")))
             {
@@ -459,7 +516,17 @@ public class TowerController : MonoBehaviour
                         }
                         go1.GetComponent<TowerController>().accelerate70 = 0.5;
                         break;
-
+                }
+            }
+            if (AccelerateEffect == AttackSpeedAccelerateEffect.AccelerateEffect250)
+            {
+                foreach (Collider2D go1 in Physics2D.OverlapCircleAll(transform.position, 1.5f, LayerMask.GetMask("Tower")))
+                {
+                    if (go1.GetComponent<TowerController>().accelerate250 == 0)
+                    {
+                        go1.GetComponent<TowerController>().AttackSpeed += 250;
+                    }
+                    go1.GetComponent<TowerController>().accelerate250 = 0.5;
                 }
             }
         }
@@ -532,6 +599,16 @@ public class TowerController : MonoBehaviour
                 AttackSpeed -= 70;
             }
         }
+
+        if (accelerate250 > 0)
+        {
+            accelerate250 -= Time.deltaTime;
+            if (accelerate250 <= 0)
+            {
+                accelerate250 = 0;
+                AttackSpeed -= 250;
+            }
+        }
     }
 
 
@@ -549,6 +626,9 @@ public class TowerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 更新燃烧攻击状态
+    /// </summary>
     private void CheckBurnAttack()
     {
         if (BEffect == BurnEffect.BurnEffect30)
@@ -592,6 +672,9 @@ public class TowerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 更新飞行控制状态
+    /// </summary>
     private void CheckAntiFly()
     {
         if (AFlyEffect == AntiFlyEffect.AntiFly1)
@@ -627,5 +710,35 @@ public class TowerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// 更新MVP光环状态
+    /// </summary>
+    private void UpdateMVPMagicResistanceDownAura()
+    {
+        var targets = Physics2D.OverlapCircleAll(transform.position, 6, LayerMask.GetMask(new string[] { "Enemy", "InvisibleEnemy" }));
+        foreach (var target in targets)
+        {
+            if (!MvpAuraTargetsList.Contains(target))
+            {
+                target.GetComponent<EnemyController>().MagicResistance -= 0.1f * MVPLevel;
+            }
+        }
+        foreach (var target in MvpAuraTargetsList)
+        {
+            try
+            {
+                if (!targets.Contains(target))
+                {
+                    target.GetComponent<EnemyController>().MagicResistance += 0.1f * MVPLevel;
+                }
+            }
+            catch (Exception)
+            {
+                continue;
+            }
+        }
+        MvpAuraTargetsList = targets.ToList();
     }
 }

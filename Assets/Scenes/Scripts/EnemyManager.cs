@@ -442,6 +442,248 @@ public class EnemyManager : MonoBehaviour
                 enemy.MaxDamageToPlayer = 100;
                 enemy.IsFlying = true;
                 break;
+            case 31:
+                if (UnityEngine.Random.value < 0.5)
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(14000 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(900 * movementSpeedFactor));
+                    enemy.SpellImmunity = true;
+                    enemy.Armor = 12;
+                }
+                else
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(21000 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(800 * movementSpeedFactor));
+                    enemy.Armor = 99999;
+                }
+                enemy.Health = enemy.MaxHealth;
+                enemy.MagicResistance = 0.1f;
+                enemy.EnemyDescription = "敌人特性:\n魔免或物免";
+                enemy.Experience = 10;
+                enemy.MaxAmount = 14;
+                break;
+            case 32:
+                enemy.MaxHealth = Convert.ToInt32(Mathf.Round(85000 * hpFactor));
+                enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(600 * movementSpeedFactor));
+                enemy.Armor = 12;
+                enemy.Health = enemy.MaxHealth;
+                enemy.MagicResistance = 0.1f;
+                enemy.EnemyDescription = "敌人特性:\n恢复(每秒恢复500生命)";
+                enemy.Experience = 10;
+                enemy.Heal = 500;
+                enemy.MaxAmount = 15;
+                break;
+            case 33:
+                if (UnityEngine.Random.value < 0.5)
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(80000 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(700 * movementSpeedFactor));
+                    enemy.SpellImmunity = true;
+                }
+                else
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(55000 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(1000 * movementSpeedFactor));
+                }
+                enemy.Armor = 99999;
+                enemy.Health = enemy.MaxHealth;
+                enemy.MagicResistance = 0.1f;
+                enemy.CanRun = true;
+                enemy.EnemyDescription = "敌人特性:\n物免";
+                enemy.Experience = 10;
+                enemy.MaxAmount = 15;
+                break;
+            case 34:
+                if (UnityEngine.Random.value < 0.5)
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(13000 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(925 * movementSpeedFactor));
+                    enemy.SpellImmunity = true;
+                }
+                else
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(20000 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(725 * movementSpeedFactor));
+                }
+                enemy.Armor = 12;
+                enemy.Health = enemy.MaxHealth;
+                enemy.MagicResistance = 0.1f;
+                enemy.Evation = 0.5f;
+                enemy.IsFlying = true;
+                enemy.EnemyDescription = "敌人特性:\n闪避+飞行";
+                enemy.Experience = 10;
+                enemy.MaxAmount = 15;
+                break;
+            case 35:
+                if (UnityEngine.Random.value < 0.5)
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(8800 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(700 * movementSpeedFactor));
+                    enemy.SpellImmunity = true;
+                    enemy.Armor = 12;
+                }
+                else
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(10000 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(700 * movementSpeedFactor));
+                    enemy.Armor = 99999;
+                }
+                enemy.IsFlying = true;
+                enemy.Health = enemy.MaxHealth;
+                enemy.MagicResistance = 0.1f;
+                enemy.EnemyDescription = "敌人特性:\n飞行+魔免或飞行+物免";
+                enemy.Experience = 10;
+                enemy.MaxAmount = 15;
+                break;
+            case 36:
+                if (UnityEngine.Random.value < 0.5)
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(55000 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(1000 * movementSpeedFactor));
+                    enemy.SpellImmunity = true;
+                    enemy.Armor = 12;
+                }
+                else
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(85000 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(1000 * movementSpeedFactor));
+                    enemy.Armor = 99999;
+                }
+                enemy.Health = enemy.MaxHealth;
+                enemy.MagicResistance = 0.1f;
+                enemy.EnemyDescription = "敌人特性:\n魔免或物免";
+                enemy.Experience = 10;
+                enemy.MaxAmount = 14;
+                break;
+            case 37:
+                enemy.MaxHealth = Convert.ToInt32(Mathf.Round(120000 * hpFactor));
+                enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(1200 * movementSpeedFactor));
+                enemy.Armor = 12;
+                enemy.Health = enemy.MaxHealth;
+                enemy.MagicResistance = 0.1f;
+                enemy.EnemyDescription = "敌人特性:\n奔跑";
+                enemy.CanRun = true;
+                enemy.Experience = 10;
+                enemy.MaxAmount = 13;
+                break;
+            case 38:
+                if (UnityEngine.Random.value < 0.5)
+                {
+                    enemy.IsInvisible = true;
+                }
+                enemy.Disarmble = true;
+                enemy.MaxHealth = Convert.ToInt32(Mathf.Round(20000 * hpFactor));
+                enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(1000 * movementSpeedFactor));
+                enemy.Health = enemy.MaxHealth;
+                enemy.MagicResistance = 0.1f;
+                enemy.EnemyDescription = "敌人特性:\n缴械或缴械+隐身";
+                enemy.Experience = 10;
+                enemy.MaxAmount = 13;
+                break;
+            case 39:
+                if (UnityEngine.Random.value < 0.5)
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(55000 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(600 * movementSpeedFactor));
+                }
+                else
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(15000 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(800 * movementSpeedFactor));
+                }
+                enemy.Untouchable = true;
+                enemy.Evation = 0.5f;
+                enemy.IsFlying = true;
+                enemy.Health = enemy.MaxHealth;
+                enemy.MagicResistance = 0.1f;
+                enemy.EnemyDescription = "敌人特性:\n飞行+闪避+不可侵犯";
+                enemy.Experience = 10;
+                enemy.MaxAmount = 12;
+                break;
+            case 40:
+                enemy.MaxHealth = Convert.ToInt32(Mathf.Round(330000 * hpFactor));
+                enemy.Health = enemy.MaxHealth;
+                enemy.Armor = 0;
+                enemy.MagicResistance = 0.1f;
+                enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(800 * movementSpeedFactor));
+                enemy.EnemyDescription = "敌人特性:\n飞行BOSS";
+                enemy.Experience = 300;
+                enemy.MaxAmount = 1;
+                enemy.MaxDamageToPlayer = 100;
+                enemy.IsFlying = true;
+                break;
+            case 41:
+                if (UnityEngine.Random.value < 0.5)
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(240000 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(700 * movementSpeedFactor));
+                    enemy.MagicResistance = 0.5f;
+                }
+                else
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(120000 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(1300 * movementSpeedFactor));
+                    enemy.MagicResistance = 0.25f;
+                }
+                enemy.Armor = 16;
+                enemy.Refractable = true;
+                enemy.Health = enemy.MaxHealth;
+                enemy.EnemyDescription = "敌人特性:\n折射";
+                enemy.Experience = 10;
+                enemy.MaxAmount = 11;
+                break;
+            case 42:
+                enemy.MaxHealth = Convert.ToInt32(Mathf.Round(15000 * hpFactor));
+                enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(700 * movementSpeedFactor));
+                enemy.Armor = 16;
+                enemy.Health = enemy.MaxHealth;
+                enemy.MagicResistance = 0.1f;
+                enemy.SpellImmunity = true;
+                enemy.EnemyDescription = "敌人特性:\n飞行+魔免+奔跑";
+                enemy.CanRun = true;
+                enemy.IsFlying = true;
+                enemy.Experience = 10;
+                enemy.MaxAmount = 10;
+                break;
+            case 43:
+                enemy.MaxHealth = Convert.ToInt32(Mathf.Round(190000 * hpFactor));
+                enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(800 * movementSpeedFactor));
+                enemy.Armor = 16;
+                enemy.Health = enemy.MaxHealth;
+                enemy.MagicResistance = 0.1f;
+                enemy.Untouchable = true;
+                enemy.Evation = 0.5f;
+                enemy.Heal = 500;
+                enemy.EnemyDescription = "敌人特性:\n不可侵犯+闪避+回血";
+                enemy.Experience = 10;
+                enemy.MaxAmount = 10;
+                break;
+            case 44:
+                enemy.MaxHealth = Convert.ToInt32(Mathf.Round(200000 * hpFactor));
+                enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(500 * movementSpeedFactor));
+                enemy.Armor = 16;
+                enemy.Health = enemy.MaxHealth;
+                enemy.MagicResistance = 0.1f;
+                enemy.SpellImmunity = true;
+                enemy.CanRun = true;
+                enemy.EnemyDescription = "敌人特性:\n奔跑+魔免";
+                enemy.Experience = 10;
+                enemy.MaxAmount = 9;
+                break;
+            case 45:
+                enemy.MaxHealth = Convert.ToInt32(Mathf.Round(120000 * hpFactor));
+                enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(1200 * movementSpeedFactor));
+                enemy.Armor = 16;
+                enemy.Health = enemy.MaxHealth;
+                enemy.MagicResistance = 0.1f;
+                enemy.CanRun = true;
+                enemy.IsFlying = true;
+                enemy.Disarmble = true;
+                enemy.EnemyDescription = "敌人特性:\n飞行+奔跑+缴械";
+                enemy.Experience = 10;
+                enemy.MaxAmount = 8;
+                break;
+
         }
         enemy.Gold = enemy.Experience;
     }
@@ -492,8 +734,37 @@ public class EnemyManager : MonoBehaviour
                 return "下拨敌人: 飞行+闪避+折射敌人";
             case 30:
                 return "下拨敌人: 飞行BOSS";
+            case 31:
+                return "下拨敌人: 魔免敌人或物免敌人";
+            case 32:
+                return "下拨敌人: 回血敌人(每秒恢复生命)";
+            case 33:
+                return "下拨敌人: 物免+奔跑敌人";
+            case 34:
+                return "下拨敌人: 飞行+闪避敌人";
+            case 35:
+                return "下拨敌人: 飞行+魔免敌人或飞行+物免敌人";
+            case 36:
+                return "下拨敌人: 魔免敌人或物免敌人";
+            case 37:
+                return "下拨敌人: 奔跑敌人";
+            case 38:
+                return "下拨敌人: 缴械或缴械+隐身敌人";
+            case 39:
+                return "下拨敌人: 飞行+闪避+不可侵犯敌人";
+            case 40:
+                return "下拨敌人: 飞行BOSS";
+            case 41:
+                return "下拨敌人: 折射敌人";
+            case 42:
+                return "下拨敌人: 飞行+魔免+奔跑敌人";
+            case 43:
+                return "下拨敌人: 不可侵犯+闪避+回血敌人";
+            case 44:
+                return "下拨敌人: 缴械+飞行+奔跑敌人";
             default:
                 return "下拨敌人: 普通敌人";
+
         }
     }
 }

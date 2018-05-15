@@ -73,14 +73,21 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                health = value;
+                if (value < MaxHealth)
+                {
+                    health = value;
+                }
+                else
+                {
+                    health = MaxHealth;
+                }
             }
             HealthBarChange();
         }
     }
     private float health;
-    private Vector2 LastLocation;
 
+    private Vector2 LastLocation;
     private float movementSpeed;
     public float MovementSpeed
     { 
@@ -111,9 +118,17 @@ public class EnemyController : MonoBehaviour
 
     public int Armor;
     public float MagicResistance;
+
+    public int Experience;
+    public int Gold;
+    public int MaxAmount;
+    public int MaxDamageToPlayer;
+    public String EnemyDescription;
+
     public Transform Front;
     public Transform Back;
     public NavMeshAgent nav;
+
     public bool IsFlying;
     public bool IsInvisible;
     public float Evation;
@@ -123,21 +138,17 @@ public class EnemyController : MonoBehaviour
     public bool Untouchable;
     public bool CanRun;
     public bool CanStackArmor;
+    public int Heal = 0;
+    private double healTimer;
 
     private int RefractionCharge = 0;
 
-    public int Experience;
-    public int Gold;
-    public int MaxAmount;
-    public int MaxDamageToPlayer;
-    public String EnemyDescription;
-
-    private double attackSlow60Timer;
-    private double attackSlow90Timer;
-    private double attackSlow120Timer;
-    private double attackSlow150Timer;
-    private double attackSlow180Timer;
-    private double attackSlow480Timer;
+    internal double attackSlow60Timer;
+    internal double attackSlow90Timer;
+    internal double attackSlow120Timer;
+    internal double attackSlow150Timer;
+    internal double attackSlow180Timer;
+    internal double attackSlow480Timer;
 
     public double flyingDisable1Timer1;
     public double flyingDisable1Timer2;
@@ -169,6 +180,8 @@ public class EnemyController : MonoBehaviour
     public double ArmorReduce30Timer;
 
     private double frozenAttackTimer;
+
+    internal double frozenTimer;
 
     private double runingTimer;
 
@@ -621,6 +634,15 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
+        if (Heal != 0)
+        {
+            healTimer += Time.deltaTime;
+            if (healTimer > 1)
+            {
+                Health += Heal;
+                healTimer = 0;
+            }
+        }
         CheckSlowState();
         CheckPoisonState();
         CheckArmorReduceState();
@@ -630,6 +652,7 @@ public class EnemyController : MonoBehaviour
         CheckForDisArm();
         CheckForInvision();
         CheckForzenAttackState();
+        CheckForzenState();
         if (stunTimer > 0)
         {
             stunTimer -= Time.deltaTime;
@@ -660,7 +683,7 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     private void CheckColor()
     {
-        bool isSlowed = attackSlow60Timer != 0 || attackSlow90Timer != 0 || attackSlow120Timer != 0 || attackSlow150Timer != 0 || attackSlow180Timer != 0 || attackSlow480Timer != 0 || frozenAttackTimer != 0;
+        bool isSlowed = attackSlow60Timer != 0 || attackSlow90Timer != 0 || attackSlow120Timer != 0 || attackSlow150Timer != 0 || attackSlow180Timer != 0 || attackSlow480Timer != 0 || frozenAttackTimer != 0 || frozenTimer != 0;
         bool isPoisoned = poison1Timer != 0 || poison2Timer != 0 || poison4Timer != 0 || poison8Timer != 0 || poison16Timer != 0 || poison64Timer != 0;
         bool isArmorReduced = attackArmorReduce1Timer != 0 || attackArmorReduce2Timer != 0 || attackArmorReduce4Timer != 0 || attackArmorReduce8Timer != 0 || attackArmorReduce16Timer != 0 || attackArmorReduce64Timer != 0 
             || attackArmorReduce20Timer != 0 || attackArmorReduce30Timer != 0;
@@ -1090,6 +1113,47 @@ public class EnemyController : MonoBehaviour
                     movementSpeedDiff += 480;
                 }
                 MovementSpeed = (MovementSpeed + movementSpeedDiff) * 2f - movementSpeedDiff;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 更新冻结状态
+    /// </summary>
+    private void CheckForzenState()
+    {
+        if (frozenTimer > 0)
+        {
+            frozenTimer -= Time.deltaTime;
+            if (frozenTimer <= 0)
+            {
+                frozenTimer = 0;
+                int movementSpeedDiff = 0;
+                if (frozenTimer > 0)
+                {
+                    movementSpeedDiff += 60;
+                }
+                if (frozenTimer > 0)
+                {
+                    movementSpeedDiff += 90;
+                }
+                if (frozenTimer > 0)
+                {
+                    movementSpeedDiff += 120;
+                }
+                if (frozenTimer > 0)
+                {
+                    movementSpeedDiff += 150;
+                }
+                if (frozenTimer > 0)
+                {
+                    movementSpeedDiff += 180;
+                }
+                if (frozenTimer > 0)
+                {
+                    movementSpeedDiff += 480;
+                }
+                MovementSpeed = (MovementSpeed + movementSpeedDiff) * 4f - movementSpeedDiff;
             }
         }
     }

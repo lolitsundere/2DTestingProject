@@ -12,7 +12,9 @@ public class TowerManager : MonoBehaviour
         Sliver, Malachite, AsteriatedRuby, SliverKnight, MalachiteHuge, Jade, Volcano, PinkDiamond, PinkDiamondHuge,
         KDiamond, Uranium238, Uranium235, DepletedKyparium, BloodStone, BloodStoneAntique, TheCrownPrince, Quartz,
         GreyJade, MonkeyKingJade, GullinanDiamond, ChineseJade, Lazurite, GoldenJubilee, Gold, EgyptGold,
-        DarkEmerald, EmeraldGolem, ParaibaTourmaline, ElaboratelyCarvedTourmaline, SapphireStarOfAdam
+        DarkEmerald, EmeraldGolem, ParaibaTourmaline, ElaboratelyCarvedTourmaline, SapphireStarOfAdam,
+        DeepSeaPearl, ChrysoberylCatsEye, RedCoral, NaturalZumurud, CarmenLucia, YellowSapphire,
+        NorthernSabersEye, StarSapphire, TheGreatStone
     };
 
     /// <summary>
@@ -132,7 +134,7 @@ public class TowerManager : MonoBehaviour
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.BasicPhysicalDamage = 1;
-                tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect20;
+                tower.AccelerateEffectList.Add(TowerController.AttackSpeedAccelerateEffect.AccelerateEffect20);
                 tower.CanBreakInvisibility = true;
                 tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加20)\n同种效果不可叠加\n显示6格范围内的隐形敌人";
                 tower.AttackColor = Color.gray;
@@ -142,7 +144,7 @@ public class TowerManager : MonoBehaviour
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.BasicPhysicalDamage = 2;
-                tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect30;
+                tower.AccelerateEffectList.Add(TowerController.AttackSpeedAccelerateEffect.AccelerateEffect30);
                 tower.CanBreakInvisibility = true;
                 tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加30)\n同种效果不可叠加\n显示6格范围内的隐形敌人";
                 tower.AttackColor = Color.gray;
@@ -152,7 +154,7 @@ public class TowerManager : MonoBehaviour
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.BasicPhysicalDamage = 3;
-                tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect40;
+                tower.AccelerateEffectList.Add(TowerController.AttackSpeedAccelerateEffect.AccelerateEffect40);
                 tower.CanBreakInvisibility = true;
                 tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加40)\n同种效果不可叠加\n显示6格范围内的隐形敌人";
                 tower.AttackColor = Color.gray;
@@ -162,7 +164,7 @@ public class TowerManager : MonoBehaviour
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.BasicPhysicalDamage = 4;
-                tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect50;
+                tower.AccelerateEffectList.Add(TowerController.AttackSpeedAccelerateEffect.AccelerateEffect50);
                 tower.CanBreakInvisibility = true;
                 tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加50)\n同种效果不可叠加\n显示6格范围内的隐形敌人";
                 tower.AttackColor = Color.gray;
@@ -172,7 +174,7 @@ public class TowerManager : MonoBehaviour
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.BasicPhysicalDamage = 5;
-                tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect60;
+                tower.AccelerateEffectList.Add(TowerController.AttackSpeedAccelerateEffect.AccelerateEffect60);
                 tower.CanBreakInvisibility = true;
                 tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加60)\n同种效果不可叠加\n显示6格范围内的隐形敌人";
                 tower.AttackColor = Color.gray;
@@ -182,7 +184,7 @@ public class TowerManager : MonoBehaviour
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 1;
                 tower.BasicPhysicalDamage = 6;
-                tower.AccelerateEffect = TowerController.AttackSpeedAccelerateEffect.AccelerateEffect70;
+                tower.AccelerateEffectList.Add(TowerController.AttackSpeedAccelerateEffect.AccelerateEffect70);
                 tower.CanBreakInvisibility = true;
                 tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加70)\n同种效果不可叠加\n显示6格范围内的隐形敌人";
                 tower.AttackColor = Color.gray;
@@ -622,7 +624,7 @@ public class TowerManager : MonoBehaviour
                 tower.BasicAttackTime = 0.5;
                 tower.BasicPhysicalDamage = 30;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect16;
-                tower.CanAddRange = true;
+                tower.ProvideAddRange = true;
                 tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒16点魔法伤害)\n瞭望(增加3格周围3格内防御塔的攻击距离)\n同种效果不可叠加";
                 tower.AttackColor = Color.grey;
                 break;
@@ -632,7 +634,7 @@ public class TowerManager : MonoBehaviour
                 tower.BasicAttackTime = 0.5;
                 tower.BasicPhysicalDamage = 80;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect16;
-                tower.CanAddRange = true;
+                tower.ProvideAddRange = true;
                 tower.ProvideCanNotMiss = true;
                 tower.TowerDescription = "防御塔特性:\n使攻击目标中毒(持续5秒,每秒16点魔法伤害)\n瞭望(增加3格周围3格内防御塔的攻击距离)\n必中(使周围3格内防御塔的攻击不会被闪避)\n同种效果不可叠加";
                 tower.AttackColor = new Color32(0x97, 0xb0, 0xa1, 0xff);
@@ -643,7 +645,7 @@ public class TowerManager : MonoBehaviour
                 tower.BasicAttackTime = 0.6;
                 tower.BasicPhysicalDamage = 3154;
                 tower.AtkPoisonEffect = TowerController.AttackPoisonEffect.PoisonEffect16;
-                tower.CanAddRange = true;
+                tower.ProvideAddRange = true;
                 tower.ProvideCanNotMiss = true;
                 tower.CanCrit = true;
                 tower.TowerDescription = "防御塔特性:\n暴击(10%概率打出5倍暴击)\n使攻击目标中毒(持续5秒,每秒16点魔法伤害)\n瞭望(增加3格周围3格内防御塔的攻击距离)\n必中(使周围3格内防御塔的攻击不会被闪避)\n同种效果不可叠加";
@@ -751,6 +753,106 @@ public class TowerManager : MonoBehaviour
                 tower.TowerDescription = "防御塔特性:\n减少附近12格内敌人护甲30点\n使攻击目标中毒(持续5秒,每秒64点魔法伤害)\n减少攻击目标的护甲值(减64点护甲,持续2秒)\n减少攻击目标以及周围3格内敌人一半的移速,持续3秒\n同种效果不可叠加";
                 tower.AttackColor = Color.blue;
                 break;
+            case TowerType.DeepSeaPearl:
+                tower.BasicAttackRange = 500;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.6;
+                tower.BasicPhysicalDamage = 80;
+                tower.ProvideSpellImmunity = true;
+                tower.TowerDescription = "防御塔特性:\n为周围6格内防御塔提供魔法免疫效果";
+                tower.AttackColor = Color.white;
+                break;
+            case TowerType.ChrysoberylCatsEye:
+                tower.BasicAttackRange = 500;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 1;
+                tower.BasicPhysicalDamage = 6;
+                tower.AccelerateEffectList.Add(TowerController.AttackSpeedAccelerateEffect.AccelerateEffect60);
+                tower.CanBreakInvisibility = true;
+                tower.ProvideInspire = true;
+                tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加50)\n增加临近5格内防御塔的攻击力(基础攻击力的50%)\n同种效果不可叠加\n显示6格范围内的隐形敌人";
+                tower.AttackColor = Color.yellow;
+                break;
+            case TowerType.RedCoral:
+                tower.BasicAttackRange = 500;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 0.6;
+                tower.BasicPhysicalDamage = 120;
+                tower.AccelerateEffectList.Add(TowerController.AttackSpeedAccelerateEffect.AccelerateEffect60);
+                tower.AccelerateEffectList.Add(TowerController.AttackSpeedAccelerateEffect.AccelerateEffect50);
+                tower.CanBreakInvisibility = true;
+                tower.ProvideInspire = true;
+                tower.ProvideSpellImmunity = true;
+                tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加50+40)\n为周围6格内防御塔提供魔法免疫效果\n增加临近5格内防御塔的攻击力(基础攻击力的50%)\n同种效果不可叠加\n显示6格范围内的隐形敌人";
+                tower.AttackColor = Color.red;
+                break;
+            case TowerType.NaturalZumurud:
+                tower.BasicAttackRange = 500;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 1;
+                tower.BasicPhysicalDamage = 80;
+                tower.ProvideSpellImmunity = true;
+                WorldManager.TowerPerTurn++;
+                tower.TowerDescription = "防御塔特性:\n为周围6格内防御塔提供魔法免疫效果\n每回合可以多造一个防御塔";
+                tower.AttackColor = Color.black;
+                break;
+            case TowerType.CarmenLucia:
+                tower.BasicAttackRange = 500;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 1;
+                tower.BasicPhysicalDamage = 6;
+                tower.AccelerateEffectList.Add(TowerController.AttackSpeedAccelerateEffect.AccelerateEffect70);
+                tower.AccelerateEffectList.Add(TowerController.AttackSpeedAccelerateEffect.AccelerateEffect250);
+                tower.CanBreakInvisibility = true;
+                tower.ProvideInspire = true;
+                tower.ProvideSpellImmunity = true;
+                tower.TowerDescription = "防御塔特性:\n增加临近6格内防御塔的攻击速度(加70)\n增加临近1.5格内防御塔的攻击速度(加250)\n为周围6格内防御塔提供魔法免疫效果\n增加临近5格内防御塔的攻击力(基础攻击力的50%)\n同种效果不可叠加\n显示6格范围内的隐形敌人";
+                tower.AttackColor = Color.red;
+                break;
+            case TowerType.YellowSapphire:
+                tower.BasicAttackRange = 600;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 1;
+                tower.BasicPhysicalDamage = 20;
+                tower.HasFrozenAura = true;
+                tower.TowerDescription = "防御塔特性:\n减速光环(周围3格内敌人减速75%)";
+                tower.AttackColor = new Color32(0xd0, 0xbd, 0x7e, 0xff);
+                break;
+            case TowerType.NorthernSabersEye:
+                tower.BasicAttackRange = 500;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 1;
+                tower.BasicPhysicalDamage = 60;
+                tower.HasFrozenAura = true;
+                tower.ProvideLightingChain = true;
+                tower.TowerDescription = "防御塔特性:\n减速光环(周围3格内敌人减速75%)\n闪电链光环(周围2格防御塔攻击时有30%概率触发闪电链,对敌人造成500魔法伤害,弹射5次)";
+                tower.AttackColor = new Color32(0x6a, 0x69, 0xab, 0xff);
+                break;
+            case TowerType.StarSapphire:
+                tower.BasicAttackRange = 600;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 1;
+                tower.BasicPhysicalDamage = 20;
+                tower.HasFrozenAura = true;
+                tower.ProvideLightingChain = true;
+                tower.AccelerateEffectList.Add(TowerController.AttackSpeedAccelerateEffect.AccelerateEffect70);
+                tower.CanBreakInvisibility = true;
+                tower.AtkSlowEffect = TowerController.AttackSlowEffect.SlowEffect480;
+                tower.TowerDescription = "防御塔特性:\n减速光环(周围3格内敌人减速75%)\n闪电链光环(周围2格防御塔攻击时有30%概率触发闪电链,对敌人造成500魔法伤害,弹射5次\n增加临近6格内防御塔的攻击速度(加70)\n减少攻击目标的移动速度(减480移动速度,持续2秒)\n同种效果不可叠加)";
+                tower.AttackColor = new Color32(0x05, 0x06, 0x47, 0xff);
+                break;
+            case TowerType.TheGreatStone:
+                tower.BasicAttackRange = 800;
+                tower.BasicAttackSpeed = 100;
+                tower.BasicAttackTime = 1;
+                tower.BasicPhysicalDamage = 2009;
+                tower.CanCrit = true;
+                tower.AtkSplashEffect = TowerController.AttackSplashEffect.SplashEffect6;
+                tower.TowerDescription = "防御塔特性:\n暴击(10%概率打出5倍暴击)\n分裂攻击(7格内敌人受到主攻击目标所受100%的伤害)";
+                tower.AttackColor = Color.gray;
+                break;
+
+
         }
 
     }
@@ -1145,7 +1247,42 @@ public class TowerManager : MonoBehaviour
         {
             return TowerType.ElaboratelyCarvedTourmaline;
         }
-
+        else if (tower.name.StartsWith("DeepSeaPearl"))
+        {
+            return TowerType.DeepSeaPearl;
+        }
+        else if (tower.name.StartsWith("Chrysoberyl"))
+        {
+            return TowerType.ChrysoberylCatsEye;
+        }
+        else if (tower.name.StartsWith("RedC"))
+        {
+            return TowerType.RedCoral;
+        }
+        else if (tower.name.StartsWith("NaturalZumu"))
+        {
+            return TowerType.NaturalZumurud;
+        }
+        else if (tower.name.StartsWith("CarmenLu"))
+        {
+            return TowerType.CarmenLucia;
+        }
+        else if (tower.name.StartsWith("Yellow"))
+        {
+            return TowerType.YellowSapphire;
+        }
+        else if (tower.name.StartsWith("NorthernSaber"))
+        {
+            return TowerType.NorthernSabersEye;
+        }
+        else if (tower.name.StartsWith("Star"))
+        {
+            return TowerType.StarSapphire;
+        }
+        else if (tower.name.StartsWith("TheGr"))
+        {
+            return TowerType.TheGreatStone;
+        }
         else return TowerType.Unkown;
 
     }
@@ -1315,6 +1452,24 @@ public class TowerManager : MonoBehaviour
                 return "精心雕琢的碧玺";
             case TowerType.SapphireStarOfAdam:
                 return "斯里兰卡之星";
+            case TowerType.DeepSeaPearl:
+                return "深海珍珠";
+            case TowerType.ChrysoberylCatsEye:
+                return "猫眼石";
+            case TowerType.RedCoral:
+                return "红珊瑚";
+            case TowerType.NaturalZumurud:
+                return "天然祖母绿";
+            case TowerType.CarmenLucia:
+                return "卡门露西亚";
+            case TowerType.YellowSapphire:
+                return "黄彩蓝宝石";
+            case TowerType.NorthernSabersEye:
+                return "极地豹眼石";
+            case TowerType.StarSapphire:
+                return "星彩蓝宝石";
+            case TowerType.TheGreatStone:
+                return "镇家之石";
         }
         return "未知类型";
     }
@@ -1468,6 +1623,17 @@ public class TowerManager : MonoBehaviour
                 return "ParaibaTourmaline";
             case TowerType.ElaboratelyCarvedTourmaline:
                 return "ElaboratelyCarvedTourmaline";
+            case TowerType.DeepSeaPearl:
+                return "DeepSeaPearl";
+            case TowerType.ChrysoberylCatsEye:
+                return "ChrysoberylCatsEye";
+            case TowerType.RedCoral:
+                return "RedCoral";
+            case TowerType.YellowSapphire:
+                return "YellowSapphire";
+            case TowerType.NorthernSabersEye:
+                return "NorthernSabersEye";
+
 
         }
         return "Untagged";
@@ -1542,6 +1708,24 @@ public class TowerManager : MonoBehaviour
                 return "ElaboratelyCarvedTourmaline";
             case TowerType.SapphireStarOfAdam:
                 return "SapphireStarOfAdam";
+            case TowerType.DeepSeaPearl:
+                return "DeepSeaPearl";
+            case TowerType.ChrysoberylCatsEye:
+                return "ChrysoberylCatsEye";
+            case TowerType.RedCoral:
+                return "RedCoral";
+            case TowerType.NaturalZumurud:
+                return "NaturalZumurud";
+            case TowerType.CarmenLucia:
+                return "CarmenLucia";
+            case TowerType.YellowSapphire:
+                return "YellowSapphire";
+            case TowerType.NorthernSabersEye:
+                return "NorthernSabersEye";
+            case TowerType.StarSapphire:
+                return "StarSapphire";
+            case TowerType.TheGreatStone:
+                return "TheGreatStone";
         }
         return "";
     }

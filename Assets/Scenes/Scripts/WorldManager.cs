@@ -61,7 +61,7 @@ public class WorldManager : MonoBehaviour {
     private int EnemyPerLevel = 0;
     private int CurrentEnemyAcount = 0;
 
-    private const int TowerPerTurn = 5;
+    public static int TowerPerTurn = 5;
     private List<GameObject> OneTurnTowerList = new List<GameObject>();
     private List<GameObject> TowerList = new List<GameObject>();
 
