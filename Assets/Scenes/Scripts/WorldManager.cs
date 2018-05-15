@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -32,10 +33,13 @@ public class WorldManager : MonoBehaviour {
     public Text ItemInfo4;
     public Text ItemDescription;
     public Text TopText;
+    public Text DamageText;
+    public GameObject UI;
     public Button CombinePanelButton;
     public GameObject CombinePanel;
     public static int Health;
     public static int PlayerGold = 0;
+    private bool ready = false;
 
     public HashSet<NavMeshSurface> NavSet = new HashSet<NavMeshSurface>();
     public int PlayerCount = 1;
@@ -61,7 +65,7 @@ public class WorldManager : MonoBehaviour {
     private int EnemyPerLevel = 0;
     private int CurrentEnemyAcount = 0;
 
-    public static int TowerPerTurn = 5;
+    public static int TowerPerTurn;
     private List<GameObject> OneTurnTowerList = new List<GameObject>();
     private List<GameObject> TowerList = new List<GameObject>();
 
@@ -81,66 +85,21 @@ public class WorldManager : MonoBehaviour {
     private SpriteRenderer EnabledAttackRange;
 
 
-    void Start()
+    public void StartGame(bool skip)
     {
         CurrentPhase=Phase.ConstructingTower;
-        CreateWorld();
-        MazeLengthMessage.text = "迷宫长度:" + GetMazeLength();
-        EnemyInfo.text = "下拨敌人: 普通敌人";
-        Health = 100;
-
-        CombinePanelButton.onClick.AddListener(() =>
+        if (!skip)
         {
-            CombinePanel.SetActive(true);
-
-            HashSet<TowerManager.TowerType> ConstructingTowerSet = new HashSet<TowerManager.TowerType>();
-
-            foreach (GameObject tower in OneTurnTowerList)
+            StartCoroutine(CreateWorld());
+        }
+        else
+        {
+            var t = CreateWorld();
+            while (t.MoveNext())
             {
-                TowerManager.TowerType tt = TowerManager.GetTowerType(tower);
-                if (!ConstructingTowerSet.Contains(tt))
-                {
-                    ConstructingTowerSet.Add(tt);
-                }
             }
-
-            foreach (TowerManager.TowerType tt in ConstructingTowerSet)
-            {
-                if (TowerManager.GetTowerTag(tt) != "Untagged")
-                {
-                    foreach (var go in GameObject.FindGameObjectsWithTag(TowerManager.GetTowerTag(tt)))
-                    {
-                        go.GetComponent<Text>().color = new Color32(0xF1,0xFF,0x00,0xFF);
-                    }
-                }
-            }
-
-            HashSet<TowerManager.TowerType> ConstructedTowerSet = new HashSet<TowerManager.TowerType>();
-
-            foreach (GameObject tower in TowerList)
-            {
-                TowerManager.TowerType tt = TowerManager.GetTowerType(tower);
-                if (!ConstructedTowerSet.Contains(tt))
-                {
-                    ConstructedTowerSet.Add(tt);
-                }
-            }
-
-            foreach (TowerManager.TowerType tt in ConstructedTowerSet)
-            {
-                if (TowerManager.GetTowerTag(tt) != "Untagged")
-                {
-                    foreach (var go in GameObject.FindGameObjectsWithTag(TowerManager.GetTowerTag(tt)))
-                    {
-                        go.GetComponent<Text>().color = new Color32(0xFF, 0x00, 0x00, 0xFF);
-                    }
-                }
-            }
-
-            
-        });
+        }
     }
-
 
     private void FixedUpdate()
     {
@@ -170,78 +129,89 @@ public class WorldManager : MonoBehaviour {
 
     private void Update()
     {
-        TopText.text = String.Format("等级: {0} 经验: {1} 金钱: {2} HP:{3}/100", PlayerLevel, PlayerExp, PlayerGold, Health);
+        if (ready)
+        {
+            TopText.text = String.Format("等级: {0} 经验: {1} 金钱: {2} HP:{3}/100", PlayerLevel, PlayerExp, PlayerGold, Health);
 
-        if (SelectedObject != null && SelectedObject.tag == "Tower")
-        {
-            ItemInfo1.text = TowerManager.GetTowerName(TowerManager.GetTowerType(SelectedObject));
-            ItemInfo2.text = String.Format("攻击力:{0}", Mathf.Round(SelectedObject.GetComponent<TowerController>().PhysicalDamage));
-            ItemInfo3.text = String.Format("基础攻击间隔:{0}s", SelectedObject.GetComponent<TowerController>().BasicAttackTime);
-            ItemInfo4.text = String.Format("攻击速度:{0}", SelectedObject.GetComponent<TowerController>().AttackSpeed);
-            ItemDescription.text = SelectedObject.GetComponent<TowerController>().TowerDescription;
-        }
-        switch (CurrentPhase)
-        {
-            case (Phase.ConstructingTower):
-                if (OneTurnTowerList.Count >= TowerPerTurn)
-                {
-                    InfoMessage.text = "选择一个要留下的防御塔";
-                    CurrentPhase = Phase.SecetingTower;
-                }
-                break;
-            case (Phase.SecetingTower):
-                break;
-            case (Phase.EnemySpawning):
-                if (CurrentEnemyAcount < EnemyPerLevel && EnemyDic.Count < 0)
-                {
-                    SpawnEnemy();
-                }
-                if (SelectedObject!=null && SelectedObject.tag == "Enemy")
-                {
-                    ItemInfo1.text = String.Format("生命值:{0}/{1}", Mathf.RoundToInt(SelectedObject.GetComponent<EnemyController>().Health), SelectedObject.GetComponent<EnemyController>().MaxHealth);
-                    ItemInfo2.text = String.Format("护甲:{0}", SelectedObject.GetComponent<EnemyController>().Armor);
-                    ItemInfo3.text = String.Format("魔法抗性:{0}%", SelectedObject.GetComponent<EnemyController>().MagicResistance * 100);
-                    ItemInfo4.text = String.Format("移动速度:{0}", SelectedObject.GetComponent<EnemyController>().MovementSpeed);
-                    ItemDescription.text = SelectedObject.GetComponent<EnemyController>().EnemyDescription;
-                }
-                if (CurrentEnemyAcount == EnemyPerLevel && EnemyDic.Count == 0)
-                {
+            if (SelectedObject != null && SelectedObject.tag == "Tower")
+            {
+                ItemInfo1.text = TowerManager.GetTowerName(TowerManager.GetTowerType(SelectedObject));
+                ItemInfo2.text = String.Format("攻击力:{0}", Mathf.Round(SelectedObject.GetComponent<TowerController>().PhysicalDamage));
+                ItemInfo3.text = String.Format("基础攻击间隔:{0}s", SelectedObject.GetComponent<TowerController>().BasicAttackTime);
+                ItemInfo4.text = String.Format("攻击速度:{0}", SelectedObject.GetComponent<TowerController>().AttackSpeed);
+                ItemDescription.text = SelectedObject.GetComponent<TowerController>().TowerDescription;
+            }
+            switch (CurrentPhase)
+            {
+                case (Phase.ConstructingTower):
+                    if (OneTurnTowerList.Count >= TowerPerTurn)
+                    {
+                        InfoMessage.text = "选择一个要留下的防御塔";
+                        CurrentPhase = Phase.SecetingTower;
+                    }
+                    break;
+                case (Phase.SecetingTower):
+                    break;
+                case (Phase.EnemySpawning):
+                    DamageText.text = "";
                     SortedDictionary<float, GameObject> towerDamageDic = new SortedDictionary<float, GameObject>(new DescendingComparer<float>());
                     foreach (GameObject tower in TowerList)
                     {
                         while (towerDamageDic.ContainsKey(tower.GetComponent<TowerController>().DamageDealed))
                         {
-                            tower.GetComponent<TowerController>().DamageDealed--;
+                            tower.GetComponent<TowerController>().DamageDealed -= 0.001f;
                         }
                         towerDamageDic.Add(tower.GetComponent<TowerController>().DamageDealed, tower);
-                        tower.GetComponent<TowerController>().DamageDealed = 0;
                     }
-                    foreach (var pair in towerDamageDic)
+                    foreach (var i in towerDamageDic)
                     {
-                        if (pair.Value.GetComponent<TowerController>().MVPLevel < 10)
+                        DamageText.text += String.Format("{0}: {1}\n", TowerManager.GetTowerName(TowerManager.GetTowerType(i.Value)), Mathf.Abs(Mathf.Round(i.Key)));
+                    }
+                    if (CurrentEnemyAcount < EnemyPerLevel && EnemyDic.Count < 0)
+                    {
+                        SpawnEnemy();
+                    }
+                    if (SelectedObject != null && SelectedObject.tag == "Enemy")
+                    {
+                        ItemInfo1.text = String.Format("生命值:{0}/{1}", Mathf.RoundToInt(SelectedObject.GetComponent<EnemyController>().Health), SelectedObject.GetComponent<EnemyController>().MaxHealth);
+                        ItemInfo2.text = String.Format("护甲:{0}", SelectedObject.GetComponent<EnemyController>().Armor);
+                        ItemInfo3.text = String.Format("魔法抗性:{0}%", SelectedObject.GetComponent<EnemyController>().MagicResistance * 100);
+                        ItemInfo4.text = String.Format("移动速度:{0}", SelectedObject.GetComponent<EnemyController>().MovementSpeed);
+                        ItemDescription.text = SelectedObject.GetComponent<EnemyController>().EnemyDescription;
+                    }
+                    if (CurrentEnemyAcount == EnemyPerLevel && EnemyDic.Count == 0)
+                    {
+                        foreach (GameObject tower in TowerList)
                         {
-                            pair.Value.GetComponent<TowerController>().MVPLevel++;
-                            break;
+                            tower.GetComponent<TowerController>().DamageDealed = 0;
                         }
-                    }
-                    CurrentPhase = Phase.ConstructingTower;
-                    InfoMessage.text = "点击地板创建5个随机防御塔";
-                    CurrentEnemyAcount = 0;
-
-                    foreach (int x in Enumerable.Range(0, WorldWidth))
-                    {
-                        foreach (int y in Enumerable.Range(0, WorldHeight))
+                        foreach (var pair in towerDamageDic)
                         {
-                            if (IntMap[x, y] == 0)
+                            if (pair.Value.GetComponent<TowerController>().MVPLevel < 10)
                             {
-                                FloorMap[x][y].transform.GetComponent<BoxCollider2D>().enabled = true;
+                                pair.Value.GetComponent<TowerController>().MVPLevel++;
+                                break;
                             }
                         }
+                        CurrentPhase = Phase.ConstructingTower;
+                        InfoMessage.text = "点击地板创建"+TowerPerTurn+"个随机防御塔";
+                        CurrentEnemyAcount = 0;
+
+                        foreach (int x in Enumerable.Range(0, WorldWidth))
+                        {
+                            foreach (int y in Enumerable.Range(0, WorldHeight))
+                            {
+                                if (IntMap[x, y] == 0)
+                                {
+                                    FloorMap[x][y].transform.GetComponent<BoxCollider2D>().enabled = true;
+                                }
+                            }
+                        }
+                        StageLevel++;
+                        EnemyInfo.text = EnemyManager.GetEenemyInfo(StageLevel);
                     }
-                    StageLevel++;
-                    EnemyInfo.text = EnemyManager.GetEenemyInfo(StageLevel);
-                }
-                break;
+                    break;
+            }
         }
     }
 
@@ -249,18 +219,21 @@ public class WorldManager : MonoBehaviour {
     /// <summary>
     /// 重新生成寻路
     /// </summary>
-    private void UpdateNavMesh()
+    private IEnumerator UpdateNavMesh()
     {
         foreach (NavMeshSurface nms in NavSet)
         {
             nms.BuildNavMesh();
+            yield return null;
         }
+        CurrentPhase = Phase.EnemySpawning;
+        SpawnEnemy();
     }
 
     /// <summary>
     /// 生成初始地图
     /// </summary>
-    private void CreateWorld()
+    private IEnumerator CreateWorld()
     {
         NavSet.Add(GameObject.Find("Plane").transform.GetComponent<NavMeshSurface>());
         NavSet.Add(GameObject.Find("LeftWall").transform.GetComponent<NavMeshSurface>());
@@ -268,6 +241,7 @@ public class WorldManager : MonoBehaviour {
         NavSet.Add(GameObject.Find("TopWall").transform.GetComponent<NavMeshSurface>());
         NavSet.Add(GameObject.Find("BottomWall").transform.GetComponent<NavMeshSurface>());
 
+        int gap = 1;
         foreach (int posX in Enumerable.Range(0, WorldWidth))
         {
             FloorMap.Add(new List<GameObject>());
@@ -389,10 +363,85 @@ public class WorldManager : MonoBehaviour {
                     addedObject = CreateFloor(new Vector3(posX, posY, -1f));
                 }
                 FloorMap[posX].Add(addedObject);
-      
+
+                if (posY % gap == 0)
+                {
+                    yield return 0;
+                }
             }
+            gap++;
         }
-        CreateStartInnerWall();
+
+
+        //创建游戏开始时在固定位置生成的内墙
+        foreach (int i in new int[] { 1, 2, 3, 4, 6, 7, 8, 9, 37, 36, 35, 34, 32, 31, 30, 29 })
+        {
+            CreateInnerWall(new Vector3(i, 19f, -1f));
+            yield return 0;
+            CreateInnerWall(new Vector3(19f, i, -1f));
+            yield return 0;
+        }
+        UI.SetActive(true);
+
+        yield return 0;
+        InfoMessage.text = "点击地板创建" + TowerPerTurn + "个随机防御塔";
+        MazeLengthMessage.text = "迷宫长度:" + GetMazeLength();
+        EnemyInfo.text = "第1拨: 普通敌人";
+        Health = 100;
+
+        CombinePanelButton.onClick.AddListener(() =>
+        {
+            CombinePanel.SetActive(true);
+
+            HashSet<TowerManager.TowerType> ConstructingTowerSet = new HashSet<TowerManager.TowerType>();
+
+            foreach (GameObject tower in OneTurnTowerList)
+            {
+                TowerManager.TowerType tt = TowerManager.GetTowerType(tower);
+                if (!ConstructingTowerSet.Contains(tt))
+                {
+                    ConstructingTowerSet.Add(tt);
+                }
+            }
+
+            foreach (TowerManager.TowerType tt in ConstructingTowerSet)
+            {
+                if (TowerManager.GetTowerTag(tt) != "Untagged")
+                {
+                    foreach (var go in GameObject.FindGameObjectsWithTag(TowerManager.GetTowerTag(tt)))
+                    {
+                        go.GetComponent<Text>().color = new Color32(0xF1, 0xFF, 0x00, 0xFF);
+                    }
+                }
+            }
+
+            HashSet<TowerManager.TowerType> ConstructedTowerSet = new HashSet<TowerManager.TowerType>();
+
+            foreach (GameObject tower in TowerList)
+            {
+                TowerManager.TowerType tt = TowerManager.GetTowerType(tower);
+                if (!ConstructedTowerSet.Contains(tt))
+                {
+                    ConstructedTowerSet.Add(tt);
+                }
+            }
+
+            foreach (TowerManager.TowerType tt in ConstructedTowerSet)
+            {
+                if (TowerManager.GetTowerTag(tt) != "Untagged")
+                {
+                    foreach (var go in GameObject.FindGameObjectsWithTag(TowerManager.GetTowerTag(tt)))
+                    {
+                        go.GetComponent<Text>().color = new Color32(0xFF, 0x00, 0x00, 0xFF);
+                    }
+                }
+            }
+
+
+        });
+
+        ready = true;
+        yield return 0;
     }
 
     /// <summary>
@@ -550,18 +599,6 @@ public class WorldManager : MonoBehaviour {
             int length = GetMazeLength();
             MazeLengthMessage.text = "迷宫长度:" + length;
             MazeLengthMessage.color = Color.white;
-        }
-    }
-
-    /// <summary>
-    /// 创建游戏开始时在固定位置生成的内墙
-    /// </summary>
-    private void CreateStartInnerWall()
-    {
-        foreach (int i in new int[]{1,2,3,4,6,7,8,9,37,36,35,34,32,31,30,29})
-        {
-            CreateInnerWall(new Vector3(i, 19f, -1f));
-            CreateInnerWall(new Vector3(19f, i, -1f));
         }
     }
  
@@ -731,18 +768,25 @@ public class WorldManager : MonoBehaviour {
                     TowerManager.TowerType t = TowerManager.GetTowerType(SelectedObject);
                     if ((int)t % 6 != 1 && PlayerGold >= 200)
                     {
-                        Button b = GetEmptyButtom();
-                        b.image.color = Color.white;
-                        b.GetComponentInChildren<Text>().text = "随机降级\n(200金币)";
-                        b.onClick = new Button.ButtonClickedEvent();
-                        b.onClick.AddListener(()=>
+                        try
                         {
-                            int downgradeValue = random.Next((int)t % 6 - 1);
-                            SelectedObject.transform.localScale -= Vector3.one * 0.1f * (downgradeValue + 1);
-                            TowerManager.SettingTower(SelectedObject.GetComponent<TowerController>(), (TowerManager.TowerType)((int)t - downgradeValue - 1));
-                            PlayerGold -= 200;
-                            RemainSelectedTower();
-                        });
+                            Button b = GetEmptyButtom();
+                            b.image.color = Color.white;
+                            b.GetComponentInChildren<Text>().text = "随机降级\n(200金币)";
+                            b.onClick = new Button.ButtonClickedEvent();
+                            b.onClick.AddListener(() =>
+                            {
+                                int downgradeValue = random.Next((int)t % 6 - 1);
+                                SelectedObject.transform.localScale -= Vector3.one * 0.1f * (downgradeValue + 1);
+                                TowerManager.SettingTower(SelectedObject.GetComponent<TowerController>(), (TowerManager.TowerType)((int)t - downgradeValue - 1));
+                                PlayerGold -= 200;
+                                RemainSelectedTower();
+                            });
+                        }
+                        catch (Exception)
+                        {
+
+                        }
                     }
                 }
                 break;
@@ -858,9 +902,7 @@ public class WorldManager : MonoBehaviour {
             ItemInfo4.text = String.Format("攻击速度:{0}", SelectedObject.GetComponent<TowerController>().AttackSpeed);
 
 
-            CurrentPhase = Phase.EnemySpawning;
-            UpdateNavMesh();
-            SpawnEnemy();
+            StartCoroutine(UpdateNavMesh());
             InfoMessage.text = "消灭敌人";
             foreach (int x in Enumerable.Range(0,WorldWidth))
             {
@@ -917,6 +959,7 @@ public class WorldManager : MonoBehaviour {
     {
         if (SelectedObject != null && SelectedObject.tag == "Tower")
         {
+            SelectedObject.GetComponent<TowerController>().AccelerateEffectList = new List<TowerController.AttackSpeedAccelerateEffect>();
             SelectedObject.transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
             TowerManager.SettingTower(SelectedObject.GetComponent<TowerController>(), TowerManager.GetTowerType(SelectedObject));
             RemainSelectedTower();
@@ -930,6 +973,7 @@ public class WorldManager : MonoBehaviour {
     {
         if (SelectedObject != null && SelectedObject.tag == "Tower")
         {
+            SelectedObject.GetComponent<TowerController>().AccelerateEffectList = new List<TowerController.AttackSpeedAccelerateEffect>();
             SelectedObject.transform.localScale += new Vector3(0.2f, 0.2f, 0.2f);
             TowerManager.SettingTower(SelectedObject.GetComponent<TowerController>(), TowerManager.GetTowerType(SelectedObject));
             RemainSelectedTower();

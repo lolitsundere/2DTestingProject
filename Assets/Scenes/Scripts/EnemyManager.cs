@@ -478,7 +478,6 @@ public class EnemyManager : MonoBehaviour
                 {
                     enemy.MaxHealth = Convert.ToInt32(Mathf.Round(80000 * hpFactor));
                     enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(700 * movementSpeedFactor));
-                    enemy.SpellImmunity = true;
                 }
                 else
                 {
@@ -489,7 +488,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.Health = enemy.MaxHealth;
                 enemy.MagicResistance = 0.1f;
                 enemy.CanRun = true;
-                enemy.EnemyDescription = "敌人特性:\n物免";
+                enemy.EnemyDescription = "敌人特性:\n物免+奔跑";
                 enemy.Experience = 10;
                 enemy.MaxAmount = 15;
                 break;
@@ -498,7 +497,6 @@ public class EnemyManager : MonoBehaviour
                 {
                     enemy.MaxHealth = Convert.ToInt32(Mathf.Round(13000 * hpFactor));
                     enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(925 * movementSpeedFactor));
-                    enemy.SpellImmunity = true;
                 }
                 else
                 {
@@ -653,7 +651,7 @@ public class EnemyManager : MonoBehaviour
                 enemy.MagicResistance = 0.1f;
                 enemy.Untouchable = true;
                 enemy.Evation = 0.5f;
-                enemy.Heal = 500;
+                enemy.Heal = 700;
                 enemy.EnemyDescription = "敌人特性:\n不可侵犯+闪避+回血";
                 enemy.Experience = 10;
                 enemy.MaxAmount = 10;
@@ -683,6 +681,84 @@ public class EnemyManager : MonoBehaviour
                 enemy.Experience = 10;
                 enemy.MaxAmount = 8;
                 break;
+            case 46:
+                enemy.MaxHealth = Convert.ToInt32(Mathf.Round(600000 * hpFactor));
+                enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(800 * movementSpeedFactor));
+                enemy.Armor = 99999;
+                enemy.Health = enemy.MaxHealth;
+                enemy.MagicResistance = 0.2f;
+                enemy.EnemyDescription = "敌人特性:\n物免";
+                enemy.Experience = 10;
+                enemy.MaxAmount = 8;
+                break;
+            case 47:
+                if (UnityEngine.Random.value < 0.5)
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(300000 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(500 * movementSpeedFactor));
+                    enemy.SpellImmunity = true;
+                }
+                else
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(550000 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(600 * movementSpeedFactor));
+                }
+
+                enemy.Armor = 16;
+                enemy.Health = enemy.MaxHealth;
+                enemy.MagicResistance = 1f;
+                enemy.Untouchable = true;
+                enemy.CanRun = true;
+                enemy.EnemyDescription = "敌人特性:\n魔免+不可侵犯+奔跑或不可侵犯+奔跑";
+                enemy.Experience = 10;
+                enemy.MaxAmount = 8;
+                break;
+            case 48:
+                if (UnityEngine.Random.value < 0.5)
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(60000 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(550 * movementSpeedFactor));
+                }
+                else
+                {
+                    enemy.MaxHealth = Convert.ToInt32(Mathf.Round(100000 * hpFactor));
+                    enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(400 * movementSpeedFactor));
+                }
+
+                enemy.Armor = 16;
+                enemy.Health = enemy.MaxHealth;
+                enemy.MagicResistance = 0.1f;
+                enemy.IsFlying = true;
+                enemy.SpellImmunity = true;
+                enemy.Disarmble = true;
+                enemy.Evation = 0.5f;
+                enemy.EnemyDescription = "敌人特性:\n飞行+魔免+缴械+闪避";
+                enemy.Experience = 10;
+                enemy.MaxAmount = 8;
+                break;
+            case 49:
+                enemy.MaxHealth = Convert.ToInt32(Mathf.Round(800000 * hpFactor));
+                enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(700 * movementSpeedFactor));
+                enemy.Armor = 40;
+                enemy.Health = enemy.MaxHealth;
+                enemy.MagicResistance = 0.8f;
+                enemy.Heal = 1000;
+                enemy.EnemyDescription = "敌人特性:\n恢复";
+                enemy.Experience = 10;
+                enemy.MaxAmount = 8;
+                break;
+            case 50:
+                enemy.MaxHealth = Convert.ToInt32(Mathf.Round(1000000 * hpFactor));
+                enemy.Health = enemy.MaxHealth;
+                enemy.Armor = 16;
+                enemy.MagicResistance = 0.2f;
+                enemy.MovementSpeed = Convert.ToInt32(Mathf.Round(1000 * movementSpeedFactor));
+                enemy.EnemyDescription = "敌人特性:\n飞行BOSS";
+                enemy.Experience = 300;
+                enemy.MaxAmount = 1;
+                enemy.MaxDamageToPlayer = 100;
+                enemy.IsFlying = true;
+                break;
 
         }
         enemy.Gold = enemy.Experience;
@@ -693,77 +769,89 @@ public class EnemyManager : MonoBehaviour
         switch (level)
         {
             case 5:
-                return "下拨敌人: 飞行敌人(可无视地形移动)";
+                return "第" + level + "拨: 飞行敌人(可无视地形移动)";
             case 8:
-                return "下拨敌人: 隐身敌人(需蛋白石类防御塔反隐后才可攻击)";
+                return "第" + level + "拨: 隐身敌人(需蛋白石类防御塔反隐后才可攻击)";
             case 9:
-                return "下拨敌人: 闪避敌人(有概率闪避攻击)";
+                return "第" + level + "拨: 闪避敌人(有概率闪避攻击)";
             case 10:
-                return "下拨敌人: 普通BOSS";
+                return "第" + level + "拨: 普通BOSS";
             case 12:
-                return "下拨敌人: 缴械敌人(使周围防御塔无法攻击)";
+                return "第" + level + "拨: 缴械敌人(使周围防御塔无法攻击)";
             case 14:
-                return "下拨敌人: 折射敌人(在受到伤害时有概率生成防护罩)";
+                return "第" + level + "拨: 折射敌人(在受到伤害时有概率生成防护罩)";
             case 15:
-                return "下拨敌人: 飞行敌人";
+                return "第" + level + "拨: 飞行敌人";
             case 16:
-                return "下拨敌人: 魔免敌人(不会受到魔法伤害和Debuff)";
+                return "第" + level + "拨: 魔免敌人(不会受到魔法伤害和Debuff)";
             case 17:
-                return "下拨敌人: 不可侵犯敌人(减少攻击它的防御塔的攻速)";
+                return "第" + level + "拨: 不可侵犯敌人(减少攻击它的防御塔的攻速)";
             case 18:
-                return "下拨敌人:缴械+隐身敌人";
+                return "第" + level + "拨:缴械+隐身敌人";
             case 19:
-                return "下拨敌人:奔跑敌人(在受到伤害时有概率加速)";
+                return "第" + level + "拨:奔跑敌人(在受到伤害时有概率加速)";
             case 20:
-                return "下拨敌人: 普通BOSS";
+                return "第" + level + "拨: 普通BOSS";
             case 22:
-                return "下拨敌人: 重甲敌人(高护甲)";
+                return "第" + level + "拨: 重甲敌人(高护甲)";
             case 23:
-                return "下拨敌人: 折射+物免(不会受到物理伤害)敌人";
+                return "第" + level + "拨: 折射+物免(不会受到物理伤害)敌人";
             case 24:
-                return "下拨敌人: 叠甲敌人(每受到攻击护甲增加)";
+                return "第" + level + "拨: 叠甲敌人(每受到攻击护甲增加)";
             case 25:
-                return "下拨敌人: 飞行+重甲敌人";
+                return "第" + level + "拨: 飞行+重甲敌人";
             case 26:
-                return "下拨敌人: 魔免敌人";
+                return "第" + level + "拨: 魔免敌人";
             case 27:
-                return "下拨敌人: 飞行+不可侵犯敌人或飞行+不可侵犯+物免敌人";
+                return "第" + level + "拨: 飞行+不可侵犯敌人或飞行+不可侵犯+物免敌人";
             case 28:
-                return "下拨敌人: 飞行+叠甲敌人";
+                return "第" + level + "拨: 飞行+叠甲敌人";
             case 29:
-                return "下拨敌人: 飞行+闪避+折射敌人";
+                return "第" + level + "拨: 飞行+闪避+折射敌人";
             case 30:
-                return "下拨敌人: 飞行BOSS";
+                return "第" + level + "拨: 飞行BOSS";
             case 31:
-                return "下拨敌人: 魔免敌人或物免敌人";
+                return "第" + level + "拨: 魔免敌人或物免敌人";
             case 32:
-                return "下拨敌人: 回血敌人(每秒恢复生命)";
+                return "第" + level + "拨: 回血敌人(每秒恢复生命)";
             case 33:
-                return "下拨敌人: 物免+奔跑敌人";
+                return "第" + level + "拨: 物免+奔跑敌人";
             case 34:
-                return "下拨敌人: 飞行+闪避敌人";
+                return "第" + level + "拨: 飞行+闪避敌人";
             case 35:
-                return "下拨敌人: 飞行+魔免敌人或飞行+物免敌人";
+                return "第" + level + "拨: 飞行+魔免敌人或飞行+物免敌人";
             case 36:
-                return "下拨敌人: 魔免敌人或物免敌人";
+                return "第" + level + "拨: 魔免敌人或物免敌人";
             case 37:
-                return "下拨敌人: 奔跑敌人";
+                return "第" + level + "拨: 奔跑敌人";
             case 38:
-                return "下拨敌人: 缴械或缴械+隐身敌人";
+                return "第" + level + "拨: 缴械或缴械+隐身敌人";
             case 39:
-                return "下拨敌人: 飞行+闪避+不可侵犯敌人";
+                return "第" + level + "拨: 飞行+闪避+不可侵犯敌人";
             case 40:
-                return "下拨敌人: 飞行BOSS";
+                return "第" + level + "拨: 飞行BOSS";
             case 41:
-                return "下拨敌人: 折射敌人";
+                return "第" + level + "拨: 折射敌人";
             case 42:
-                return "下拨敌人: 飞行+魔免+奔跑敌人";
+                return "第" + level + "拨: 飞行+魔免+奔跑敌人";
             case 43:
-                return "下拨敌人: 不可侵犯+闪避+回血敌人";
+                return "第" + level + "拨: 不可侵犯+闪避+回血敌人";
             case 44:
-                return "下拨敌人: 缴械+飞行+奔跑敌人";
+                return "第" + level + "拨: 奔跑+魔免敌人";
+            case 45:
+                return "第" + level + "拨: 飞行+奔跑+缴械敌人";
+            case 46:
+                return "第" + level + "拨: 物免敌人";
+            case 47:
+                return "第" + level + "拨: 魔免+不可侵犯+奔跑或不可侵犯+奔跑敌人";
+            case 48:
+                return "第" + level + "拨: 飞行+魔免+缴械+闪避敌人";
+            case 49:
+                return "第" + level + "拨: 回血敌人";
+            case 50:
+                return "第" + level + "拨: 飞行BOSS";
             default:
-                return "下拨敌人: 普通敌人";
+                return "第" + level + "拨: 普通敌人";
 
         }
     }

@@ -34,7 +34,7 @@ public class CameraController : MonoBehaviour
     {
         //缩放
         var scrollingSize = camera.orthographicSize - Input.mouseScrollDelta.y;
-        if (scrollingSize > 2 && scrollingSize < 17)
+        if (scrollingSize > 2 && scrollingSize < 25)
         {
             camera.orthographicSize = scrollingSize;
         }

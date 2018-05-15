@@ -73,8 +73,8 @@ public class TowerCombiningManager : MonoBehaviour {
 
         set = new HashSet<TowerManager.TowerType>();
         set.Add(TowerManager.TowerType.Y5);
-        set.Add(TowerManager.TowerType.E3);
-        set.Add(TowerManager.TowerType.B2);
+        set.Add(TowerManager.TowerType.E2);
+        set.Add(TowerManager.TowerType.B3);
         CombineDic.Add(TowerManager.TowerType.Uranium238, set);
 
         set = new HashSet<TowerManager.TowerType>();

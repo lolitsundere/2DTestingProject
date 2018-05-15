@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
+# Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2DTestingProject", "2DTestingProject.csproj", "{A2594B7A-92BD-0A27-176C-A12A4BCEA4B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2DTestingProject.Editor", "2DTestingProject.Editor.csproj", "{381A6BEB-18A8-734D-6AA4-4DD8DB7A0B42}"

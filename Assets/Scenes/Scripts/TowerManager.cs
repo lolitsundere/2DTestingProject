@@ -640,7 +640,7 @@ public class TowerManager : MonoBehaviour
                 tower.AttackColor = new Color32(0x97, 0xb0, 0xa1, 0xff);
                 break;
             case TowerType.GullinanDiamond:
-                tower.BasicAttackRange = 1200;
+                tower.BasicAttackRange = 1000;
                 tower.BasicAttackSpeed = 100;
                 tower.BasicAttackTime = 0.6;
                 tower.BasicPhysicalDamage = 3154;
